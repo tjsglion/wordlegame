@@ -1,0 +1,1 @@
+CREATE INDEX `game_daily_progress_slug_date_status_idx` ON `game_daily_progress` (`game_slug`,`date_key`,`status`);

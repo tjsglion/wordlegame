@@ -1,0 +1,292 @@
+{
+  "Metadata": {
+    "title": "WordleGame — H5 单词游戏平台",
+    "description": "Wordle、单词搜索、填字等文字类小游戏，每日一题，即开即玩。"
+  },
+  "HomeMetadata": {
+    "title": "WordleGame - 在线 Wordle、填字与单词游戏",
+    "description": "免费在线玩 Wordle、单词搜索、填字等文字游戏。每日更新，即点即玩，无需下载。",
+    "keywords": [
+      "在线单词游戏",
+      "Wordle 在线玩",
+      "每日单词谜题",
+      "单词搜索游戏",
+      "在线填字游戏",
+      "浏览器文字游戏"
+    ]
+  },
+  "Common": {
+    "siteName": "WordleGame",
+    "help": "玩法说明",
+    "leaderboard": "战绩与排行榜",
+    "login": "登录",
+    "logout": "退出登录",
+    "account": "账号信息",
+    "close": "关闭",
+    "dashboard": "我的主页",
+    "toggleSound": "切换音效与震动",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "games": "游戏列表",
+    "controls": "控制项",
+    "availableNow": "可游玩",
+    "comingSoon": "即将推出",
+    "dailyChallenge": "每日",
+    "practiceMode": "练习",
+    "practiceModeDescription": "不限次数随机开局，不用等到明天也能继续玩。",
+    "current": "当前"
+  },
+  "LoginPage": {
+    "title": "登录",
+    "description": "选择一种方式登录 WordleGame",
+    "signInWithGoogle": "使用 Google 登录",
+    "signInWithGitHub": "使用 GitHub 登录",
+    "errors": {
+      "OAuthSignin": "无法启动第三方登录，请稍后再试。",
+      "OAuthCallback": "第三方登录回调失败，请重试。",
+      "OAuthCreateAccount": "创建账号失败，请重试。",
+      "OAuthAccountNotLinked": "该邮箱已绑定其他登录方式，请使用原来的方式登录。",
+      "Callback": "登录回调出错，请重试。",
+      "AccessDenied": "没有访问权限。",
+      "Configuration": "服务器登录配置有误，请联系管理员。",
+      "default": "登录失败，请重试。"
+    }
+  },
+  "DashboardPage": {
+    "title": "我的主页",
+    "description": "这是一个需要登录才能访问的示例页面。",
+    "name": "用户名",
+    "email": "邮箱",
+    "userId": "用户 ID"
+  },
+  "GamePage": {
+    "comingSoonDescription": "这款游戏正在开发中，先去玩今日 Wordle 吧。"
+  },
+  "WordleMetadata": {
+    "title": "Wordle 在线玩 - 每日 5 字母猜词游戏 | WordleGame",
+    "description": "免费在线玩 Wordle。6 次机会猜出今日 5 字母单词，查看个人战绩，并在今日排行榜中和其他玩家比较成绩。",
+    "keywords": [
+      "Wordle 在线玩",
+      "每日猜单词",
+      "5字母单词游戏",
+      "免费 Wordle 游戏",
+      "Wordle 排行榜",
+      "在线文字谜题"
+    ]
+  },
+  "HelpModal": {
+    "title": "How to play",
+    "description": "在 6 次机会内猜出隐藏的 5 字母单词。每次提交后，颜色都会给你清晰提示，帮你一步步缩小范围。",
+    "seoTitle": "Wordle 怎么玩",
+    "seoDescription": "了解 Wordle 的基本规则、每种颜色代表的含义，以及如何通过一个真实示例读懂整行结果。",
+    "basicsTitle": "基本规则",
+    "basics": {
+      "guess": "在机会用完之前，猜出这个隐藏的 5 字母单词。",
+      "submit": "每次输入都必须是一个真实存在的单词，输入后按回车提交。",
+      "clues": "每次提交后，方块会变色，提示你这次猜测离答案有多接近。"
+    },
+    "colorsTitle": "颜色代表什么",
+    "colors": {
+      "correct": {
+        "title": "绿色",
+        "description": "字母对，位置也对。",
+        "exampleCaption": "W 在答案里，而且就该放这里。"
+      },
+      "present": {
+        "title": "黄色",
+        "description": "字母对，位置不对。",
+        "exampleCaption": "I 在答案里，但不在这里。"
+      },
+      "absent": {
+        "title": "灰色",
+        "description": "这个字母不在答案里。",
+        "exampleCaption": "U 不在答案里。"
+      }
+    },
+    "walkthroughTitle": "完整看一行",
+    "walkthroughIntro": "一行里，已经有五个线索。",
+    "exampleAnswerLabel": "答案",
+    "exampleAnswer": "REACH",
+    "exampleGuessLabel": "猜测",
+    "exampleGuess": "CRANE",
+    "walkthroughPoints": {
+      "one": "C 要留，但要换位。",
+      "two": "R 也要留，也要换位。",
+      "three": "A 就放这里。",
+      "four": "N 可以排除。",
+      "five": "E 要留，但不能放这里。"
+    },
+    "walkthroughSummary": "留下 C、R、A、E，去掉 N。",
+    "repeatsTitle": "注意重复字母",
+    "repeatsIntro": "灰色不一定代表绝不会出现，也可能只是你猜多了。",
+    "repeatsAnswer": "APPLE",
+    "repeatsGuess": "ALLEY",
+    "repeatsSummary": "APPLE 里只有一个 L。第一个 L 可能命中，第二个就可能落空。",
+    "tipsTitle": "补充说明",
+    "tips": {
+      "duplicates": "有些答案会重复使用同一个字母，所以不要太早排除重复字母的可能。",
+      "keyboard": "下方键盘也会同步使用这些颜色，你可以很快看出哪些字母已经试过。",
+      "strategy": "一个好的开局词通常会同时覆盖常见元音和辅音，这样能更快拿到有效信息。"
+    }
+  },
+  "Wordle": {
+    "dailyRound": "每日挑战",
+    "practiceRound": "练习模式",
+    "roundProgress": "已用 {current} / {total} 次机会",
+    "dailyQuest": "今日词语远征",
+    "practiceQuest": "自由词语远征",
+    "questObjective": "在 {total} 次内找出隐藏单词",
+    "streak": "连续 {count} 天",
+    "startStreak": "开启连胜",
+    "tryPractice": "再来一局（练习）",
+    "backToDaily": "返回每日挑战",
+    "newPractice": "再来一局",
+    "leaderboardTitle": "战绩榜",
+    "leaderboardLocalHint": "当前显示的是这台设备上的本地战绩；登录后可以跨设备同步。",
+    "leaderboardSyncedHint": "当前显示的是本地战绩与账号云端进度合并后的结果。",
+    "leaderboardStatsTitle": "我的战绩",
+    "leaderboardDistributionTitle": "今日猜中步数分布",
+    "leaderboardDistributionBadge": "仅解出",
+    "leaderboardDistributionHint": "仅统计今日已解出 {solved} 局；共 {finished} 人完赛，未解出的对局不计入此分布。",
+    "todayLeaderboardTitle": "今日榜",
+    "todayLeaderboardCount": "今日已完赛 {count} 人",
+    "todayLeaderboardMyRank": "我的名次",
+    "todayLeaderboardRule": "排序规则：先看是否解出，再看步数更少，最后看完成时间更早。",
+    "todayLeaderboardLoading": "正在加载今日榜...",
+    "todayLeaderboardError": "今日榜暂时不可用",
+    "todayLeaderboardEmpty": "今天还没有人完赛",
+    "todayLeaderboardYou": "我",
+    "todayLeaderboardWon": "今日已解出",
+    "todayLeaderboardLost": "今日未解出",
+    "leaderboardLoginPrompt": "登录后可以跨设备同步战绩，并参与今日榜排名。",
+    "leaderboardLoginCta": "登录参与排行",
+    "viewLeaderboard": "查看排行榜",
+    "viewResult": "查看结果",
+    "resultsCta": "查看成绩",
+    "shareCta": "分享战绩",
+    "notEnoughLetters": "字母不够",
+    "notInWordList": "不在词库中",
+    "networkError": "网络异常，请重试",
+    "winMessage": "太棒了！你猜对了",
+    "loseMessage": "很遗憾，答案是 {answer}",
+    "share": "分享战绩",
+    "copied": "已复制到剪贴板",
+    "nextPuzzleIn": "距下一题还有 {time}",
+    "enter": "回车",
+    "delete": "删除",
+    "stats": {
+      "played": "已玩局数",
+      "winRate": "胜率",
+      "currentStreak": "当前连胜",
+      "maxStreak": "最大连胜"
+    }
+  },
+  "Stackdown": {
+    "loading": "正在加载谜题…",
+    "loadError": "谜题加载失败",
+    "retry": "重试",
+    "dailyStack": "每日砖堆",
+    "practiceStack": "练习砖堆",
+    "wordsRemaining": "还剩 {count} 个单词",
+    "hintSlide": "滑动获取一次提示",
+    "hintRevealCta": "需要提示？",
+    "hintRevealDetail": "会使用一次提示",
+    "hintRevealing": "正在揭示提示…",
+    "wordChecking": "正在验证单词…",
+    "progressTitle": "已猜单词",
+    "openSolvedWords": "查看已猜单词",
+    "closeSolvedWords": "关闭已猜单词",
+    "solvedWordsEmpty": "还没有已猜中的单词",
+    "currentWord": "当前第 {index} / {total} 词",
+    "upcomingWord": "第 {index} / {total} 词待猜",
+    "invalidWord": "不是目标单词，砖块已退回",
+    "networkError": "网络异常，请重试",
+    "winMessage": "堆栈已清空！",
+    "hintsUsed": "提示",
+    "totalTime": "总耗时",
+    "bestTime": "最佳时间",
+    "timecard": "计时卡",
+    "share": "分享战绩",
+    "copied": "已复制到剪贴板",
+    "nextPuzzleIn": "距下一题还有 {time}",
+    "finishedStageSummary": "已完成 {solved} / {total} 个单词",
+    "finishedStageHint": "已猜单词可从右上角入口回看，结果页里也会保留完整计时卡。",
+    "tryPractice": "继续练习模式",
+    "backToDaily": "返回每日挑战",
+    "newPractice": "再来一局",
+    "viewResult": "查看结果",
+    "viewLeaderboard": "查看排行榜",
+    "leaderboardTitle": "战绩榜",
+    "leaderboardLocalHint": "当前显示的是这台设备上的本地战绩；登录后可以跨设备同步。",
+    "leaderboardSyncedHint": "当前显示的是本地战绩与账号云端进度合并后的结果。",
+    "leaderboardStatsTitle": "我的战绩",
+    "leaderboardDistributionTitle": "今日星级分布",
+    "leaderboardDistributionBadge": "仅云端榜单",
+    "leaderboardDistributionHint": "仅统计云端榜单数据：今日 {finished} 局已完赛对局的星级分布。",
+    "todayLeaderboardTitle": "今日榜",
+    "todayLeaderboardCount": "今日已完赛 {count} 人",
+    "todayLeaderboardMyRank": "我的名次",
+    "todayLeaderboardRule": "仅统计云端榜单数据。排序规则：先看星级更高，再看用时更短，最后看完成时间更早。",
+    "todayLeaderboardError": "今日榜暂时不可用",
+    "todayLeaderboardEmpty": "今天还没有人完赛",
+    "todayLeaderboardYou": "我",
+    "leaderboardLoginPrompt": "登录后可以跨设备同步战绩，并参与今日榜排名。",
+    "leaderboardLoginCta": "登录参与排行",
+    "a11y": {
+      "stars": "{filled} / 6 星",
+      "removeLetter": "移除 {letter}",
+      "board": "Stackdown 字母砖堆",
+      "pickLetter": "选取 {letter}"
+    },
+    "stats": {
+      "wins": "胜场",
+      "currentStreak": "当前连胜",
+      "maxStreak": "最大连胜",
+      "bestTime": "最佳时间"
+    }
+  },
+  "StackdownHelp": {
+    "title": "玩法介绍",
+    "seoTitle": "Stackdown 玩法介绍",
+    "description": "从字母砖堆里找出全部 6 个隐藏单词，清空整个砖堆。提示用得越少，星星越多。",
+    "seoDescription": "了解 Stackdown 的玩法：点选暴露的字母砖，拼出每个隐藏的 5 字母单词；少用提示保住星星，还可以挑战计时。",
+    "goalTitle": "游戏目标",
+    "goal": "30 块字母砖，6 个隐藏的五字母单词。把它们全部找出来、清空砖堆，就赢了。",
+    "basicsTitle": "怎么玩",
+    "basics": {
+      "pick": "点亮色的字母砖即可选取。亮色代表它上面没有被压住；暗色的还被埋在下面，暂时点不了。",
+      "slot": "选中的字母会跳进上方的卡槽，拿走它还可能会露出砖堆里的新字母。",
+      "submit": "凑满 5 个字母就会自动提交。拼对了，这些字母砖就从砖堆里永久移除。",
+      "invalid": "拼错了也没关系——字母砖抖一抖，自己就滑回砖堆了，不会有任何惩罚。",
+      "undo": "想反悔？点一下卡槽里的字母就能放回去，它后面选的字母也会跟着一起回去。"
+    },
+    "stackTitle": "看懂砖堆",
+    "stack": {
+      "exposedTitle": "亮色 = 可以点",
+      "exposedCaption": "它上面没有遮挡，随时可取。",
+      "coveredTitle": "暗色 = 被压住",
+      "coveredCaption": "有砖块压在它上面，清掉上层的砖才能解锁。"
+    },
+    "oneWordTitle": "总有一个词能拼出来",
+    "oneWord": "任何时刻，你要找的那个词都能用暴露的字母拼出来——真的，我们保证它就在里面。你可能还会在砖堆里看到别的词，但只有那个词才能消掉砖块。觉得不可能？再看一眼。",
+    "hintsTitle": "提示与星星",
+    "demoClue": "突然的爆发",
+    "hints": {
+      "slider": "卡住了？先点砖堆下方的“需要提示？”，再滑动滑块，就能看到当前单词的词义提示——每个单词限一次。",
+      "stars": "每局从 6 颗星开始，每用一次提示掉一颗。零提示通关，就是满分。",
+      "floor": "通关保底 1 颗星——但真正的排面在 6 星。"
+    },
+    "timerTitle": "计时器",
+    "timer": {
+      "runs": "谜题加载完成后就开始计时；你切走标签页，它会自动暂停。",
+      "hidden": "计时默认隐藏，玩起来更放松；想来点压力，点一下时钟图标就行。",
+      "score": "用时完全不影响星级——星级只看提示。通关后会生成一张计时卡，列出每个单词的用时，还有你的历史最佳。"
+    },
+    "tipsTitle": "小贴士",
+    "tips": {
+      "whichTile": "同一个字母可能出现在好几块砖上，但每块砖下面压着的东西不一样——点哪块，有讲究。",
+      "daily": "每天都有一个新砖堆；练习模式随时随机发一局。",
+      "leaderboard": "排行榜先看星星，再比通关速度。"
+    }
+  }
+}

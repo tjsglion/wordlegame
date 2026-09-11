@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Brand mark: a Wordle tile in the teal brand color with a serif W,
+       echoing the header wordmark.
+       Hex values here (#2e6f5e tile, #faf9f4 letter) mirror BRAND_COLORS in
+       src/lib/brand.ts — SVG can't import JS constants, keep them in sync
+       by hand. scripts/generate-icons.mjs rasterizes this file. -->
+  <rect width="64" height="64" rx="14" fill="#2e6f5e"/>
+  <text x="32" y="45" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="bold" fill="#faf9f4" text-anchor="middle">W</text>
+</svg>

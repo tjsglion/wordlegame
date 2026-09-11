@@ -1,0 +1,292 @@
+{
+  "Metadata": {
+    "title": "WordleGame — H5 Word Games",
+    "description": "Wordle, word search, crossword and more word games. Daily puzzles, play instantly."
+  },
+  "HomeMetadata": {
+    "title": "Free Online Wordle, Crossword & Word Games | WordleGame",
+    "description": "Play Wordle, word search, crossword and more free online word games. New daily puzzles, instant play, no download.",
+    "keywords": [
+      "free online word games",
+      "play wordle online",
+      "daily word puzzle",
+      "word search game",
+      "crossword puzzle online",
+      "browser word games"
+    ]
+  },
+  "Common": {
+    "siteName": "WordleGame",
+    "help": "How to play",
+    "leaderboard": "Stats and leaderboard",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "account": "Account",
+    "close": "Close",
+    "dashboard": "Dashboard",
+    "toggleSound": "Toggle sound and vibration",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "games": "Games",
+    "controls": "Controls",
+    "availableNow": "Play now",
+    "comingSoon": "Coming soon",
+    "dailyChallenge": "Daily",
+    "practiceMode": "Practice",
+    "practiceModeDescription": "Play unlimited random puzzles without waiting for tomorrow.",
+    "current": "Current"
+  },
+  "LoginPage": {
+    "title": "Sign in",
+    "description": "Choose a provider to sign in to WordleGame",
+    "signInWithGoogle": "Continue with Google",
+    "signInWithGitHub": "Continue with GitHub",
+    "errors": {
+      "OAuthSignin": "Could not start the OAuth flow. Please try again.",
+      "OAuthCallback": "The OAuth callback failed. Please try again.",
+      "OAuthCreateAccount": "Could not create your account. Please try again.",
+      "OAuthAccountNotLinked": "This email is linked to another sign-in method. Use the original one.",
+      "Callback": "The sign-in callback failed. Please try again.",
+      "AccessDenied": "Access denied.",
+      "Configuration": "Server sign-in is misconfigured. Please contact the admin.",
+      "default": "Sign in failed. Please try again."
+    }
+  },
+  "DashboardPage": {
+    "title": "Dashboard",
+    "description": "A sample page that requires authentication.",
+    "name": "Name",
+    "email": "Email",
+    "userId": "User ID"
+  },
+  "GamePage": {
+    "comingSoonDescription": "This game is still in development. Play today's Wordle meanwhile."
+  },
+  "WordleMetadata": {
+    "title": "Play Wordle Online - Daily 5-Letter Word Puzzle | WordleGame",
+    "description": "Play Wordle online for free. Guess the daily 5-letter word in 6 tries, track your stats, and compare on today's leaderboard.",
+    "keywords": [
+      "play wordle online",
+      "daily wordle puzzle",
+      "5 letter word game",
+      "free wordle game",
+      "wordle leaderboard",
+      "word puzzle online"
+    ]
+  },
+  "HelpModal": {
+    "title": "How to play",
+    "description": "Guess the hidden 5-letter word in 6 tries. After each guess, the colors point you in the right direction so you can narrow it down fast.",
+    "seoTitle": "How to play Wordle",
+    "seoDescription": "Learn how Wordle works, what each tile color means, and how to read a guess with a real example.",
+    "basicsTitle": "The Basics",
+    "basics": {
+      "guess": "Guess the hidden 5-letter word before you run out of tries.",
+      "submit": "Each guess has to be a real word. Type it in and hit Enter to lock it in.",
+      "clues": "After every guess, the tiles change color to show how close you are."
+    },
+    "colorsTitle": "What the colors mean",
+    "colors": {
+      "correct": {
+        "title": "Green",
+        "description": "Right letter. Right spot.",
+        "exampleCaption": "W is in the word and locked in place."
+      },
+      "present": {
+        "title": "Yellow",
+        "description": "Right letter. Wrong spot.",
+        "exampleCaption": "I is in the word, but not there."
+      },
+      "absent": {
+        "title": "Gray",
+        "description": "That letter is not in the word.",
+        "exampleCaption": "U is not in the answer."
+      }
+    },
+    "walkthroughTitle": "Read a full row",
+    "walkthroughIntro": "One row. Five clues.",
+    "exampleAnswerLabel": "Answer",
+    "exampleAnswer": "REACH",
+    "exampleGuessLabel": "Guess",
+    "exampleGuess": "CRANE",
+    "walkthroughPoints": {
+      "one": "C is in. Move it.",
+      "two": "R is in. Move it too.",
+      "three": "A stays exactly there.",
+      "four": "N is out.",
+      "five": "E is in. New spot."
+    },
+    "walkthroughSummary": "Keep C, R, A, and E. Drop N.",
+    "repeatsTitle": "Watch for repeated letters",
+    "repeatsIntro": "Gray does not always mean never. Sometimes it means too many.",
+    "repeatsAnswer": "APPLE",
+    "repeatsGuess": "ALLEY",
+    "repeatsSummary": "APPLE has one L. The first L scores. The second one can miss.",
+    "tipsTitle": "Good to know",
+    "tips": {
+      "duplicates": "Some answers use the same letter more than once, so don't rule out repeats too early.",
+      "keyboard": "The keyboard uses the same colors, so you can keep track of what you've learned at a glance.",
+      "strategy": "A strong opening word usually gives you more useful information if it mixes common vowels and consonants."
+    }
+  },
+  "Wordle": {
+    "dailyRound": "Daily puzzle",
+    "practiceRound": "Practice round",
+    "roundProgress": "{current} of {total} attempts used",
+    "dailyQuest": "Today’s word trail",
+    "practiceQuest": "Free word trail",
+    "questObjective": "Find the hidden word in {total} tries",
+    "streak": "{count}-day streak",
+    "startStreak": "Start a streak",
+    "tryPractice": "Keep playing (practice)",
+    "backToDaily": "Back to daily challenge",
+    "newPractice": "Play again",
+    "leaderboardTitle": "Stats",
+    "leaderboardLocalHint": "These numbers follow the current browser until you sign in.",
+    "leaderboardSyncedHint": "These numbers reflect your current browser and your synced account progress.",
+    "leaderboardStatsTitle": "Your stats",
+    "leaderboardDistributionTitle": "Today's guess distribution",
+    "leaderboardDistributionBadge": "Solved only",
+    "leaderboardDistributionHint": "Only solved games are counted here: {solved} solved out of {finished} finished today.",
+    "todayLeaderboardTitle": "Today's leaderboard",
+    "todayLeaderboardCount": "{count} finished today",
+    "todayLeaderboardMyRank": "Your rank",
+    "todayLeaderboardRule": "Ranking order: solved players first, then fewer guesses, then earlier finish time.",
+    "todayLeaderboardLoading": "Loading today's board...",
+    "todayLeaderboardError": "Leaderboard is unavailable right now.",
+    "todayLeaderboardEmpty": "No finished games yet today.",
+    "todayLeaderboardYou": "You",
+    "todayLeaderboardWon": "Solved today's puzzle",
+    "todayLeaderboardLost": "Missed today's puzzle",
+    "leaderboardLoginPrompt": "Sign in to sync your streak across devices and show up on today's leaderboard.",
+    "leaderboardLoginCta": "Sign in to join",
+    "viewLeaderboard": "View leaderboard",
+    "viewResult": "View result",
+    "resultsCta": "Result",
+    "shareCta": "Share",
+    "notEnoughLetters": "Not enough letters",
+    "notInWordList": "Not in word list",
+    "networkError": "Network error — please try again",
+    "winMessage": "Brilliant! You got it",
+    "loseMessage": "Game over — the answer was {answer}",
+    "share": "Share result",
+    "copied": "Copied to clipboard",
+    "nextPuzzleIn": "Next puzzle in {time}",
+    "enter": "Enter",
+    "delete": "Delete",
+    "stats": {
+      "played": "Played",
+      "winRate": "Win %",
+      "currentStreak": "Current streak",
+      "maxStreak": "Max streak"
+    }
+  },
+  "Stackdown": {
+    "loading": "Loading puzzle…",
+    "loadError": "Could not load the puzzle.",
+    "retry": "Retry",
+    "dailyStack": "Daily stack",
+    "practiceStack": "Practice stack",
+    "wordsRemaining": "{count} words left",
+    "hintSlide": "Swipe for one hint",
+    "hintRevealCta": "Need a hint?",
+    "hintRevealDetail": "Uses one hint",
+    "hintRevealing": "Revealing hint…",
+    "wordChecking": "Checking word…",
+    "progressTitle": "Solved words",
+    "openSolvedWords": "View solved words",
+    "closeSolvedWords": "Close solved words",
+    "solvedWordsEmpty": "No solved words yet",
+    "currentWord": "Current word {index}/{total}",
+    "upcomingWord": "Word {index}/{total} ahead",
+    "invalidWord": "Not the word — tiles returned",
+    "networkError": "Network error — please try again",
+    "winMessage": "Stack cleared!",
+    "hintsUsed": "Hints",
+    "totalTime": "Total",
+    "bestTime": "Best time",
+    "timecard": "Timecard",
+    "share": "Share result",
+    "copied": "Copied to clipboard",
+    "nextPuzzleIn": "Next puzzle in {time}",
+    "finishedStageSummary": "Solved {solved} / {total} words",
+    "finishedStageHint": "Use the top-right shortcut to review solved words, and the result panel keeps the full timecard too.",
+    "tryPractice": "Keep playing (practice)",
+    "backToDaily": "Back to daily challenge",
+    "newPractice": "Play again",
+    "viewResult": "View result",
+    "viewLeaderboard": "View leaderboard",
+    "leaderboardTitle": "Stats",
+    "leaderboardLocalHint": "These numbers follow the current browser until you sign in.",
+    "leaderboardSyncedHint": "These numbers reflect your current browser and your synced account progress.",
+    "leaderboardStatsTitle": "Your stats",
+    "leaderboardDistributionTitle": "Today's star distribution",
+    "leaderboardDistributionBadge": "Cloud only",
+    "leaderboardDistributionHint": "Cloud leaderboard data only: how today's {finished} finished players scored, by stars.",
+    "todayLeaderboardTitle": "Today's leaderboard",
+    "todayLeaderboardCount": "{count} finished today",
+    "todayLeaderboardMyRank": "Your rank",
+    "todayLeaderboardRule": "Cloud leaderboard data only. Ranked by stars, then fastest time, then earliest finish.",
+    "todayLeaderboardError": "Leaderboard is unavailable right now.",
+    "todayLeaderboardEmpty": "No finished games yet today.",
+    "todayLeaderboardYou": "You",
+    "leaderboardLoginPrompt": "Sign in to sync your streak across devices and show up on today's leaderboard.",
+    "leaderboardLoginCta": "Sign in to join",
+    "a11y": {
+      "stars": "{filled} / 6 stars",
+      "removeLetter": "Remove {letter}",
+      "board": "Stackdown board",
+      "pickLetter": "Pick {letter}"
+    },
+    "stats": {
+      "wins": "Games won",
+      "currentStreak": "Current streak",
+      "maxStreak": "Max streak",
+      "bestTime": "Best time"
+    }
+  },
+  "StackdownHelp": {
+    "title": "How to play",
+    "seoTitle": "How to play Stackdown",
+    "description": "Clear a stack of letter tiles by finding all 6 hidden words. Fewer hints, more stars.",
+    "seoDescription": "Learn how Stackdown works: pick exposed tiles to spell each hidden 5-letter word, spend hints wisely to keep your stars, and race the optional timer.",
+    "goalTitle": "The goal",
+    "goal": "Thirty letter tiles. Six hidden five-letter words. Find them all and the stack is gone — that's the whole game.",
+    "basicsTitle": "How it plays",
+    "basics": {
+      "pick": "Tap a bright tile to pick it. Bright means nothing is sitting on top — dimmed tiles are buried for now.",
+      "slot": "Your tile pops into a slot up top, and lifting it might uncover fresh letters in the stack.",
+      "submit": "Fill all five slots and the word submits itself. Nail it and those tiles are gone for good.",
+      "invalid": "Spelled something that isn't the word? The tiles shake it off and slide right back into the stack. No harm done.",
+      "undo": "Changed your mind? Tap a letter in the slots to send it back — everything you picked after it goes too."
+    },
+    "stackTitle": "Reading the stack",
+    "stack": {
+      "exposedTitle": "Bright = pickable",
+      "exposedCaption": "Nothing covers it, so it's yours for the taking.",
+      "coveredTitle": "Dimmed = buried",
+      "coveredCaption": "Another tile sits on top. Clear the ones above to free it."
+    },
+    "oneWordTitle": "There's always a word",
+    "oneWord": "At any moment, the word you're hunting can be spelled from the exposed letters — really, we promise it's in there. You might spot other words in the pile, but only that one clears tiles. If the stack looks impossible, look again.",
+    "hintsTitle": "Hints and stars",
+    "demoClue": "A sudden outburst",
+    "hints": {
+      "slider": "Stuck? Choose Need a hint? below the stack, then swipe to reveal a clue for the word you're hunting — one per word.",
+      "stars": "You start every game with 6 stars, and each hint costs one. Clear the stack hint-free for a perfect run.",
+      "floor": "Finishing always earns at least 1 star — but the bragging rights live at 6."
+    },
+    "timerTitle": "The timer",
+    "timer": {
+      "runs": "The clock starts when the puzzle loads and pauses itself whenever you leave the tab.",
+      "hidden": "It's hidden by default so the game stays chill. Tap the clock icon if you like the pressure.",
+      "score": "Time never touches your stars — those are all about hints. Finish a stack and you'll get a timecard for each word, plus your best time ever."
+    },
+    "tipsTitle": "Good to know",
+    "tips": {
+      "whichTile": "Two tiles can show the same letter but hide different things underneath — which one you pick matters.",
+      "daily": "A fresh stack drops every day, and practice mode deals a random one whenever you want.",
+      "leaderboard": "The leaderboard ranks by stars first, then by fastest clear."
+    }
+  }
+}

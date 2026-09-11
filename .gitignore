@@ -1,0 +1,24 @@
+node_modules
+.next/
+.next-build/
+out/
+build
+.env*.local
+.env
+*.db
+# only ignore a root-level drizzle/ output dir; src/lib/drizzle/ holds the schema
+/drizzle/
+.DS_Store
+*.log
+*.tsbuildinfo
+.open-next/
+.wrangler/
+.dev.vars
+cloudflare-env.d.ts
+*.db-shm
+*.db-wal
+
+docs/*
+.workbuild/*
+backups/*
+scripts/*
