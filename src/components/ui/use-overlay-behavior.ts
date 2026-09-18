@@ -59,7 +59,6 @@ export function useOverlayBehavior({
       right: document.body.style.right,
       overscrollBehavior: document.body.style.overscrollBehavior,
     };
-
     const siblingStates = Array.from(document.body.children)
       .filter((element) => element !== portal)
       .map((element) => ({

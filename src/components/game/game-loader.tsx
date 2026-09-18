@@ -3,6 +3,8 @@
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import { gameLoaders } from "@/games/registry";
+import { StrandsGameSkeleton } from "@/games/strands/strands-skeleton";
+import type { StrandsPuzzleData } from "@/games/strands/shared";
 
 /**
  * Client-side game loader. Games are code-split per slug and rendered only on
@@ -16,18 +18,23 @@ const gameComponents: Record<string, ComponentType<Record<string, unknown>>> =
   Object.fromEntries(
   Object.entries(gameLoaders).map(([slug, load]) => [
     slug,
-    dynamic(load, { ssr: false }),
+    dynamic(load, {
+      ssr: false,
+      ...(slug === "strands" ? { loading: StrandsGameSkeleton } : {}),
+    }),
   ]),
 );
 
 export function GameLoader({
   slug,
   isAuthenticated = false,
+  strandsPuzzle,
 }: {
   slug: string;
   isAuthenticated?: boolean;
+  strandsPuzzle?: StrandsPuzzleData | null;
 }) {
   const Game = gameComponents[slug];
   if (!Game) return null;
-  return <Game isAuthenticated={isAuthenticated} />;
+  return <Game isAuthenticated={isAuthenticated} strandsPuzzle={strandsPuzzle} />;
 }

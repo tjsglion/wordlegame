@@ -1,0 +1,6 @@
+export const GOOGLE_ADSENSE_CLIENT_ID =
+  process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENT_ID?.trim() || "";
+
+export const GOOGLE_ADSENSE_ENABLED =
+  process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ENABLED === "1" &&
+  GOOGLE_ADSENSE_CLIENT_ID.length > 0;

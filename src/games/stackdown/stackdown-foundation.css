@@ -1,0 +1,262 @@
+/* Stackdown is intentionally allowed to break out of the paper-site shell.
+ * It is a touch-first H5 scene: the game owns the viewport and the site
+ * navigation becomes a quiet overlay rather than a separate page section. */
+.game-shell--stackdown {
+  --background: oklch(0.18 0.012 80);
+  --foreground: oklch(0.94 0.012 90);
+  --card: oklch(0.23 0.014 80);
+  --card-foreground: oklch(0.94 0.012 90);
+  --popover: oklch(0.23 0.014 80);
+  --popover-foreground: oklch(0.94 0.012 90);
+  --secondary: oklch(0.27 0.014 80);
+  --secondary-foreground: oklch(0.94 0.012 90);
+  --muted: oklch(0.27 0.014 80);
+  --muted-foreground: oklch(0.68 0.018 85);
+  --accent: oklch(0.27 0.014 80);
+  --accent-foreground: oklch(0.94 0.012 90);
+  --border: oklch(0.34 0.016 80);
+  --input: oklch(0.34 0.016 80);
+  --brand: oklch(0.76 0.098 168);
+  --brand-foreground: oklch(0.18 0.012 80);
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
+  --ring: var(--brand);
+  --header-surface: oklch(0.18 0.012 80 / 0.52);
+  --header-border: oklch(0.62 0.025 88 / 0.1);
+  --shadow-color: oklch(0.03 0.004 80 / 0.72);
+  background:
+    linear-gradient(180deg, oklch(0.08 0.009 162 / 0.2), transparent 34%),
+    linear-gradient(0deg, oklch(0.05 0.006 80 / 0.72), transparent 48%),
+    url("/images/stackdown/h5-tabletop-atmosphere.webp") center top / cover no-repeat,
+    oklch(0.18 0.012 80);
+}
+
+.site-header--stackdown {
+  border-color: oklch(0.62 0.025 88 / 0.1);
+  background: linear-gradient(180deg, oklch(0.11 0.01 80 / 0.74), transparent);
+  box-shadow: none;
+}
+
+.site-header--stackdown button {
+  color: oklch(0.91 0.016 88 / 0.84);
+}
+
+.site-header--stackdown button:hover {
+  background: oklch(0.72 0.08 165 / 0.13);
+}
+
+.site-header--stackdown a {
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+.site-header--stackdown .site-header-game-label {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Stackdown: a full-viewport H5 puzzle scene. The deep playfield, board and
+ * action dock read as one surface; teal only marks a live action or progress.
+ * Lines are deliberately scarce—depth comes from light, scale and touchable
+ * tile material instead. Scoped to .sd-stage. Fonts: Nunito (self-hosted).
+ * ------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Nunito";
+  src: url("/fonts/nunito-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.sd-stage {
+  --sd-paper: oklch(0.225 0.014 80);
+  --sd-paper-deep: oklch(0.195 0.012 80);
+  --sd-line: oklch(0.55 0.026 85 / 0.24);
+  --sd-ink: var(--foreground);
+  --sd-muted: var(--muted-foreground);
+  --sd-board: oklch(0.245 0.014 80);
+  --sd-board-deep: oklch(0.16 0.011 80);
+  --sd-board-highlight: oklch(0.34 0.03 165);
+  --sd-board-ink: oklch(0.97 0.008 95);
+  --sd-tile-face: oklch(0.94 0.013 90);
+  --sd-tile-edge: oklch(0.51 0.022 78);
+  --sd-tile-text: oklch(0.22 0.012 76);
+  --sd-covered-face: oklch(0.285 0.014 80);
+  --sd-covered-edge: oklch(0.17 0.011 80);
+  --sd-covered-text: oklch(0.62 0.022 85);
+  --sd-star: oklch(0.69 0.13 83);
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 38rem);
+  margin-inline: auto;
+  gap: clamp(0.75rem, 2.2vw, 1.1rem);
+  /* The control layer should read as product UI, not a children's game.
+   * Keep Nunito only on the physical letter pieces below. */
+  font-family: var(--font-sans);
+  color: var(--sd-ink);
+}
+
+/* Stackdown's game and help demo share the same physical primitives. Their
+ * individual rules below only define the scale and visual treatment. */
+.sd-brand-glyph,
+.sdh-brand-glyph {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--sd-glyph-size);
+  height: var(--sd-glyph-size);
+  flex: 0 0 auto;
+  border-radius: var(--sd-glyph-radius);
+  background: linear-gradient(145deg, var(--sd-glyph-start), var(--sd-glyph-end));
+  box-shadow:
+    var(--sd-glyph-drop-shadow),
+    inset 0 1px 0 var(--sd-glyph-highlight);
+}
+
+.sd-slots,
+.sdh-slots {
+  display: flex;
+  justify-content: center;
+  gap: 2.4%;
+  min-height: var(--sd-slots-min-height);
+  padding: var(--sd-slots-padding);
+  border-radius: var(--sd-slots-radius);
+  background: var(--sd-slots-background);
+  box-shadow: inset 0 1px 0 oklch(0.7 0.018 88 / 0.06);
+}
+
+.sd-slot,
+.sdh-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  width: 17.2%;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: var(--sd-slot-radius);
+  background: var(--sd-slot-background);
+}
+
+.sd-slot-letter,
+.sdh-slot-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: var(--sd-slot-letter-border);
+  border-bottom: var(--sd-slot-letter-bottom-border);
+  border-radius: var(--sd-slot-letter-radius);
+  background: var(--sd-tile-face-gradient);
+  color: var(--sd-tile-text);
+  font-family: "Nunito", var(--font-sans);
+  font-weight: 900;
+  text-transform: uppercase;
+  box-shadow: var(--sd-slot-letter-shadow);
+}
+
+.sd-board,
+.sdh-board-full {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  container-type: inline-size;
+  border: 0;
+  border-radius: var(--sd-board-radius);
+  background: var(--sd-board-background);
+  box-shadow: var(--sd-board-shadow);
+}
+
+.sd-tile,
+.sdh-ftile {
+  position: absolute;
+  width: 16%;
+  height: 17.6%;
+  border-radius: 13.33%;
+  padding: 0;
+  background: var(--sd-tile-edge);
+  box-shadow: var(--sd-tile-shadow);
+}
+
+.sd-tile-surface,
+.sdh-ftile-face {
+  position: absolute;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sd-tile-face-gradient);
+  color: var(--sd-tile-text);
+}
+
+.sd-board::before,
+.sdh-board-full::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: var(--sd-board-overlay);
+  background-size: var(--sd-board-overlay-size);
+}
+
+.sd-hint-fill,
+.sdh-hint-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+}
+
+.sd-hint-slider,
+.sdh-hint {
+  position: relative;
+  width: 100%;
+  height: var(--sd-hint-height);
+  border-radius: var(--sd-hint-radius);
+  background: var(--sd-hint-background);
+  box-shadow: var(--sd-hint-shadow);
+  overflow: hidden;
+}
+
+.sd-hint-label,
+.sdh-hint-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--sd-hint-label-padding);
+  color: var(--sd-hint-label-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sd-hint-handle,
+.sdh-hint-handle {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sd-hint-handle-size);
+  height: var(--sd-hint-handle-size);
+  border-radius: var(--sd-hint-handle-radius);
+  background: var(--sd-hint-handle-background);
+  color: var(--sd-hint-handle-color);
+  box-shadow: var(--sd-hint-handle-shadow);
+  transform: translateY(-50%);
+}
+
+.sd-stage::before {
+  content: none;
+}
+
+

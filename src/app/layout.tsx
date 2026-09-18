@@ -1,4 +1,6 @@
+import Script from "next/script";
 import { localeToLang, routing } from "@/i18n/routing";
+import { GOOGLE_ADSENSE_CLIENT_ID, GOOGLE_ADSENSE_ENABLED } from "@/lib/ads";
 import "./globals.css";
 
 /**
@@ -30,10 +32,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang={DEFAULT_LANG} className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        {GOOGLE_ADSENSE_ENABLED ? (
+          <meta name="google-adsense-account" content={GOOGLE_ADSENSE_CLIENT_ID} />
+        ) : null}
+      </head>
       <body className="flex min-h-dvh flex-col font-sans">
         {/* Inline color-scheme script: mutates <html> before first paint.
             suppressHydrationWarning above covers the class/lang it sets. */}
         <script dangerouslySetInnerHTML={{ __html: COLOR_SCHEME_SCRIPT }} />
+        {GOOGLE_ADSENSE_ENABLED ? (
+          <Script
+            id="google-adsense"
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${GOOGLE_ADSENSE_CLIENT_ID}`}
+            strategy="afterInteractive"
+            crossOrigin="anonymous"
+          />
+        ) : null}
         {children}
       </body>
     </html>

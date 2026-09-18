@@ -1,0 +1,824 @@
+.sd-round {
+  position: relative;
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+}
+
+.sd-loading-scene {
+  display: grid;
+  width: min(100%, 38rem);
+  margin-inline: auto;
+  gap: 1rem;
+}
+
+.sd-loading-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.72rem;
+  min-height: 3.8rem;
+  padding: 0.35rem 0.2rem;
+  color: color-mix(in oklab, var(--foreground) 76%, var(--muted-foreground));
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+
+.sd-loading-board {
+  position: relative;
+  display: grid;
+  aspect-ratio: 1;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9%;
+  padding: 16%;
+  overflow: hidden;
+  border-radius: clamp(1.7rem, 6vw, 2.5rem);
+  background:
+    radial-gradient(circle at 50% -18%, oklch(0.4 0.074 165 / 0.48), transparent 50%),
+    oklch(0.21 0.013 80 / 0.82);
+  box-shadow:
+    inset 0 1px 0 oklch(0.74 0.075 170 / 0.16),
+    0 26px 52px -32px var(--shadow-color),
+    0 0 0 0.4rem oklch(0.07 0.008 80 / 0.26);
+}
+
+.sd-loading-board span,
+.sd-loading-answer span {
+  border-radius: 0.82rem;
+  background: linear-gradient(145deg, oklch(0.46 0.034 84 / 0.7), oklch(0.28 0.018 80 / 0.56));
+  animation: sd-loading-pulse 1.35s ease-in-out infinite alternate;
+}
+
+.sd-loading-board span:nth-child(2n) {
+  animation-delay: 120ms;
+}
+
+.sd-loading-board span:nth-child(3n) {
+  animation-delay: 240ms;
+}
+
+.sd-loading-answer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.65rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 1.35rem;
+  background: oklch(0.14 0.009 80 / 0.56);
+}
+
+.sd-loading-answer span {
+  aspect-ratio: 1;
+}
+
+.sd-loading-retry {
+  width: 100%;
+  min-height: 3.85rem;
+  border: 0;
+  border-radius: 1.3rem;
+  background: oklch(0.2 0.02 160 / 0.8);
+  color: var(--foreground);
+}
+
+@keyframes sd-loading-pulse {
+  from {
+    opacity: 0.42;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0.82;
+    transform: translateY(-0.15rem);
+  }
+}
+
+@keyframes sd-stage-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.2rem) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sd-stage-enter {
+  animation: sd-stage-enter 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sd-finished-stage {
+  border-radius: 1.75rem;
+  border: 0;
+  background: linear-gradient(145deg, oklch(0.29 0.036 164 / 0.78), var(--sd-paper));
+  padding: 1.5rem;
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--sd-paper) 64%, transparent),
+    0 10px 24px -20px var(--shadow-color);
+}
+
+.sd-finished-stat {
+  padding: 0.25rem 0.75rem;
+}
+
+.sd-finished-stat + .sd-finished-stat {
+  border-left: 1px solid color-mix(in oklab, var(--sd-line) 72%, transparent);
+}
+
+.sd-finished-eyebrow,
+.sd-finished-stat-label {
+  color: var(--sd-muted);
+}
+
+.sd-finished-summary,
+.sd-finished-stat-value {
+  color: var(--sd-ink);
+}
+
+.sd-finished-hint {
+  color: color-mix(in oklab, var(--sd-muted) 88%, var(--sd-ink));
+}
+
+.sd-finished-action {
+  border-color: color-mix(in oklab, var(--sd-line) 76%, var(--brand));
+  background: color-mix(in oklab, var(--sd-paper) 84%, var(--brand));
+  color: var(--sd-ink);
+}
+
+.sd-finished-action:hover {
+  background: color-mix(in oklab, var(--sd-paper) 74%, var(--brand));
+  color: var(--sd-ink);
+}
+
+.sd-star.filled {
+  fill: var(--sd-star);
+  color: var(--sd-star);
+}
+
+.sd-star.empty {
+  color: color-mix(in oklab, var(--sd-muted) 34%, transparent);
+}
+
+.sd-toast {
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--sd-board-highlight) 66%, var(--sd-board-ink));
+  background: var(--sd-board-deep);
+  color: var(--sd-board-ink);
+  box-shadow:
+    0 12px 30px -18px var(--shadow-color),
+    inset 0 1px 0 color-mix(in oklab, var(--sd-board-highlight) 44%, transparent);
+}
+
+.sd-message {
+  /* The word state owns the left half of the command row. A fixed minimum
+   * keeps the board from jumping when a freshly solved word is shown. */
+  min-height: 2.25rem;
+  display: flex;
+  align-items: center;
+  font-weight: 650;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: color-mix(in oklab, var(--sd-ink) 76%, var(--sd-muted));
+}
+
+.sd-game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.8rem;
+  padding: 0.35rem 0.2rem 0.25rem;
+  border: 0;
+  box-shadow: none;
+}
+
+.sd-game-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.72rem;
+}
+
+/* A small stacked-tile glyph gives the game a recognizable in-world mark
+ * without turning the header into a logo banner. */
+.sd-brand-glyph {
+  --sd-glyph-size: 2.45rem;
+  --sd-glyph-radius: 0.82rem;
+  --sd-glyph-start: oklch(0.42 0.074 165 / 0.85);
+  --sd-glyph-end: oklch(0.22 0.025 160 / 0.9);
+  --sd-glyph-drop-shadow: 0 10px 20px -14px oklch(0.03 0.004 80 / 0.9);
+  --sd-glyph-highlight: oklch(0.82 0.1 170 / 0.36);
+}
+
+.sd-brand-glyph span {
+  --sd-glyph-piece-size: 0.82rem;
+  --sd-glyph-piece-radius: 0.24rem;
+  --sd-glyph-piece-offset-x: 0.32rem;
+  --sd-glyph-piece-offset-y: 0.16rem;
+  --sd-glyph-piece-top: 0.42rem;
+  --sd-glyph-piece-shadow: 0 0.13rem 0 oklch(0.59 0.028 80);
+}
+
+.sd-brand-glyph span,
+.sdh-brand-glyph span {
+  position: absolute;
+  width: var(--sd-glyph-piece-size);
+  height: var(--sd-glyph-piece-size);
+  border-radius: var(--sd-glyph-piece-radius);
+  background: oklch(0.94 0.014 90);
+  box-shadow: var(--sd-glyph-piece-shadow);
+}
+
+.sd-brand-glyph span:nth-child(1),
+.sdh-brand-glyph span:nth-child(1) {
+  transform: translate(calc(-1 * var(--sd-glyph-piece-offset-x)), var(--sd-glyph-piece-offset-y));
+}
+
+.sd-brand-glyph span:nth-child(2),
+.sdh-brand-glyph span:nth-child(2) {
+  transform: translate(var(--sd-glyph-piece-offset-x), var(--sd-glyph-piece-offset-y));
+}
+
+.sd-brand-glyph span:nth-child(3),
+.sdh-brand-glyph span:nth-child(3) {
+  transform: translateY(calc(-1 * var(--sd-glyph-piece-top)));
+}
+
+.sd-game-kicker {
+  margin-bottom: 0.22rem;
+  color: color-mix(in oklab, var(--sd-muted) 76%, var(--brand));
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.19em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.sd-game-tools {
+  flex-shrink: 0;
+}
+
+.sd-progress-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 2.45rem;
+  padding: 0.45rem 0.7rem;
+  border: 0;
+  border-radius: 0.85rem;
+  background: oklch(0.14 0.009 80 / 0.56);
+  color: color-mix(in oklab, var(--sd-muted) 74%, var(--sd-ink));
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    transform 0.16s ease,
+    background-color 0.16s ease;
+}
+
+.sd-progress-button:hover {
+  background: oklch(0.22 0.023 160 / 0.72);
+}
+
+.sd-progress-button:active {
+  transform: scale(0.96);
+}
+
+.sd-progress-button:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.sd-progress-value {
+  color: var(--sd-ink);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.sd-progress-value span {
+  color: var(--sd-muted);
+  font-size: 0.7rem;
+}
+
+.sd-message-found {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.015em;
+  color: var(--brand);
+}
+
+.sd-message-pending {
+  font-weight: 700;
+  color: var(--sd-ink);
+}
+
+.sd-message-detail {
+  color: var(--sd-muted);
+}
+
+.sd-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.8rem;
+  color: color-mix(in oklab, var(--sd-muted) 88%, var(--sd-ink));
+  background: oklch(0.31 0.015 80 / 0.7);
+  border: 0;
+  touch-action: manipulation;
+  transition:
+    transform 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.sd-icon-button:hover {
+  background: color-mix(in oklab, var(--brand) 22%, var(--sd-paper));
+}
+
+.sd-icon-button:active {
+  transform: scale(0.94);
+}
+
+.sd-icon-button:focus-visible,
+.sd-slot.filled:focus-visible,
+.sd-tile.exposed:focus-visible,
+.sd-hint-slider:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* --- Letter slots: quiet paper wells; a selected tile snaps into place. --- */
+.sd-slots {
+  --sd-slots-min-height: 4.85rem;
+  --sd-slots-padding: 0;
+  --sd-slots-radius: 1.35rem;
+  --sd-slots-background: transparent;
+}
+
+.sd-slots::before {
+  content: none;
+}
+
+/* The board is the primary action. The selected-letter rail follows as its
+ * direct consequence, then steps down into the optional hint control. */
+.sd-board + .sd-slots {
+  margin-top: 0.15rem;
+}
+
+.sd-slots + .sd-hint-slider {
+  margin-top: 0.1rem;
+}
+
+.sd-slots + .sd-hint-disclosure {
+  margin-top: 0.1rem;
+}
+
+.sd-hint-disclosure {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  /* The disclosure is replaced in place by the 3.85rem hint slider. Keep
+   * their footprint identical so the vertically centred stage never jumps. */
+  min-height: 3.85rem;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  border: 0;
+  border-radius: 1.2rem;
+  background: transparent;
+  color: var(--sd-muted);
+  font-size: 0.78rem;
+  font-weight: 650;
+  text-align: left;
+  transition:
+    background-color 0.18s ease,
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sd-hint-disclosure:hover {
+  background: oklch(0.14 0.009 80 / 0.45);
+}
+
+.sd-hint-disclosure:active {
+  transform: scale(0.985);
+}
+
+.sd-hint-disclosure svg {
+  color: var(--brand);
+}
+
+.sd-hint-disclosure small {
+  color: color-mix(in oklab, var(--sd-muted) 70%, transparent);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sd-slot {
+  --sd-slot-radius: 0.72rem;
+  --sd-slot-background: oklch(0.22 0.012 80 / 0.74);
+  touch-action: manipulation;
+}
+
+.sd-slot.filled {
+  cursor: pointer;
+}
+
+.sd-slot.filled:disabled {
+  cursor: default;
+}
+
+/* A picked board tile remains part of the stack until its clone reaches the
+ * answer well. Hide only that source face while it flies, so there is always
+ * exactly one visible glyph and the uncovered stack changes at landing. */
+.sd-tile.exposed.sd-tile--in-flight {
+  visibility: hidden;
+}
+
+.sd-slot-letter {
+  --sd-slot-letter-radius: 13.33%;
+  --sd-slot-letter-border: 1px solid color-mix(in oklab, var(--sd-tile-face) 72%, var(--sd-line));
+  --sd-slot-letter-bottom-border: 4px solid var(--sd-tile-edge);
+  --sd-slot-letter-shadow: 0 12px 24px -18px var(--shadow-color), 0 2px 6px color-mix(in oklab, var(--shadow-color) 70%, transparent);
+  /* Slot letters use the shared tile primitive, but unlike board tiles they
+   * do not contain .sd-tile-surface (which normally supplies this variable).
+   * Define the face here so the dark glyph always sits on a light surface. */
+  --sd-tile-face-gradient: linear-gradient(180deg, var(--sd-tile-face) 0%, color-mix(in oklab, var(--sd-tile-face) 88%, var(--sd-paper-deep)) 100%);
+  font-size: 1.4rem;
+}
+
+.sd-slot.filled:active .sd-slot-letter {
+  transform: scale(0.95);
+}
+
+/* Presentation-only tile clones preserve the path from the stack to an
+ * answer well (and back) without coupling visual motion to puzzle state. */
+.sd-tile-flights {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+}
+
+.sd-tile-flight {
+  position: fixed;
+  display: block;
+  border-radius: 13.33%;
+  background: var(--sd-tile-edge);
+  box-shadow: 0 16px 28px -16px oklch(0.03 0.004 80 / 0.88);
+  transform-origin: center;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+
+.sd-tile-flight .sd-tile-surface {
+  font-size: clamp(1rem, 5vw, 2.6rem);
+}
+
+.sd-tile-flight--pick {
+  animation: sd-tile-pick-flight 0.32s cubic-bezier(0.16, 0.94, 0.3, 1.18) forwards;
+}
+
+.sd-tile-flight--return {
+  animation: sd-tile-return-flight 0.32s cubic-bezier(0.2, 0.92, 0.32, 1.12) forwards;
+}
+
+@keyframes sd-tile-pick-flight {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  68% {
+    opacity: 1;
+    transform: translate(var(--sd-flight-x), var(--sd-flight-y)) scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(var(--sd-flight-x), var(--sd-flight-y)) scale(var(--sd-flight-scale));
+  }
+}
+
+@keyframes sd-tile-return-flight {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(var(--sd-flight-x), var(--sd-flight-y)) scale(1);
+  }
+}
+
+.sd-slot-letter--returning {
+  animation: sd-slot-letter-depart 1ms steps(1, end) var(--sd-return-delay) forwards;
+}
+
+@keyframes sd-slot-letter-depart {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Match the reference principle: reject the entire five-letter attempt as a
+ * single physical object, with a short horizontal wobble and a little depth. */
+.sd-slots.sd-incorrect .sd-slot {
+  animation: sd-slot-reject 0.75s ease-in-out both;
+}
+
+@keyframes sd-slot-reject {
+  0%,
+  52%,
+  100% {
+    transform: translateX(0) rotateY(0deg);
+  }
+  7% {
+    transform: translateX(-12px) rotateY(-9deg);
+  }
+  19% {
+    transform: translateX(10px) rotateY(7deg);
+  }
+  32% {
+    transform: translateX(-6px) rotateY(-5deg);
+  }
+  44% {
+    transform: translateX(4px) rotateY(3deg);
+  }
+}
+
+/* --- The Stack: a warm graphite play surface with tactile paper tiles. --- */
+.sd-board {
+  --sd-board-radius: clamp(1.7rem, 6vw, 2.5rem);
+  --sd-board-background: radial-gradient(circle at 50% -18%, oklch(0.4 0.074 165 / 0.58) 0%, transparent 46%), radial-gradient(circle at 50% 118%, oklch(0.09 0.008 80 / 0.9) 0%, transparent 54%), var(--sd-board);
+  --sd-board-shadow: none;
+  --sd-board-overlay: linear-gradient(120deg, oklch(0.68 0.045 170 / 0.08), transparent 26%), radial-gradient(circle at 1px 1px, oklch(0.75 0.032 88 / 0.09) 0.75px, transparent 0);
+  --sd-board-overlay-size: auto, 15px 15px;
+}
+
+.sd-board::before {
+  opacity: 0.5;
+}
+
+/* Tile = dark body (the visible bottom strip reads as the 3D edge) with a
+ * cream surface lifted one depth-unit up. Geometry constants come from
+ * stackdown-game.tsx: width 16%, depth 1.6% of the board edge. */
+.sd-tile {
+  touch-action: manipulation;
+  --sd-tile-shadow: 0 14px 24px -18px oklch(0.03 0.004 80 / 0.78);
+}
+
+.sd-tile.exposed {
+  cursor: pointer;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.sd-tile.exposed:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.05);
+  box-shadow: 0 17px 24px -18px oklch(0.03 0.004 80 / 0.88);
+}
+
+.sd-tile.exposed:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.sd-tile.exposed:disabled {
+  cursor: default;
+}
+
+.sd-tile.covered {
+  background: var(--sd-covered-edge);
+  box-shadow: 0 5px 10px -9px oklch(0.03 0.004 80 / 0.7);
+}
+
+.sd-tile-surface {
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* 16/17.6 of the tile body — the cream face; the rest is the dark edge. */
+  height: 90.91%;
+  font-size: 8.8cqw;
+  line-height: 1;
+  user-select: none;
+  --sd-tile-face-gradient: linear-gradient(180deg, var(--sd-tile-face) 0%, color-mix(in oklab, var(--sd-tile-face) 88%, var(--sd-paper-deep)) 100%);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--sd-tile-face) 62%, transparent);
+  color: var(--sd-tile-text);
+}
+
+.sd-tile.covered .sd-tile-surface {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--sd-covered-face) 92%, var(--sd-board-highlight) 8%) 0%,
+      var(--sd-covered-face) 100%
+    );
+  color: var(--sd-covered-text);
+  box-shadow: inset 0 1px 0 oklch(0.6 0.03 165 / 0.14);
+  opacity: 0.9;
+}
+
+/* --- Swipe-to-reveal hint. This is one purpose-built control, rather than a
+ * decorative card around a tiny slider: its fill, handle, and copy all share
+ * a single 56px interaction surface. --- */
+.sd-hint-slider {
+  --sd-hint-height: 3.85rem;
+  --sd-hint-radius: 1.3rem;
+  --sd-hint-background: oklch(0.14 0.009 80 / 0.56);
+  --sd-hint-shadow: inset 0 1px 0 oklch(0.7 0.018 88 / 0.06), 0 12px 22px -24px var(--shadow-color);
+  --sd-hint-handle-size: 2.85rem;
+  --sd-hint-handle-radius: 9999px;
+  border: 0;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.18s ease;
+}
+
+.sd-hint-slider:hover:not(.disabled):not(.revealed) {
+  transform: translateY(-1px);
+  background: oklch(0.18 0.015 80 / 0.76);
+}
+
+.sd-hint-slider.dragging {
+  cursor: grabbing;
+}
+
+.sd-hint-slider.pending {
+  cursor: progress;
+}
+
+.sd-hint-slider.disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.sd-hint-fill {
+  height: auto;
+  background: linear-gradient(90deg, oklch(0.56 0.1 166 / 0.7), oklch(0.7 0.11 166 / 0.5));
+  border-right: 0;
+}
+
+.sd-hint-slider:not(.dragging) .sd-hint-fill {
+  transition: width 0.25s ease-out;
+}
+
+.sd-hint-slider.snapped .sd-hint-fill {
+  transition: width 0.12s ease-out;
+}
+
+.sd-hint-slider.recoiling .sd-hint-fill {
+  transition: width 0.28s cubic-bezier(0.22, 1.22, 0.36, 1);
+}
+
+.sd-hint-slider.pending .sd-hint-fill {
+  background: oklch(0.64 0.1 166 / 0.72);
+}
+
+.sd-hint-label {
+  --sd-hint-label-padding: 0.4rem 4.15rem 0.4rem 4.65rem;
+  --sd-hint-label-color: color-mix(in oklab, var(--sd-muted) 82%, var(--sd-ink));
+  font-weight: 700;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.sd-hint-clue {
+  /* The clue is a sentence, not a label: drop the label's caps/tracking and
+   * keep it on one line with an ellipsis. Right padding clears the handle
+   * zone; color is inherited from .sd-hint-label. */
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Once the clue is shown the slider is spent: no handle, no grab cursor. */
+.sd-hint-slider.revealed {
+  cursor: default;
+}
+
+.sd-hint-slider.revealed .sd-hint-handle {
+  display: none;
+}
+
+.sd-hint-handle {
+  --sd-hint-handle-background: var(--brand);
+  --sd-hint-handle-color: var(--primary-foreground);
+  --sd-hint-handle-shadow: 0 10px 18px -10px oklch(0.62 0.12 166 / 0.7), inset 0 1px 0 oklch(1 0 0 / 0.32);
+  background: var(--brand);
+  border: 0;
+  pointer-events: none;
+}
+
+.sd-hint-slider.snapped .sd-hint-handle,
+.sd-hint-slider.pending .sd-hint-handle {
+  background: color-mix(in oklab, var(--brand) 84%, var(--sd-board-deep));
+}
+
+.sd-hint-slider:not(.dragging) .sd-hint-handle {
+  transition: left 0.25s ease-out;
+}
+
+.sd-hint-slider.snapped .sd-hint-handle {
+  transition: left 0.12s ease-out;
+}
+
+.sd-hint-slider.recoiling .sd-hint-handle {
+  transition: left 0.28s cubic-bezier(0.22, 1.22, 0.36, 1);
+}
+
+@media (max-height: 46rem) and (max-width: 40rem) {
+  .sd-round {
+    justify-content: flex-start;
+    padding-top: 0.7rem;
+  }
+
+  .sd-stage,
+  .sd-loading-scene {
+    gap: 0.58rem;
+  }
+
+  .sd-game-header,
+  .sd-loading-heading {
+    min-height: 3.2rem;
+  }
+
+  .sd-brand-glyph {
+    --sd-glyph-size: 2.2rem;
+  }
+
+  .sd-board,
+  .sd-loading-board {
+    width: min(100%, max(14rem, calc(100dvh - 19.5rem)));
+    margin-inline: auto;
+  }
+
+  .sd-slots {
+    min-height: 4.3rem;
+    padding: 0.42rem 0.58rem;
+  }
+}
+
+/* --- Animations. --- */
+@keyframes sd-submit-pulse {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 12px 24px -18px var(--shadow-color), 0 2px 6px color-mix(in oklab, var(--shadow-color) 70%, transparent);
+  }
+  50% {
+    transform: translateY(-3%) scale(1.03);
+    box-shadow:
+      0 0 0 2px color-mix(in oklab, var(--brand) 24%, transparent),
+      0 16px 24px -18px var(--shadow-color),
+      0 2px 6px color-mix(in oklab, var(--shadow-color) 70%, transparent);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 12px 24px -18px var(--shadow-color), 0 2px 6px color-mix(in oklab, var(--shadow-color) 70%, transparent);
+  }
+}
+
+.sd-slots.sd-pending .sd-slot-letter {
+  animation: sd-submit-pulse 0.9s ease-in-out infinite both;
+}
+
+/* Word-solved bounce: slot letters pop one after another, then bank. */
+@keyframes sd-solved {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-14%) scale(1.12);
+  }
+  70% {
+    transform: translateY(0) scale(0.98);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sd-slots.sd-solved .sd-slot-letter {
+  animation: sd-solved 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-stage-enter,
+  .sd-slots.sd-pending .sd-slot-letter,
+  .sd-slots.sd-solved .sd-slot-letter,
+  .sd-tile-flight,
+  .sd-slots.sd-incorrect .sd-slot,
+  .sd-hint-fill,
+  .sd-hint-handle {
+    animation: none;
+    transition: none;
+  }
+}

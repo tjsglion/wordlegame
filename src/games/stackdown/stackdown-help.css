@@ -1,0 +1,367 @@
+.sdh-mini-stack,
+.sdh-board-full {
+  --sd-demo-board-background: radial-gradient(circle at 50% -18%, oklch(0.4 0.074 165 / 0.5), transparent 48%), radial-gradient(circle at 50% 118%, oklch(0.09 0.008 80 / 0.88), transparent 54%), oklch(0.245 0.014 80);
+  background: var(--sd-demo-board-background);
+}
+
+.sdh-mini-stack {
+  box-shadow:
+    inset 0 1px 0 oklch(0.74 0.075 170 / 0.18),
+    0 18px 30px -22px oklch(0.03 0.004 80 / 0.9),
+    0 0 0 0.2rem oklch(0.07 0.008 80 / 0.25);
+}
+
+.sdh-mini-tile,
+.sdh-ftile {
+  --sd-tile-edge: oklch(0.51 0.022 78);
+  --sd-tile-text: oklch(0.22 0.012 76);
+  --sd-tile-shadow: 0 8px 13px -9px oklch(0.03 0.004 80 / 0.9);
+  --sd-demo-tile-face: linear-gradient(180deg, oklch(0.94 0.013 90), oklch(0.88 0.015 86));
+}
+
+.sdh-mini-tile {
+  /* The face pseudo-element must be contained by each tile. The legend tiles
+   * are not absolutely positioned, so without this they inherit the modal
+   * panel as their containing block and paint over the help copy. */
+  position: relative;
+  background: var(--sd-tile-edge);
+  border-radius: inherit;
+  color: var(--sd-tile-text);
+  font-family: "Nunito", var(--font-sans);
+  box-shadow: var(--sd-tile-shadow);
+}
+
+.sdh-mini-tile.absolute {
+  position: absolute;
+}
+
+.sdh-mini-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 9.09%;
+  border-radius: inherit;
+  background: var(--sd-demo-tile-face);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.52);
+}
+
+.sdh-mini-tile.covered {
+  background: oklch(0.17 0.011 80);
+  color: oklch(0.62 0.022 85);
+  box-shadow: 0 4px 8px -7px oklch(0.03 0.004 80 / 0.8);
+}
+
+.sdh-mini-tile.covered::before {
+  background: linear-gradient(180deg, oklch(0.3 0.018 82), oklch(0.27 0.014 80));
+  box-shadow: inset 0 1px 0 oklch(0.6 0.03 165 / 0.16);
+}
+
+.sdh-mini-tile {
+  isolation: isolate;
+}
+
+.sdh-mini-tile > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sdh-stage {
+  width: 100%;
+  max-width: 17rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  overflow: hidden;
+  border: 1px solid oklch(0.76 0.05 166 / 0.14);
+  border-radius: 1.35rem;
+  padding: 0.65rem;
+  color: oklch(0.94 0.012 90);
+  background:
+    linear-gradient(180deg, oklch(0.08 0.009 162 / 0.22), transparent 34%),
+    linear-gradient(0deg, oklch(0.05 0.006 80 / 0.78), transparent 50%),
+    url("/images/stackdown/h5-tabletop-atmosphere.webp") center / cover,
+    oklch(0.18 0.012 80);
+  box-shadow:
+    inset 0 1px 0 oklch(0.76 0.05 166 / 0.16),
+    0 20px 38px -24px oklch(0.02 0.004 80 / 0.95);
+}
+
+.sdh-game-header {
+  display: grid;
+  grid-template-columns: 1.75rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.48rem;
+  min-height: 2.25rem;
+  padding: 0.1rem 0.15rem;
+}
+
+.sdh-brand-glyph {
+  --sd-glyph-size: 1.7rem;
+  --sd-glyph-radius: 0.52rem;
+  --sd-glyph-start: oklch(0.42 0.074 165 / 0.9);
+  --sd-glyph-end: oklch(0.22 0.025 160 / 0.94);
+  --sd-glyph-drop-shadow: none;
+  --sd-glyph-highlight: oklch(0.82 0.1 170 / 0.32);
+}
+
+.sdh-brand-glyph span {
+  --sd-glyph-piece-size: 0.53rem;
+  --sd-glyph-piece-radius: 0.16rem;
+  --sd-glyph-piece-offset-x: 0.21rem;
+  --sd-glyph-piece-offset-y: 0.1rem;
+  --sd-glyph-piece-top: 0.27rem;
+  --sd-glyph-piece-shadow: 0 0.08rem 0 oklch(0.59 0.028 80);
+}
+
+.sdh-game-copy {
+  min-width: 0;
+}
+
+.sdh-game-kicker {
+  display: block;
+  margin-bottom: 0.1rem;
+  color: oklch(0.72 0.05 166);
+  font-family: var(--font-sans);
+  font-size: 0.42rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.sdh-message {
+  min-width: 0;
+  overflow: hidden;
+  color: oklch(0.9 0.012 90);
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 650;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sdh-message.found {
+  color: oklch(0.76 0.098 168);
+  font-family: "Nunito", var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.025em;
+}
+
+.sdh-progress {
+  padding: 0.38rem 0.42rem;
+  border-radius: 0.5rem;
+  background: oklch(0.14 0.009 80 / 0.72);
+  color: oklch(0.94 0.012 90);
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.sdh-progress span {
+  color: oklch(0.68 0.018 85);
+  font-size: 0.5rem;
+}
+
+.sdh-slots {
+  --sd-slots-min-height: 2.85rem;
+  --sd-slots-padding: 0.32rem 0.38rem;
+  --sd-slots-radius: 0.85rem;
+  --sd-slots-background: oklch(0.14 0.009 80 / 0.64);
+}
+
+.sdh-slots.shake { animation: game-shake 0.5s ease both; }
+.sdh-slots.solved .sdh-slot-letter { animation: sd-solved 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+.sdh-slot {
+  --sd-slot-radius: 0.43rem;
+  --sd-slot-background: oklch(0.22 0.012 80 / 0.78);
+}
+
+.sdh-slot-letter {
+  position: relative;
+  --sd-slot-letter-radius: inherit;
+  --sd-slot-letter-border: 1px solid oklch(0.82 0.02 88 / 0.7);
+  --sd-slot-letter-bottom-border: 0.18rem solid oklch(0.51 0.022 78);
+  --sd-slot-letter-shadow: none;
+  --sd-tile-face-gradient: linear-gradient(180deg, oklch(0.94 0.013 90), oklch(0.88 0.015 86));
+  --sd-tile-text: oklch(0.22 0.012 76);
+  font-size: 0.8rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sdh-slot-letter[data-hidden] { opacity: 0; transform: scale(0.5); }
+
+/* Same 16% tile geometry as the real board, just with a self-contained scene. */
+.sdh-board-full {
+  --sd-board-radius: 1.06rem;
+  --sd-board-background: var(--sd-demo-board-background);
+  --sd-board-shadow: inset 0 1px 0 oklch(0.74 0.075 170 / 0.2), inset 0 -14px 20px oklch(0.06 0.006 80 / 0.62), 0 0 0 0.16rem oklch(0.07 0.008 80 / 0.27);
+  --sd-board-overlay: linear-gradient(120deg, oklch(0.68 0.045 170 / 0.08), transparent 26%), radial-gradient(circle at 1px 1px, oklch(0.75 0.032 88 / 0.09) 0.6px, transparent 0);
+  --sd-board-overlay-size: auto, 10px 10px;
+}
+
+.sdh-board-full::before {
+  opacity: 1;
+}
+
+.sdh-ftile {
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.4s ease;
+}
+
+.sdh-ftile.covered { background: oklch(0.17 0.011 80); box-shadow: 0 4px 8px -7px oklch(0.03 0.004 80 / 0.8); }
+.sdh-ftile.gone { opacity: 0; transform: translateY(-8%) scale(0.6); }
+
+.sdh-ftile-face {
+  inset: 0 0 9.09%;
+  --sd-tile-face-gradient: var(--sd-demo-tile-face);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.52);
+}
+
+.sdh-ftile-dim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, oklch(0.3 0.018 82), oklch(0.27 0.014 80));
+  box-shadow: inset 0 1px 0 oklch(0.6 0.03 165 / 0.16);
+  transition: opacity 0.4s ease;
+}
+
+.sdh-ftile-letter {
+  position: relative;
+  font-family: "Nunito", var(--font-sans);
+  font-size: 8.5cqw;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 0.4s ease;
+}
+
+/* Fake pointer riding the stack during pick sequences. */
+.sdh-cursor {
+  position: absolute;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: -0.35rem 0 0 -0.35rem;
+  border-radius: 9999px;
+  background: oklch(0.76 0.098 168);
+  box-shadow: 0 0 0 4px oklch(0.76 0.098 168 / 0.2), 0 1px 4px oklch(0.02 0.004 80 / 0.72);
+  z-index: 10;
+  transition: left 0.3s ease, top 0.3s ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.sdh-tap {
+  position: absolute;
+  inset: -7px;
+  border: 2px solid oklch(0.76 0.098 168 / 0.9);
+  border-radius: 22%;
+  animation: sdh-ping 0.8s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes sdh-ping {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+
+/* Hint slider demo: mirrors the in-game swipe-to-reveal control. */
+.sdh-hint {
+  --sd-hint-height: 2.65rem;
+  --sd-hint-radius: 0.9rem;
+  --sd-hint-background: oklch(0.14 0.009 80 / 0.68);
+  --sd-hint-shadow: inset 0 1px 0 oklch(0.7 0.018 88 / 0.06);
+}
+
+.sdh-hint-disclosure {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 2.65rem;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.9rem;
+  color: oklch(0.68 0.018 85);
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 650;
+}
+
+.sdh-hint-disclosure svg {
+  color: oklch(0.76 0.098 168);
+}
+
+.sdh-hint-disclosure small {
+  color: oklch(0.68 0.018 85 / 0.7);
+  font-size: 0.48rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sdh-hint-fill {
+  background: linear-gradient(90deg, oklch(0.56 0.1 166 / 0.72), oklch(0.7 0.11 166 / 0.52));
+  transition: width 0.55s ease;
+}
+
+.sdh-hint-label {
+  --sd-hint-label-padding: 0 2.8rem 0 3.35rem;
+  --sd-hint-label-color: oklch(0.78 0.02 88);
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sdh-hint-clue {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 3.35rem 2.8rem;
+  color: oklch(0.96 0.01 92);
+  font-family: var(--font-sans);
+  font-size: 0.63rem;
+  font-weight: 650;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: sdh-hint-in 0.3s ease;
+}
+
+@keyframes sdh-hint-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+.sdh-hint-handle {
+  --sd-hint-handle-size: 2rem;
+  --sd-hint-handle-radius: 0.68rem;
+  --sd-hint-handle-background: oklch(0.76 0.098 168);
+  --sd-hint-handle-color: oklch(0.18 0.012 80);
+  --sd-hint-handle-shadow: 0 8px 14px -8px oklch(0.62 0.12 166 / 0.7), inset 0 1px 0 oklch(1 0 0 / 0.28);
+  transition: left 0.55s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sdh-tap,
+  .sdh-slots.shake,
+  .sdh-slots.solved .sdh-slot-letter,
+  .sdh-hint-clue {
+    animation: none;
+  }
+}
+

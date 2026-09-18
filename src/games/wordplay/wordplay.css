@@ -1,0 +1,44 @@
+/* Word Trail: round letter cells with a smooth trace overlay; gold = coins
+ * and hints, green = found target slots. Portrait mobile first. */
+.wordplay-game { width: min(100%, 30rem); margin: 0 auto; padding: .5rem 1rem 1.25rem; user-select: none; gap: .8rem; }
+.wordplay-hud { display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+.wordplay-hud-actions { display: inline-flex; align-items: center; gap: .5rem; }
+.wordplay-level-button, .wordplay-hint-button { display: inline-flex; align-items: center; gap: .4rem; border: 1px solid var(--border); border-radius: 999px; background: var(--card); color: var(--foreground); padding: .45rem .8rem; font: inherit; font-size: .78rem; font-weight: 800; letter-spacing: .06em; cursor: pointer; }
+.wordplay-level-button svg, .wordplay-hint-button svg { width: 1rem; height: 1rem; }
+.wordplay-hint-button:disabled { opacity: .45; cursor: default; }
+.wordplay-coins { display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; background: color-mix(in oklab, var(--wordplay-coin) 22%, var(--card)); color: var(--foreground); padding: .45rem .75rem; font-size: .8rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+.wordplay-coins svg { width: 1rem; height: 1rem; color: var(--wordplay-coin); }
+.wordplay-hint-cost { display: inline-flex; align-items: center; gap: .15rem; color: var(--wordplay-coin); }
+.wordplay-hint-cost svg { width: .8rem; height: .8rem; }
+.wordplay-toast { position: fixed; z-index: 40; top: 1.25rem; left: 50%; transform: translateX(-50%); border-radius: 999px; background: var(--foreground); color: var(--background); padding: .6rem 1rem; font-size: .85rem; font-weight: 700; white-space: nowrap; box-shadow: 0 10px 26px var(--shadow-color); animation: wordplay-toast-in 300ms ease-out both; }
+.wordplay-slots { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.wordplay-slot { display: inline-flex; gap: .22rem; border: 1px solid var(--border); border-radius: .7rem; background: var(--card); padding: .4rem .55rem; transition: background 300ms ease, border-color 300ms ease; }
+.wordplay-slot-letter { display: inline-block; min-width: .85em; border-bottom: 2px solid var(--wordplay-slot-empty); color: transparent; font-size: .95rem; font-weight: 900; line-height: 1.25; text-align: center; }
+.wordplay-slot.is-found { border-color: var(--wordplay-found); background: color-mix(in oklab, var(--wordplay-found) 26%, var(--card)); animation: wordplay-slot-pop 350ms ease; }
+.wordplay-slot.is-found .wordplay-slot-letter { border-bottom-color: transparent; color: var(--wordplay-found-foreground); }
+.wordplay-board { position: relative; width: 100%; aspect-ratio: 1; touch-action: none; }
+.wordplay-paths { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.wordplay-path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.wordplay-path--active { stroke: var(--wordplay-active); opacity: .55; }
+.wordplay-path--error { stroke: var(--wordplay-error); opacity: .75; }
+.wordplay-cells { position: absolute; inset: 0; display: grid; gap: clamp(.3rem, 1.6vw, .65rem); }
+.wordplay-cell { position: relative; z-index: 2; min-width: 0; border: 1px solid color-mix(in oklab, var(--border) 80%, transparent); border-radius: 50%; background: var(--card); color: var(--foreground); box-shadow: 0 2px 5px color-mix(in oklab, var(--shadow-color) 40%, transparent); font-family: "Nunito", var(--font-sans); font-size: clamp(1.05rem, 5.5vw, 1.6rem); font-weight: 900; cursor: pointer; transition: background 160ms ease, transform 160ms ease; }
+.wordplay-cell:not(:disabled):hover { transform: scale(1.05); }
+.wordplay-cell.is-active { background: var(--wordplay-active); transform: scale(.95); }
+.wordplay-cell.is-hint { outline: 3px solid var(--wordplay-coin); outline-offset: 2px; animation: wordplay-hint-pulse 700ms ease-in-out infinite; }
+.wordplay-cell.is-error { background: var(--wordplay-error); animation: wordplay-shake 400ms ease; }
+.wordplay-bonus-row { display: flex; justify-content: center; min-height: 1.9rem; }
+.wordplay-bonus-chip { display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; background: color-mix(in oklab, var(--wordplay-coin) 16%, var(--card)); color: var(--muted-foreground); padding: .3rem .7rem; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.wordplay-bonus-chip svg { width: .85rem; height: .85rem; color: var(--wordplay-coin); }
+.wordplay-levels h2 { margin: 0 0 1rem; font-size: 1.4rem; font-weight: 800; }
+.wordplay-level-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.2rem, 1fr)); gap: .5rem; }
+.wordplay-level-cell { display: flex; aspect-ratio: 1; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: .8rem; background: var(--card); color: var(--foreground); font: inherit; font-size: .9rem; font-weight: 800; cursor: pointer; }
+.wordplay-level-cell svg { width: 1rem; height: 1rem; }
+.wordplay-level-cell.is-completed { border-color: var(--wordplay-found); background: color-mix(in oklab, var(--wordplay-found) 26%, var(--card)); color: var(--wordplay-found-foreground); }
+.wordplay-level-cell.is-current { outline: 2px solid var(--brand); outline-offset: 2px; }
+.wordplay-level-cell:disabled { opacity: .4; cursor: default; }
+@keyframes wordplay-shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6%); } 40% { transform: translateX(6%); } 60% { transform: translateX(-4%); } 80% { transform: translateX(4%); } }
+@keyframes wordplay-slot-pop { 0% { transform: scale(.85); } 60% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@keyframes wordplay-hint-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+@keyframes wordplay-toast-in { from { opacity: 0; transform: translate(-50%, -1rem); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (prefers-reduced-motion: reduce) { .wordplay-cell.is-error, .wordplay-cell.is-hint, .wordplay-slot.is-found, .wordplay-toast { animation: none; } }

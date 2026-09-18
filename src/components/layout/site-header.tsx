@@ -1,10 +1,10 @@
 "use client";
 
-import { createPortal } from "react-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { BarChart3, Menu, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { GameModalShell } from "@/components/game/game-modal-shell";
 import { games } from "@/games/registry";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -16,9 +16,9 @@ import { UserProfileTrigger } from "@/components/layout/user-profile-trigger";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { SoundToggle } from "@/components/sound-toggle";
 import { Button } from "@/components/ui/button";
-import { useOverlayBehavior } from "@/components/ui/use-overlay-behavior";
 import { WordleStatsModal } from "@/components/wordle/wordle-stats-modal";
 import { StackdownStatsModal } from "@/components/stackdown/stackdown-stats-modal";
+import { requestStrandsResults } from "@/games/strands/results";
 
 interface SiteHeaderProps {
   pageTitle: string;
@@ -39,6 +39,7 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const locale = useLocale() as Locale;
   const t = useTranslations("Common");
+  const tStrands = useTranslations("Strands");
   const searchParams = useSearchParams();
   const [drawerState, setDrawerState] = useState<
     "closed" | "opening" | "open" | "closing"
@@ -49,10 +50,11 @@ export function SiteHeader({
     width: 352,
   });
   const isDrawerMounted = drawerState !== "closed";
-  const portalRef = useRef<HTMLDivElement>(null);
   const isWordlePracticeActive =
     currentSlug === "wordle" && searchParams.get("mode") === "practice";
   const isWordleDailyActive = currentSlug === "wordle" && !isWordlePracticeActive;
+  const isStrandsDailyActive =
+    currentSlug === "strands" && searchParams.get("mode") !== "practice";
   const wordleBaseHref = "/";
 
   const closeDrawer = useCallback(() => {
@@ -74,7 +76,8 @@ export function SiteHeader({
 
       const viewportPadding = 12;
       const idealWidth = 352;
-      const left = Math.max(viewportPadding, rect.left);
+      const isMobileViewport = window.innerWidth < 640;
+      const left = isMobileViewport ? 0 : Math.max(viewportPadding, rect.left);
       const availableWidth = Math.max(
         0,
         window.innerWidth - left - viewportPadding,
@@ -108,12 +111,6 @@ export function SiteHeader({
     }
   }, [drawerState]);
 
-  useOverlayBehavior({
-    open: isDrawerMounted,
-    portalRef,
-    onClose: closeDrawer,
-  });
-
   return (
     <>
         <header
@@ -121,6 +118,7 @@ export function SiteHeader({
             "site-header-surface sticky top-0 z-30 border-b pt-[env(safe-area-inset-top)] backdrop-blur-md",
             currentSlug === "stackdown" && "site-header--stackdown",
             currentSlug === "wordle" && "site-header--wordle",
+            currentSlug === "strands" && "site-header--strands",
           )}
         >
         <div className="mx-auto flex min-h-14 w-full max-w-4xl items-center justify-between gap-3 px-4">
@@ -163,6 +161,17 @@ export function SiteHeader({
             {currentSlug === "stackdown" ? (
               <StackdownStatsModal isAuthenticated={isAuthenticated} />
             ) : null}
+            {isStrandsDailyActive ? (
+              <Button
+                type="button"
+                variant="ghost"
+                className="size-11 rounded-full text-foreground/68 hover:text-foreground"
+                aria-label={tStrands("results")}
+                onClick={requestStrandsResults}
+              >
+                <BarChart3 aria-hidden />
+              </Button>
+            ) : null}
             {isAuthenticated && user ? (
               <UserProfileTrigger user={user} />
             ) : (
@@ -172,53 +181,41 @@ export function SiteHeader({
         </div>
       </header>
 
-      {isDrawerMounted && typeof document !== "undefined"
-        ? createPortal(
-            <div
-              ref={portalRef}
-              className="fixed inset-0 z-50"
-              aria-modal="true"
-              role="dialog"
-              aria-labelledby="site-menu-title"
-              tabIndex={-1}
-            >
-              <button
-                type="button"
-                aria-label={t("closeMenu")}
-                className={cn(
-                  "absolute inset-0 bg-black/10 supports-backdrop-filter:backdrop-blur-xs",
-                  drawerState === "closing"
-                    ? "menu-drawer-overlay-exit"
-                    : "menu-drawer-overlay-enter",
-                )}
-                onClick={closeDrawer}
-              />
-
-              <div
-                style={{
-                  left: `${drawerPosition.left}px`,
-                  width: `${drawerPosition.width}px`,
-                  maxWidth: `calc(100vw - ${drawerPosition.left}px)`,
-                  height: "100dvh",
-                  maxHeight: "100dvh",
-                }}
-                className={cn(
-                  "fixed top-0 right-auto bottom-0 h-dvh overflow-hidden rounded-none border-y-0 border-l-0 border-r border-border/80 bg-card/95 p-0 shadow-[24px_0_80px_-40px_rgba(0,0,0,0.45)] backdrop-blur-xl",
-                  drawerState === "closing"
-                    ? "menu-drawer-exit"
-                    : "menu-drawer-enter",
-                )}
-              >
-                <div className="flex h-full flex-col">
+      <GameModalShell
+        open={isDrawerMounted}
+        onClose={closeDrawer}
+        variant="drawer"
+        titleId="site-menu-title"
+        closeButtonAriaLabel={t("closeMenu")}
+        showCloseButton={false}
+        classNames={{
+          overlay:
+            drawerState === "closing"
+              ? "menu-drawer-overlay-exit"
+              : "menu-drawer-overlay-enter",
+          panel:
+            drawerState === "closing" ? "menu-drawer-exit" : "menu-drawer-enter",
+        }}
+        styles={{
+          panel: {
+            left: `${drawerPosition.left}px`,
+            width: `${drawerPosition.width}px`,
+            maxWidth: `calc(100vw - ${drawerPosition.left}px)`,
+            height: "100dvh",
+            maxHeight: "100dvh",
+          },
+        }}
+      >
+        <div className="flex h-full flex-col">
                   <div className="flex items-start justify-between gap-3 border-b border-border px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
                     <div className="min-w-0">
                       <p className="text-[11px] font-medium tracking-[0.24em] text-foreground/58 uppercase">
                         {t("siteName")}
                       </p>
-                        <h2
-                          id="site-menu-title"
-                          className="mt-1 truncate text-xl font-semibold tracking-[-0.02em]"
-                        >
+                      <h2
+                        id="site-menu-title"
+                        className="mt-1 truncate text-xl font-semibold tracking-[-0.02em]"
+                      >
                         {pageTitle}
                       </h2>
                     </div>
@@ -227,8 +224,8 @@ export function SiteHeader({
                       variant="ghost"
                       className="size-11 shrink-0 rounded-full text-foreground/68 hover:text-foreground"
                       aria-label={t("closeMenu")}
-                        data-overlay-close
-                        data-overlay-initial-focus
+                      data-overlay-close
+                      data-overlay-initial-focus
                       onClick={closeDrawer}
                     >
                       <X aria-hidden />
@@ -353,12 +350,8 @@ export function SiteHeader({
                       <SoundToggle />
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>,
-            document.body,
-          )
-        : null}
+        </div>
+      </GameModalShell>
     </>
   );
 }

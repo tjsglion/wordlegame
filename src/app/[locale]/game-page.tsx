@@ -6,9 +6,13 @@ import { getGame } from "@/games/registry";
 import { GameLoader } from "@/components/game/game-loader";
 import { WordleHelpSection } from "@/components/help/wordle-help-section";
 import { StackdownHelpSection } from "@/components/help/stackdown-help-section";
+import { StrandsHelpSection } from "@/components/help/strands-help-section";
+import { WordplayHelpSection } from "@/components/help/wordplay-help-section";
 import { getSession } from "@/lib/auth/utils";
 import { SiteShell } from "@/components/layout/site-shell";
 import { buildLanguageAlternates, localizedPath } from "@/lib/site";
+import { getDailyStrandsPuzzle, getRandomStrandsPracticePuzzle } from "@/games/strands/server";
+import { todayKey, utcDateKeyToEpochMillis } from "@/lib/game/daily";
 
 interface GameRouteParams {
   locale: string;
@@ -68,7 +72,12 @@ export async function generateGameMetadata({
   };
 }
 
-export async function GameRoutePage({ locale, slug }: GameRouteParams) {
+export async function GameRoutePage({
+  locale,
+  slug,
+  mode = "daily",
+  practicePuzzleId,
+}: GameRouteParams & { mode?: "daily" | "practice"; practicePuzzleId?: string }) {
   // The layout already rejects unknown locales via hasLocale.
   setRequestLocale(locale);
   const session = await getSession();
@@ -97,17 +106,29 @@ export async function GameRoutePage({ locale, slug }: GameRouteParams) {
     );
   }
 
+  const strandsPuzzle = slug === "strands"
+    ? mode === "practice"
+      ? await getRandomStrandsPracticePuzzle(utcDateKeyToEpochMillis(todayKey()), practicePuzzleId)
+      : await getDailyStrandsPuzzle(todayKey())
+    : null;
+
   return (
     <SiteShell
       pageTitle={game.title[locale as Locale]}
       currentSlug={game.slug}
       isAuthenticated={Boolean(session?.user)}
-      playfield={slug === "wordle" || slug === "stackdown"}
+      playfield={slug === "wordle" || slug === "stackdown" || slug === "strands" || slug === "wordplay"}
       user={session?.user ?? null}
     >
-      <GameLoader slug={slug} isAuthenticated={Boolean(session?.user)} />
+      <GameLoader
+        slug={slug}
+        isAuthenticated={Boolean(session?.user)}
+        strandsPuzzle={strandsPuzzle}
+      />
       {slug === "wordle" ? <WordleHelpSection /> : null}
       {slug === "stackdown" ? <StackdownHelpSection /> : null}
+      {slug === "strands" ? <StrandsHelpSection /> : null}
+      {slug === "wordplay" ? <WordplayHelpSection /> : null}
     </SiteShell>
   );
 }

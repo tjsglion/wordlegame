@@ -32,7 +32,7 @@ export function SiteShell({
         playfield ? "game-shell--playfield" : "bg-background"
       } ${currentSlug === "stackdown" ? "game-shell--stackdown" : ""} ${
         currentSlug === "wordle" ? "game-shell--wordle" : ""
-      }`}
+      } ${currentSlug === "strands" ? "game-shell--strands" : ""}`}
     >
       <SiteHeader
         pageTitle={pageTitle}

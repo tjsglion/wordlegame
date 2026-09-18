@@ -34,7 +34,8 @@
     "dailyChallenge": "Daily",
     "practiceMode": "Practice",
     "practiceModeDescription": "Play unlimited random puzzles without waiting for tomorrow.",
-    "current": "Current"
+    "current": "Current",
+    "results": "Results"
   },
   "LoginPage": {
     "title": "Sign in",
@@ -287,6 +288,147 @@
       "whichTile": "Two tiles can show the same letter but hide different things underneath — which one you pick matters.",
       "daily": "A fresh stack drops every day, and practice mode deals a random one whenever you want.",
       "leaderboard": "The leaderboard ranks by stars first, then by fastest clear."
+    }
+  },
+  "Strands": {
+    "title": "Strands",
+    "modeDaily": "Daily",
+    "modePractice": "Practice",
+    "complete": "Complete",
+    "unavailable": "Today's puzzle is not available yet.",
+    "gameControls": "Game controls",
+    "tryPractice": "Keep playing (practice)",
+    "backToDaily": "Back to daily challenge",
+    "hint": "Hint",
+    "results": "Results",
+    "foundWords": "Found words",
+    "removeWord": "Remove {word}",
+    "meterAria": "{current} of 3 hint charges",
+    "gridAria": "Strands grid",
+    "gridInstructions": "Use arrow keys to move between letters. Press Enter or Space to add a letter; activate the last selected letter again to submit.",
+    "cellAria": "Letter {letter}, row {row}, column {column}{states}",
+    "cellStatePrefix": ", ",
+    "cellStateDivider": ", ",
+    "cellStateFound": "found word",
+    "cellStateFoundSpangram": "found spangram",
+    "cellStateSelected": "selected",
+    "cellStateHint": "hint",
+    "cellStateError": "error",
+    "winSummary": "Hints: {count}",
+    "progressSummary": "Found {found} of {total} words",
+    "share": "Share",
+    "shareCopied": "Share text copied",
+    "shareFailed": "Could not share. Try again.",
+    "nextPuzzleIn": "Next puzzle in {time}",
+    "hintsDistribution": "Hints used distribution",
+    "stats": {
+      "played": "Played",
+      "streak": "Streak",
+      "best": "Best",
+      "hintsUsed": "Hints used"
+    },
+    "feedback": {
+      "alreadyFound": "Already found",
+      "alreadyCounted": "Already counted",
+      "spangramEdge": "Spangram must touch opposite edges",
+      "tooShort": "Too short",
+      "unknown": "Not in word list",
+      "charged": "Good word!",
+      "noHint": "No hint available"
+    },
+    "shareText": {
+      "dailyTitle": "Strands",
+      "practiceTitle": "Strands (Practice)",
+      "hintsUsed": "Hints used: {count}",
+      "none": "None",
+      "playAt": "Play at: {url}"
+    }
+  },
+  "StrandsHelp": {
+    "title": "How to play",
+    "description": "Build words by tracing connected letters across the board. Find every theme word, plus the Spangram that spans the puzzle.",
+    "basicsTitle": "The basics",
+    "basics": {
+      "drag": "Trace through neighboring letters in any of the eight directions, or click one letter at a time to build a path.",
+      "submit": "Tap the last selected letter again to submit the word you traced.",
+      "find": "Find all theme words hidden on the board to finish the puzzle. Theme words can be traced forward or backward."
+    },
+    "spangramTitle": "Spangram",
+    "spangram": "One answer is the Spangram. It describes the theme and must connect two opposite edges of the board.",
+    "hintsTitle": "Hints",
+    "hints": {
+      "charge": "Three extra valid words that are not theme answers fill the hint meter.",
+      "reveal": "When the meter is full, use Hint to reveal part of an unfinished answer."
+    },
+    "tipsTitle": "Good to know",
+    "tips": {
+      "words": "Theme answers stay highlighted so you can keep track of what is already solved.",
+      "mode": "Daily mode gives you the fixed puzzle for today, while Practice deals a fresh board anytime."
+    }
+  },
+  "Wordplay": {
+    "level": "Level {level}",
+    "levelBadgeAria": "Level {level}, choose a level",
+    "levelsTitle": "Choose a level",
+    "levelLockedAria": "Level {level}, locked",
+    "levelCompletedAria": "Level {level}, completed",
+    "levelCurrentAria": "Level {level}, current level",
+    "coinsAria": "{count} coins",
+    "coinsLabel": "Coins earned",
+    "hint": "Hint",
+    "hintAria": "Reveal the starting letter of a hidden word for {cost} coins",
+    "targetsAria": "Words to find",
+    "slotHiddenAria": "Hidden word, {count} letters",
+    "slotFoundAria": "Found word {word}",
+    "bonusChip": "Bonus ×{count}",
+    "bonusChipAria": "{count} bonus words found",
+    "gridAria": "Word Trail board",
+    "cellAria": "Letter {letter}, row {row}, column {column}{states}",
+    "cellStatePrefix": ", ",
+    "cellStateDivider": ", ",
+    "cellStateSelected": "selected",
+    "cellStateHint": "hint",
+    "cellStateError": "error",
+    "feedback": {
+      "alreadyFound": "Already found",
+      "tooShort": "Too short",
+      "unknown": "Not in word list",
+      "bonus": "Bonus word! +{coins} coins",
+      "noHint": "Not enough coins"
+    },
+    "levelCompleteTitle": "Level {level} complete!",
+    "allCompleteTitle": "All levels complete!",
+    "allCompleteDescription": "You traced every hidden word across all {count} levels. Incredible run!",
+    "coinsEarned": "+{count}",
+    "bonusFoundLabel": "Bonus words",
+    "replay": "Replay level",
+    "nextLevel": "Next level"
+  },
+  "WordplayHelp": {
+    "title": "How to play",
+    "seoTitle": "How to play Word Trail",
+    "description": "Trace connected letters on the board to find every hidden word and clear the level.",
+    "seoDescription": "Learn how Word Trail works: drag across neighboring letters to spell the hidden target words, earn coins for bonus words, and spend them on hints.",
+    "goalTitle": "The goal",
+    "goal": "Each level hides a handful of words on a letter grid. Trace them all to finish the level and unlock the next one — 200 levels, growing from 3×3 up to 6×6 boards.",
+    "basicsTitle": "How it plays",
+    "basics": {
+      "trace": "Press a letter and drag through its neighbors — horizontally, vertically, or diagonally. Each cell can be used only once per trace.",
+      "submit": "Lift your finger to submit the word you traced. You can also tap letters one by one, then tap the last letter again to submit.",
+      "slots": "The blank slots up top show the length of every hidden word. Find one and its slot lights up with the answer."
+    },
+    "bonusTitle": "Bonus words",
+    "bonus": "Trace a real word that isn't one of the targets and it counts as a bonus word, earning you 2 coins. Cells are never locked, so keep hunting even after a word is found.",
+    "hintsTitle": "Coins and hints",
+    "hints": {
+      "earn": "You start with 30 coins, earn 2 per bonus word, and 10 for every level you complete.",
+      "hint": "Stuck? Spend 25 coins on a hint to flash the starting cell of a word you haven't found yet."
+    },
+    "tipsTitle": "Good to know",
+    "tips": {
+      "direction": "Words can be traced forwards or backwards — both directions count.",
+      "reuse": "Letters are reusable: the same cell can be part of many different words.",
+      "progress": "Your progress and coins save automatically, and sync across devices when you sign in."
     }
   }
 }

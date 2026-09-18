@@ -20,6 +20,20 @@ export const MAX_HINTS_PER_WORD = 1;
 export const STAR_COUNT = WORDS_PER_PUZZLE;
 /** Tiles per puzzle: one per letter of every solution word. */
 export const TILE_COUNT = WORD_LENGTH * WORDS_PER_PUZZLE;
+/** Duration of the board-to-slot flight used by the interactive client. */
+export const STACKDOWN_TILE_FLIGHT_MS = 320;
+/** Lets the browser paint the fifth tile after its landing commits. */
+export const STACKDOWN_FINAL_PICK_SETTLE_MS = 32;
+
+/**
+ * The flight lifecycle commits the fifth pick only after physical landing.
+ * This tiny settling pause then lets its static answer slot paint before feedback.
+ */
+export function finalPickSubmitDelay(reducedMotion: boolean): number {
+  return reducedMotion
+    ? 0
+    : STACKDOWN_FINAL_PICK_SETTLE_MS;
+}
 
 export type GameMode = "daily" | "practice";
 
@@ -112,4 +126,31 @@ export function overlaps(
     Math.abs(upper.x - tile.x) <= 1 &&
     Math.abs(upper.y - tile.y) <= 1
   );
+}
+
+/**
+ * Ids with no currently-present tile covering them. The client uses this for
+ * both the authoritative playable pile and the short-lived visual pile while
+ * a picked tile is still flying away.
+ */
+export function exposedTileIds(
+  tiles: ReadonlyArray<Pick<StackdownTile, "x" | "y" | "z">>,
+  presentIds: Iterable<number>,
+): Set<number> {
+  const present = new Set(presentIds);
+  const exposed = new Set<number>();
+  for (const id of present) {
+    const tile = tiles[id];
+    if (!tile) continue;
+    let covered = false;
+    for (const otherId of present) {
+      const other = tiles[otherId];
+      if (otherId !== id && other && overlaps(other, tile)) {
+        covered = true;
+        break;
+      }
+    }
+    if (!covered) exposed.add(id);
+  }
+  return exposed;
 }

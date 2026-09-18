@@ -10,6 +10,11 @@ export function todayKey(date: Date = new Date()): string {
   return date.toISOString().slice(0, 10);
 }
 
+/** Stable UTC timestamp for date-scoped identifiers. */
+export function utcDateKeyToEpochMillis(dateKey: string): number {
+  return Date.parse(`${dateKey}T00:00:00.000Z`);
+}
+
 /** xmur3 string hash -> 32-bit unsigned seed. */
 export function hashString(input: string): number {
   let h = 1779033703 ^ input.length;

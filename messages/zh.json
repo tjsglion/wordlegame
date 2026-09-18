@@ -34,7 +34,8 @@
     "dailyChallenge": "每日",
     "practiceMode": "练习",
     "practiceModeDescription": "不限次数随机开局，不用等到明天也能继续玩。",
-    "current": "当前"
+    "current": "当前",
+    "results": "结果"
   },
   "LoginPage": {
     "title": "登录",
@@ -287,6 +288,147 @@
       "whichTile": "同一个字母可能出现在好几块砖上，但每块砖下面压着的东西不一样——点哪块，有讲究。",
       "daily": "每天都有一个新砖堆；练习模式随时随机发一局。",
       "leaderboard": "排行榜先看星星，再比通关速度。"
+    }
+  },
+  "Strands": {
+    "title": "连线寻词",
+    "modeDaily": "每日",
+    "modePractice": "练习",
+    "complete": "完成",
+    "unavailable": "今天的谜题暂未准备好。",
+    "gameControls": "游戏控制",
+    "tryPractice": "再来一局（练习）",
+    "backToDaily": "返回每日挑战",
+    "hint": "提示",
+    "results": "结果",
+    "foundWords": "已找到单词",
+    "removeWord": "移除 {word}",
+    "meterAria": "提示能量 {current} / 3",
+    "gridAria": "连线寻词网格",
+    "gridInstructions": "使用方向键在字母间移动。按回车或空格添加字母；再次激活最后一个已选字母即可提交。",
+    "cellAria": "字母 {letter}，第 {row} 行，第 {column} 列{states}",
+    "cellStatePrefix": "，",
+    "cellStateDivider": "，",
+    "cellStateFound": "已找到",
+    "cellStateFoundSpangram": "已找到 Spangram",
+    "cellStateSelected": "当前选中",
+    "cellStateHint": "提示",
+    "cellStateError": "错误",
+    "winSummary": "使用提示：{count}",
+    "progressSummary": "已找到 {found}/{total} 个单词",
+    "share": "分享",
+    "shareCopied": "分享内容已复制",
+    "shareFailed": "分享失败，请重试。",
+    "nextPuzzleIn": "距下一题还有 {time}",
+    "hintsDistribution": "提示使用分布",
+    "stats": {
+      "played": "已玩",
+      "streak": "连胜",
+      "best": "最佳",
+      "hintsUsed": "提示使用"
+    },
+    "feedback": {
+      "alreadyFound": "这个词已经找到了",
+      "alreadyCounted": "这个额外单词已经计过分了",
+      "spangramEdge": "Spangram 必须连接两条相对边",
+      "tooShort": "太短了",
+      "unknown": "不在词库中",
+      "charged": "好词，提示已充能",
+      "noHint": "当前没有可用提示"
+    },
+    "shareText": {
+      "dailyTitle": "连线寻词",
+      "practiceTitle": "连线寻词（练习）",
+      "hintsUsed": "使用提示：{count}",
+      "none": "无",
+      "playAt": "游玩地址：{url}"
+    }
+  },
+  "StrandsHelp": {
+    "title": "玩法说明",
+    "description": "沿着相邻字母连出单词，找全所有主题词，再找到那条横跨棋盘的 Spangram。",
+    "basicsTitle": "基本规则",
+    "basics": {
+      "drag": "可以沿八个方向连续拖动相邻字母，也可以逐个点击字母来组成一条路径。",
+      "submit": "再次点击最后一个已选字母，就会提交你刚刚连出的单词。",
+      "find": "把棋盘里所有主题词都找出来，这局就算完成；主题词正着或倒着连都可以。"
+    },
+    "spangramTitle": "什么是 Spangram",
+    "spangram": "其中一个答案是 Spangram。它会点明整局主题，而且必须连接棋盘的两条相对边。",
+    "hintsTitle": "提示机制",
+    "hints": {
+      "charge": "找到三个不属于主题答案的有效单词，可以充满提示槽。",
+      "reveal": "提示槽充满后，点击“提示”会揭示某个未完成答案的一段路径。"
+    },
+    "tipsTitle": "补充说明",
+    "tips": {
+      "words": "已经找到的主题词会保留高亮，方便你随时回看当前进度。",
+      "mode": "每日模式对应当天固定谜题；练习模式则会随时发一盘新的练习题。"
+    }
+  },
+  "Wordplay": {
+    "level": "第 {level} 关",
+    "levelBadgeAria": "第 {level} 关，选择关卡",
+    "levelsTitle": "选择关卡",
+    "levelLockedAria": "第 {level} 关，未解锁",
+    "levelCompletedAria": "第 {level} 关，已完成",
+    "levelCurrentAria": "第 {level} 关，当前关卡",
+    "coinsAria": "{count} 枚金币",
+    "coinsLabel": "获得金币",
+    "hint": "提示",
+    "hintAria": "花费 {cost} 金币，显示一个未找到单词的起始字母",
+    "targetsAria": "待寻找的单词",
+    "slotHiddenAria": "隐藏单词，{count} 个字母",
+    "slotFoundAria": "已找到单词 {word}",
+    "bonusChip": "奖励 ×{count}",
+    "bonusChipAria": "已找到 {count} 个奖励单词",
+    "gridAria": "描词闯关棋盘",
+    "cellAria": "字母 {letter}，第 {row} 行，第 {column} 列{states}",
+    "cellStatePrefix": "，",
+    "cellStateDivider": "，",
+    "cellStateSelected": "当前选中",
+    "cellStateHint": "提示",
+    "cellStateError": "错误",
+    "feedback": {
+      "alreadyFound": "这个单词已经找到了",
+      "tooShort": "太短了",
+      "unknown": "不在词库中",
+      "bonus": "奖励单词！+{coins} 金币",
+      "noHint": "金币不足"
+    },
+    "levelCompleteTitle": "第 {level} 关完成！",
+    "allCompleteTitle": "全部关卡完成！",
+    "allCompleteDescription": "你描完了全部 {count} 关的所有隐藏单词，太厉害了！",
+    "coinsEarned": "+{count}",
+    "bonusFoundLabel": "奖励单词",
+    "replay": "重玩本关",
+    "nextLevel": "下一关"
+  },
+  "WordplayHelp": {
+    "title": "玩法说明",
+    "seoTitle": "描词闯关怎么玩",
+    "description": "在字母棋盘上描出相连的字母，找出所有隐藏单词即可过关。",
+    "seoDescription": "了解描词闯关的玩法：沿相邻字母拖出隐藏的目标单词，描出奖励单词赚金币，金币可用来购买提示。",
+    "goalTitle": "游戏目标",
+    "goal": "每一关的字母棋盘里都藏着几个单词。把它们全部描出来就能过关并解锁下一关——共 200 关，棋盘从 3×3 逐步变大到 6×6。",
+    "basicsTitle": "怎么玩",
+    "basics": {
+      "trace": "按住一个字母，沿相邻字母拖动——横、竖、斜八个方向都可以；同一次描画中每个格子只能用一次。",
+      "submit": "松开手指即可提交描出的单词；也可以逐个点击字母，再点一次最后一个字母来提交。",
+      "slots": "上方的空格槽显示每个隐藏单词的长度，找到后对应的槽位会亮起并显示答案。"
+    },
+    "bonusTitle": "奖励单词",
+    "bonus": "描出不在目标列表里但真实存在的单词，会记为奖励单词并获得 2 金币。格子不会被锁定，找到单词后依然可以在棋盘上继续探索。",
+    "hintsTitle": "金币与提示",
+    "hints": {
+      "earn": "初始拥有 30 金币；每个奖励单词 +2，每通过一关 +10。",
+      "hint": "卡住了？花费 25 金币购买提示，会短暂高亮一个未找到单词的起始格子。"
+    },
+    "tipsTitle": "小贴士",
+    "tips": {
+      "direction": "单词正着描、倒着描都算数。",
+      "reuse": "字母可以反复使用：同一个格子可以属于多个不同的单词。",
+      "progress": "进度和金币会自动保存；登录后还能跨设备同步。"
     }
   }
 }

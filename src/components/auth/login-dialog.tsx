@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, type ComponentProps } from "react";
-import { createPortal } from "react-dom";
-import { LogIn, X } from "lucide-react";
+import { useEffect, useState, type ComponentProps } from "react";
+import { LogIn } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { SignInPanel } from "@/components/auth/sign-in-panel";
+import { GameModalShell } from "@/components/game/game-modal-shell";
 import { Button } from "@/components/ui/button";
-import { useOverlayBehavior } from "@/components/ui/use-overlay-behavior";
 import { cn } from "@/lib/utils";
 
 export const OPEN_LOGIN_MODAL_EVENT = "wordle:open-login";
@@ -39,13 +38,6 @@ export function LoginModal({
   const queryString = searchParams.toString();
   const callbackUrl = queryString ? `${pathname}?${queryString}` : pathname;
   const [open, setOpen] = useState(false);
-  const portalRef = useRef<HTMLDivElement>(null);
-
-  useOverlayBehavior({
-    open,
-    portalRef,
-    onClose: () => setOpen(false),
-  });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -76,55 +68,29 @@ export function LoginModal({
         {triggerLabel ? <span>{triggerLabel}</span> : null}
       </Button>
 
-      {open && typeof document !== "undefined"
-        ? createPortal(
-            <div
-                ref={portalRef}
-              className="fixed inset-0 z-[60]"
-              aria-modal="true"
-              role="dialog"
-              aria-label={tLogin("title")}
-                tabIndex={-1}
-            >
-              <button
-                type="button"
-                aria-label={tCommon("closeMenu")}
-                className="absolute inset-0 touch-none bg-black/28 backdrop-blur-[2px]"
-                onClick={() => setOpen(false)}
-              />
-
-              <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))]">
-                <div
-                  className={cn(
-                    "pointer-events-auto relative w-full max-w-sm animate-in fade-in-0 zoom-in-95 duration-150",
-                  )}
-                >
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="absolute top-3 right-3 z-10 size-11 rounded-full text-muted-foreground hover:text-foreground"
-                    aria-label={tCommon("closeMenu")}
-                    data-overlay-close
-                      data-overlay-initial-focus
-                    onClick={() => setOpen(false)}
-                  >
-                    <X aria-hidden />
-                  </Button>
-
-                  <SignInPanel
-                    title={tLogin("title")}
-                    description={tLogin("description")}
-                    googleLabel={tLogin("signInWithGoogle")}
-                    githubLabel={tLogin("signInWithGitHub")}
-                    callbackUrl={callbackUrl}
-                    className="border-0 shadow-2xl ring-1 ring-foreground/10"
-                  />
-                </div>
-              </div>
-            </div>,
-            document.body,
-          )
-        : null}
+      <GameModalShell
+        open={open}
+        onClose={() => setOpen(false)}
+        variant="compact"
+        titleId="login-modal-title"
+        descriptionId="login-modal-description"
+        closeButtonAriaLabel={tCommon("closeMenu")}
+        classNames={{
+          panel: "max-w-sm border-0 bg-transparent p-0 shadow-none",
+          closeButton: "top-3 right-3",
+        }}
+      >
+        <SignInPanel
+          title={tLogin("title")}
+          description={tLogin("description")}
+          googleLabel={tLogin("signInWithGoogle")}
+          githubLabel={tLogin("signInWithGitHub")}
+          callbackUrl={callbackUrl}
+          titleId="login-modal-title"
+          descriptionId="login-modal-description"
+          className="border-0 shadow-2xl ring-1 ring-foreground/10"
+        />
+      </GameModalShell>
     </>
   );
 }

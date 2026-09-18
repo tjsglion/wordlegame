@@ -1,0 +1,124 @@
+/* Strands: the trace, rather than interface chrome, is the visual focus.
+ * Layout follows the Wordle H5 pattern: the stage is a flex column that owns
+ * the viewport height (Tailwind classes on .strands-game), the play group is
+ * centered with my-auto, and the grid width is budgeted off 100dvh. */
+.strands-game { --strands-blue: #93c5fd; --strands-yellow: #facc15; --strands-active: #d6d3d1; --strands-error: #fca5a5; min-height: min-content; overflow-y: auto; user-select: none; }
+.strands-header, .strands-controls { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.strands-header { margin-bottom: .55rem; }.strands-header h2 { margin: .15rem 0 0; font-size: clamp(1.35rem, 5vw, 1.8rem); line-height: 1.05; }.strands-header-meta { display: flex; align-items: center; gap: .45rem; }.strands-eyebrow, .strands-progress, .strands-modal-kicker { margin: 0; color: var(--muted-foreground); font-size: .7rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }.strands-progress { font-variant-numeric: tabular-nums; }.strands-complete-label { border-radius: 999px; background: color-mix(in oklab, var(--strands-yellow) 32%, var(--card)); color: color-mix(in oklab, var(--foreground) 82%, #713f12); padding: .22rem .42rem; font-size: .62rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.strands-play-area { display: flex; flex-direction: column; gap: clamp(.7rem, 2.2dvh, 1.1rem); }
+.strands-hint-button, .strands-results-button, .strands-share-button, .strands-mode-button { border: 1px solid var(--border); border-radius: 999px; background: var(--card); color: var(--foreground); font: inherit; font-size: .75rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; cursor: pointer; }.strands-hint-button { display: inline-flex; align-items: center; gap: .55rem; padding: .5rem .75rem; }.strands-hint-button:disabled { opacity: .45; cursor: default; }.strands-results-button { padding: .5rem .8rem; }.strands-meter { display: inline-flex; gap: .2rem; }.strands-meter i { width: .42rem; height: .42rem; border: 1px solid var(--strands-yellow); border-radius: 50%; }.strands-meter i.is-filled { background: var(--strands-yellow); }
+/* Grid width shrinks with the available viewport height so header + hint row
+ * + grid + found-words slot fit one screen without scrolling, down to iPhone
+ * SE size. Budget: site header (~3.5rem) + strands header (~3rem) + hint row
+ * (~2.3rem) + found-words slot (~3.3rem) + gaps and padding (~4rem) ≈ 16rem;
+ * the grid is 6×8, so its height stays 8/6 of its width. */
+.strands-grid { position: relative; width: clamp(16.5rem, min(100%, calc((100dvh - 15.5rem) * 6 / 8)), 24rem); margin-inline: auto; aspect-ratio: 6 / 8; touch-action: none; }.strands-paths { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }.strands-path { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 20; }.strands-path--found { stroke: var(--strands-blue); opacity: .6; mix-blend-mode: multiply; stroke-dasharray: 1; animation: strands-path-draw 600ms ease-in-out forwards; }.strands-path--spangram { stroke: var(--strands-yellow); stroke-width: 24; opacity: .72; mix-blend-mode: multiply; stroke-dasharray: 1; animation: strands-path-draw 600ms ease-in-out forwards; }.strands-path--active { stroke: var(--strands-active); opacity: .5; }.strands-path--error { stroke: var(--strands-error); opacity: .7; }
+.strands-cells { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(8, 1fr); gap: .25rem; container-type: inline-size; }.strands-cell { position: relative; z-index: 2; min-width: 40px; min-height: 40px; border: 1px solid color-mix(in oklab, var(--border) 80%, transparent); border-radius: 50%; background: var(--card); color: var(--foreground); box-shadow: 0 2px 5px color-mix(in oklab, var(--shadow-color) 40%, transparent); font-family: "Nunito", var(--font-sans); font-size: clamp(1rem, 9cqw, 2rem); font-weight: 900; transition: transform 200ms ease, background-color 200ms ease; }.strands-cell:not(:disabled):hover { background: color-mix(in oklab, var(--card) 90%, var(--strands-blue)); transform: scale(1.05); }.strands-cell:focus-visible { z-index: 3; outline: 3px solid var(--ring); outline-offset: 2px; }.strands-cell.is-found { background: #bfdbfe; color: #1e3a8a; }.strands-cell.is-spangram { border: 3px double #a16207; background: #fde047; color: #713f12; }.strands-cell.is-active { background: var(--strands-active); transform: scale(.97); }.strands-cell.is-error { background: var(--strands-error); transform: scale(.9); }.strands-cell.is-hint { outline: 2px solid color-mix(in oklab, var(--strands-yellow) 75%, transparent); outline-offset: 2px; transform: scale(.95); }
+/* The found-words slot is always mounted with a fixed min-height (like the
+ * Wordle CTA slot) so late-game chips never make the grid jump; overflow
+ * scrolls instead of pushing the layout. */
+.strands-found { display: flex; min-height: 2.4rem; max-height: 3.9rem; flex-wrap: wrap; gap: .45rem; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }.strands-chip { display: inline-flex; align-items: center; gap: .3rem; border-radius: 999px; background: #a6c8ff; color: #172554; padding: .28rem .55rem; font-size: .72rem; font-weight: 800; letter-spacing: .06em; }.strands-chip.is-spangram { background: #f9df6d; color: #713f12; }
+/* Toast lives in a zero-height slot above the play area (Wordle pattern):
+ * absolute, so showing a notice never shifts the grid. */
+.strands-toast { position: absolute; z-index: 10; top: .35rem; left: 50%; border-radius: 999px; background: var(--foreground); color: var(--background); padding: .65rem 1rem; font-size: .875rem; font-weight: 700; white-space: nowrap; box-shadow: 0 10px 26px var(--shadow-color); animation: strands-toast-enter 300ms ease-out both; transform: translateX(-50%); }
+.strands-modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); margin: 1.1rem 0; }.strands-modal-stats div + div { border-left: 1px solid var(--border); }.strands-modal-stats dt { color: var(--muted-foreground); font-size: .65rem; font-weight: 700; text-transform: uppercase; }.strands-modal-stats dd { margin: .2rem 0 0; font-size: 1.2rem; font-weight: 800; }.strands-share-button { width: 100%; padding: .75rem 1rem; background: var(--brand); color: var(--brand-foreground); }.strands-mode-button { width: 100%; margin-top: .6rem; padding: .6rem 1rem; }.strands-mode-button:hover { border-color: color-mix(in oklab, var(--foreground) 45%, transparent); }
+/* Compact variant for short viewports (mirrors the Wordle max-height block):
+ * tighter chrome frees ~1.2rem, so the grid budget drops to 15rem. */
+@media (max-height: 42rem) { .strands-header { margin-bottom: .35rem; }.strands-header h2 { font-size: clamp(1.15rem, 4vw, 1.45rem); }.strands-hint-button { padding: .4rem .65rem; }.strands-grid { width: clamp(15.75rem, min(100%, calc((100dvh - 14.5rem) * 6 / 8)), 24rem); }.strands-found { min-height: 2rem; max-height: 3.2rem; } }
+@keyframes strands-path-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } } @keyframes strands-toast-enter { from { opacity: 0; transform: translate(-50%, -1rem); } to { opacity: 1; transform: translate(-50%, 0); } }.dark .strands-path--found, .dark .strands-path--spangram { opacity: .4; mix-blend-mode: screen; }.dark .strands-cell.is-found { background: #2563eb; color: #eff6ff; }.dark .strands-cell.is-spangram { background: #ca8a04; color: #fefce8; } @media (prefers-reduced-motion: reduce) { .strands-path--found, .strands-path--spangram, .strands-toast { animation: none; } }
+
+/* ---------------------------------------------------------------------------
+ * Strands scene — a "thread & paper" world: warm paper field, blue/yellow
+ * strand glows and a faint diagonal weave. Painted by SiteShell
+ * (game-shell--strands) so the first frame already carries it.
+ * ------------------------------------------------------------------------- */
+.game-shell--strands.game-shell--playfield {
+  --background: oklch(0.966 0.014 96);
+  --foreground: oklch(0.3 0.035 258);
+  --card: oklch(0.995 0.004 96);
+  --card-foreground: oklch(0.3 0.035 258);
+  --popover: oklch(0.99 0.005 96);
+  --popover-foreground: oklch(0.3 0.035 258);
+  --muted: oklch(0.93 0.015 255);
+  --muted-foreground: oklch(0.5 0.035 258);
+  --brand: oklch(0.52 0.11 255);
+  --brand-foreground: oklch(0.98 0.008 255);
+  --border: oklch(0.83 0.03 258 / 0.75);
+  --ring: oklch(0.6 0.1 255);
+  --shadow-color: oklch(0.42 0.06 258 / 0.35);
+  --header-surface: oklch(0.96 0.015 96 / 0.72);
+  --header-border: oklch(0.68 0.05 255 / 0.18);
+  background:
+    radial-gradient(circle at 10% 6%, oklch(0.78 0.09 255 / 0.22), transparent 44%),
+    radial-gradient(circle at 92% 18%, oklch(0.87 0.11 96 / 0.28), transparent 40%),
+    radial-gradient(circle at 50% 108%, oklch(0.75 0.08 255 / 0.16), transparent 52%),
+    linear-gradient(180deg, oklch(0.968 0.014 96), oklch(0.95 0.017 98));
+}
+
+/* Faint woven-thread lines drifting across the field. */
+.game-shell--strands::after {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    repeating-linear-gradient(115deg, transparent 0 2.9rem, oklch(0.55 0.08 255 / 0.055) 2.9rem calc(2.9rem + 1.5px)),
+    repeating-linear-gradient(25deg, transparent 0 4.1rem, oklch(0.72 0.1 96 / 0.05) 4.1rem calc(4.1rem + 1.5px));
+}
+
+.site-header-surface.site-header--strands {
+  border-color: oklch(0.68 0.05 255 / 0.16);
+  background: linear-gradient(180deg, oklch(0.965 0.014 96 / 0.82), oklch(0.965 0.014 96 / 0.5));
+}
+
+.dark .game-shell--strands.game-shell--playfield {
+  --background: oklch(0.21 0.03 258);
+  --foreground: oklch(0.93 0.015 255);
+  --card: oklch(0.26 0.03 258);
+  --card-foreground: oklch(0.93 0.015 255);
+  --popover: oklch(0.26 0.03 258);
+  --popover-foreground: oklch(0.93 0.015 255);
+  --muted: oklch(0.3 0.028 258);
+  --muted-foreground: oklch(0.72 0.03 255);
+  --brand: oklch(0.68 0.12 255);
+  --brand-foreground: oklch(0.21 0.03 258);
+  --border: oklch(0.45 0.045 258 / 0.7);
+  --ring: oklch(0.7 0.11 255);
+  --shadow-color: oklch(0.08 0.02 258 / 0.8);
+  --header-surface: oklch(0.17 0.026 258 / 0.72);
+  --header-border: oklch(0.55 0.06 255 / 0.16);
+  background:
+    radial-gradient(circle at 12% 4%, oklch(0.42 0.1 255 / 0.35), transparent 46%),
+    radial-gradient(circle at 90% 16%, oklch(0.6 0.12 96 / 0.18), transparent 40%),
+    linear-gradient(180deg, oklch(0.19 0.028 258), oklch(0.23 0.032 258) 55%, oklch(0.17 0.025 258));
+}
+
+.dark .game-shell--strands::after {
+  background:
+    repeating-linear-gradient(115deg, transparent 0 2.9rem, oklch(0.75 0.09 255 / 0.06) 2.9rem calc(2.9rem + 1.5px)),
+    repeating-linear-gradient(25deg, transparent 0 4.1rem, oklch(0.8 0.11 96 / 0.05) 4.1rem calc(4.1rem + 1.5px));
+}
+
+.dark .site-header-surface.site-header--strands {
+  border-color: oklch(0.55 0.06 255 / 0.14);
+  background: linear-gradient(180deg, oklch(0.16 0.025 258 / 0.8), oklch(0.16 0.025 258 / 0.45));
+}
+
+.dark .strands-chip { background: #2563eb; color: #eff6ff; }
+.dark .strands-chip.is-spangram { background: #ca8a04; color: #fefce8; }
+
+/* Loading skeleton — painted while the client game chunk loads (ssr:false),
+ * sized with the same dvh budget as .strands-grid so mount never shifts. */
+.strands-skeleton-grid { display: grid; width: 100%; max-width: clamp(12rem, calc((100dvh - 16rem) * 6 / 8), 24rem); margin-inline: auto; aspect-ratio: 6 / 8; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(8, 1fr); gap: clamp(.35rem, 1.6vw, .75rem); }
+.strands-skeleton-grid span { border-radius: 50%; background: color-mix(in oklab, var(--muted-foreground) 14%, transparent); animation: strands-skeleton-pulse 1.6s ease-in-out infinite; }
+@keyframes strands-skeleton-pulse { 0%, 100% { opacity: .75; } 50% { opacity: .35; } }
+@media (max-height: 42rem) { .strands-skeleton-grid { max-width: clamp(11rem, calc((100dvh - 15rem) * 6 / 8), 24rem); } }
+@media (prefers-reduced-motion: reduce) { .strands-skeleton-grid span { animation: none; } }
+
+/* Settlement panel extras: hints-used distribution bars (Wordle-style). */
+.strands-modal-distribution { margin: 0 0 1rem; text-align: left; font-size: .75rem; }
+.strands-modal-distribution .strands-modal-kicker { display: block; margin-bottom: .5rem; text-align: center; }
+.strands-modal-distribution-row { display: flex; align-items: center; gap: .5rem; padding: .1rem 0; }
+.strands-modal-bar { height: 1rem; border-radius: .25rem; background: color-mix(in oklab, var(--muted-foreground) 35%, transparent); }
+.strands-modal-bar.is-current { background: var(--brand); }

@@ -1,4 +1,11 @@
-import { index, integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  index,
+  integer,
+  primaryKey,
+  sqliteTable,
+  text,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 import { formatSqliteDateTime } from "./date-time";
 
@@ -72,6 +79,18 @@ export const gameDailyProgress = sqliteTable(
   ],
 );
 
+export const wordplayProgress = sqliteTable("wordplay_progress", {
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" })
+    .primaryKey(),
+  currentLevel: integer("current_level").notNull().default(1),
+  coins: integer("coins").notNull().default(30),
+  /** JSON map of completed levels: { [levelNumber]: { bonus } }. */
+  completedJson: text("completed_json").notNull().default("{}"),
+  updatedAt: text("updated_at").notNull(),
+});
+
 export const wordleAnswerPool = sqliteTable("wordle_answer_pool", {
   word: text("word").primaryKey(),
   enabled: integer("enabled", { mode: "boolean" }).notNull().default(true),
@@ -94,6 +113,82 @@ export const wordleDailyPuzzles = sqliteTable("wordle_daily_puzzles", {
     .notNull()
     .$defaultFn(() => formatSqliteDateTime()),
 });
+
+export const strandsPuzzles = sqliteTable("strands_puzzles", {
+  id: text("id").primaryKey(),
+  theme: text("theme").notNull(),
+  topic: text("topic"),
+  themeEmbedding: text("theme_embedding"),
+  spangram: text("spangram").notNull(),
+  words: text("words").notNull(),
+  validWords: text("valid_words").notNull().default("[]"),
+  grid: text("grid").notNull(),
+  article: text("article"),
+  difficulty: integer("difficulty").notNull().default(1),
+  usedAt: text("used_at"),
+  createdAt: text("created_at")
+    .notNull()
+    .$defaultFn(() => formatSqliteDateTime()),
+});
+
+export const dailyStrands = sqliteTable(
+  "daily_strands",
+  {
+    date: text("date").primaryKey(),
+    puzzleId: text("puzzle_id")
+      .notNull()
+      .references(() => strandsPuzzles.id),
+    createdAt: text("created_at")
+      .notNull()
+      .$defaultFn(() => formatSqliteDateTime()),
+  },
+  (table) => [index("daily_strands_puzzle_id_idx").on(table.puzzleId)],
+);
+
+export const strandsScores = sqliteTable(
+  "strands_scores",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    date: text("date").notNull(),
+    puzzleId: text("puzzle_id")
+      .notNull()
+      .references(() => strandsPuzzles.id),
+    userId: text("user_id"),
+    anonymousId: text("anonymous_id"),
+    hintsUsed: integer("hints_used").notNull().default(0),
+    completed: integer("completed", { mode: "boolean" }).notNull().default(true),
+    createdAt: text("created_at")
+      .notNull()
+      .$defaultFn(() => formatSqliteDateTime()),
+  },
+  (table) => [
+    index("strands_scores_date_puzzle_idx").on(table.date, table.puzzleId),
+    uniqueIndex("strands_scores_unique_anonymous_completion").on(
+      table.date,
+      table.puzzleId,
+      table.anonymousId,
+    ),
+    uniqueIndex("strands_scores_unique_user_completion").on(
+      table.date,
+      table.puzzleId,
+      table.userId,
+    ),
+  ],
+);
+
+export const commonDictionary = sqliteTable(
+  "common_dictionary",
+  {
+    word: text("word").primaryKey(),
+    length: integer("length").notNull(),
+    isCommonWord: integer("is_common_word", { mode: "boolean" })
+      .notNull()
+      .default(true),
+  },
+  (table) => [
+    index("common_dictionary_length_common_idx").on(table.length, table.isCommonWord),
+  ],
+);
 
 /**
  * Crossword-style clue per answer word (game-agnostic). Filled offline by

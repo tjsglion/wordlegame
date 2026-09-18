@@ -2,6 +2,17 @@ import { drizzle } from "drizzle-orm/libsql/web";
 import { createClient } from "@libsql/client/web";
 import * as schema from "./drizzle/schema";
 
+const DATABASE_REQUEST_TIMEOUT_MS = 3_000;
+
+function fetchDatabase(input: RequestInfo | URL, init?: RequestInit) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), DATABASE_REQUEST_TIMEOUT_MS);
+
+  return fetch(input, { ...init, signal: controller.signal }).finally(() => {
+    clearTimeout(timeoutId);
+  });
+}
+
 /**
  * Create a database client per invocation.
  *
@@ -16,11 +27,11 @@ import * as schema from "./drizzle/schema";
  * - DATABASE_URL: local dev server or remote Turso URL.
  * - DATABASE_AUTH_TOKEN: required for remote Turso databases, empty locally.
  */
-export function getDb() {
-  const url = process.env.DATABASE_URL || "http://127.0.0.1:8080";
-  const authToken = process.env.DATABASE_AUTH_TOKEN || undefined;
+export function getDb(runtime: { databaseUrl?: string; databaseAuthToken?: string } = {}) {
+  const url = runtime.databaseUrl || process.env.DATABASE_URL || "http://127.0.0.1:8080";
+  const authToken = runtime.databaseAuthToken || process.env.DATABASE_AUTH_TOKEN || undefined;
 
-  const client = createClient({ url, authToken });
+  const client = createClient({ url, authToken, fetch: fetchDatabase });
   return drizzle(client, { schema });
 }
 

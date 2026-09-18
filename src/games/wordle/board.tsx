@@ -86,7 +86,7 @@ function Tile({
           key={letter}
           className={`wordle-face wordle-front ${
             filled ? "filled" : ""
-          } ${pop && filled ? "wordle-pop" : ""}`}
+          } ${pop && filled ? "game-pop" : ""}`}
         >
           {letter}
         </div>
@@ -120,7 +120,7 @@ function Row({
   return (
     <div
       className={`grid grid-cols-5 gap-2.5 ${
-        rowState === "shaking" ? "wordle-shake" : ""
+        rowState === "shaking" ? "game-shake" : ""
       } ${rowState === "pending" ? "wordle-pending" : ""}`}
       data-current={isInput || undefined}
     >

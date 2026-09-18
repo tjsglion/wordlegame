@@ -1,15 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
-import { createPortal } from "react-dom";
-import { BarChart3, Flame, Share2, X } from "lucide-react";
+import { BarChart3, Flame, Share2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { todayKey } from "@/lib/game/daily";
 import { useNextPuzzleCountdown } from "@/lib/game/use-next-puzzle-countdown";
 import { Button } from "@/components/ui/button";
-import { useOverlayBehavior } from "@/components/ui/use-overlay-behavior";
+import { GameModalShell } from "@/components/game/game-modal-shell";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { openWordleStatsModal } from "@/games/wordle/leaderboard";
 import { Board } from "./board";
@@ -120,14 +119,13 @@ function WordleRound({
   const [confettiDone, setConfettiDone] = useState(false);
   const [copied, setCopied] = useState(false);
   const [resultOpen, setResultOpen] = useState(false);
-  const resultPortalRef = useRef<HTMLDivElement>(null);
 
   // Confetti plays only for a win that just happened this session — a
   // refreshed (restored) won round skips the celebration entirely.
   const showConfetti = game.status === "won" && game.justWon && !confettiDone;
 
   const finished = game.status !== "playing";
-  const attemptsUsed = game.guesses.length;
+  // const attemptsUsed = game.guesses.length;
   const countdown = useNextPuzzleCountdown(mode === "daily" && finished);
   const winRate =
     game.stats.played > 0
@@ -149,12 +147,6 @@ function WordleRound({
     key === "winMessage" || key === "loseMessage"
       ? (resultText ?? t(key))
       : t(key);
-
-  useOverlayBehavior({
-    open: resultOpen,
-    portalRef: resultPortalRef,
-    onClose: () => setResultOpen(false),
-  });
 
   useEffect(() => {
     if (!finished) return;
@@ -220,7 +212,7 @@ function WordleRound({
 
   return (
     <div className="wordle-stage mx-auto flex w-full max-w-lg flex-1 touch-manipulation flex-col px-3 py-3 sm:px-4">
-      <div className="wordle-quest-hud">
+      {/* <div className="wordle-quest-hud">
         <div className="wordle-quest-intro">
           <span className="wordle-quest-marker" aria-hidden />
           <div className="min-w-0">
@@ -255,7 +247,7 @@ function WordleRound({
             {t("roundProgress", { current: attemptsUsed, total: MAX_GUESSES })}
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Toast notice */}
       <div className="relative h-0">
@@ -318,142 +310,114 @@ function WordleRound({
         </div>
       </div>
 
-      {finished && resultOpen && typeof document !== "undefined"
-        ? createPortal(
-            <div
-              ref={resultPortalRef}
-              className="fixed inset-0 z-[65]"
-              aria-modal="true"
-              role="dialog"
-              aria-labelledby="wordle-result-title"
-              aria-describedby="wordle-result-description"
-              tabIndex={-1}
-            >
-              <button
-                type="button"
-                aria-label={tCommon("close")}
-                className="absolute inset-0 touch-none bg-black/24 backdrop-blur-[2px]"
-                onClick={() => setResultOpen(false)}
-              />
+      <GameModalShell
+        open={finished && resultOpen}
+        onClose={() => setResultOpen(false)}
+        variant="sheet"
+        closeButtonAriaLabel={tCommon("close")}
+        titleId="wordle-result-title"
+        descriptionId="wordle-result-description"
+        classNames={{ panel: "max-w-sm" }}
+      >
+        <div className="wordle-panel-in flex flex-col gap-3">
+          <p
+            id="wordle-result-title"
+            className="wordle-panel-in flex items-center justify-center gap-1.5 pt-2 pr-10 pl-10 text-center font-semibold"
+          >
+            {game.stats.currentStreak > 0 && (
+              <Flame className="size-4 text-brand" aria-hidden />
+            )}
+            {resultText}
+          </p>
 
-              <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))]">
-                <div className="wordle-result-panel pointer-events-auto relative w-full max-w-sm animate-in fade-in-0 zoom-in-95 p-4 duration-150">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="absolute top-2 right-2 z-10 size-11 rounded-full text-muted-foreground hover:text-foreground"
-                    aria-label={tCommon("close")}
-                    data-overlay-close
-                    data-overlay-initial-focus
-                    onClick={() => setResultOpen(false)}
-                  >
-                    <X aria-hidden />
-                  </Button>
+          <div
+            className="wordle-panel-in grid grid-cols-4 gap-2 text-center text-xs"
+            style={{ animationDelay: "80ms" }}
+          >
+            <StatBlock value={game.stats.played} label={t("stats.played")} />
+            <StatBlock value={winRate} label={t("stats.winRate")} />
+            <StatBlock
+              value={game.stats.currentStreak}
+              label={t("stats.currentStreak")}
+            />
+            <StatBlock
+              value={game.stats.maxStreak}
+              label={t("stats.maxStreak")}
+            />
+          </div>
 
-                  <div className="wordle-panel-in flex flex-col gap-3">
-                    <p
-                      id="wordle-result-title"
-                      className="wordle-panel-in flex items-center justify-center gap-1.5 pt-2 pr-10 pl-10 text-center font-semibold"
-                    >
-                      {game.stats.currentStreak > 0 && (
-                        <Flame className="size-4 text-brand" aria-hidden />
-                      )}
-                      {resultText}
-                    </p>
-
-                    <div
-                      className="wordle-panel-in grid grid-cols-4 gap-2 text-center text-xs"
-                      style={{ animationDelay: "80ms" }}
-                    >
-                      <StatBlock value={game.stats.played} label={t("stats.played")} />
-                      <StatBlock value={winRate} label={t("stats.winRate")} />
-                      <StatBlock
-                        value={game.stats.currentStreak}
-                        label={t("stats.currentStreak")}
-                      />
-                      <StatBlock
-                        value={game.stats.maxStreak}
-                        label={t("stats.maxStreak")}
-                      />
-                    </div>
-
-                    <div
-                      className="wordle-panel-in flex flex-col gap-1"
-                      style={{ animationDelay: "160ms" }}
-                    >
-                      {game.stats.distribution.map((count, i) => (
-                        <div key={i} className="flex items-center gap-2 text-xs">
-                          <span className="w-3 text-right tabular-nums">{i + 1}</span>
-                          <div
-                            className={`h-4 rounded-sm ${
-                              i === highlightIndex
-                                ? "bg-wordle-correct"
-                                : "bg-muted-foreground/40"
-                            }`}
-                            style={{
-                              width: `${Math.max(8, (count / maxDistribution) * 100)}%`,
-                            }}
-                          />
-                          <span className="tabular-nums">{count}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div
-                      id="wordle-result-description"
-                      className="wordle-panel-in flex flex-col gap-3"
-                      style={{ animationDelay: "240ms" }}
-                    >
-                      {mode === "daily" && (
-                        <p className="text-center text-sm text-muted-foreground tabular-nums">
-                          {t("nextPuzzleIn", { time: countdown })}
-                        </p>
-                      )}
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => void handleShare()}
-                        className="w-full"
-                      >
-                        {t("share")}
-                      </Button>
-                      {mode === "daily" ? (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          onClick={() => void handleOpenLeaderboard()}
-                          className="w-full"
-                        >
-                          {t("viewLeaderboard")}
-                        </Button>
-                      ) : null}
-                      {mode === "practice" ? (
-                        <>
-                          <Button type="button" onClick={handleRestartPractice} className="w-full">
-                            {t("newPractice")}
-                          </Button>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={handleReturnToDaily}
-                            className="w-full"
-                          >
-                            {t("backToDaily")}
-                          </Button>
-                        </>
-                      ) : (
-                        <Button type="button" onClick={handlePlayPractice} className="w-full">
-                          {t("tryPractice")}
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </div>
+          <div
+            className="wordle-panel-in flex flex-col gap-1"
+            style={{ animationDelay: "160ms" }}
+          >
+            {game.stats.distribution.map((count, i) => (
+              <div key={i} className="flex items-center gap-2 text-xs">
+                <span className="w-3 text-right tabular-nums">{i + 1}</span>
+                <div
+                  className={`h-4 rounded-sm ${
+                    i === highlightIndex
+                      ? "bg-wordle-correct"
+                      : "bg-muted-foreground/40"
+                  }`}
+                  style={{
+                    width: `${Math.max(8, (count / maxDistribution) * 100)}%`,
+                  }}
+                />
+                <span className="tabular-nums">{count}</span>
               </div>
-            </div>,
-            document.body,
-          )
-        : null}
+            ))}
+          </div>
+
+          <div
+            id="wordle-result-description"
+            className="wordle-panel-in flex flex-col gap-3"
+            style={{ animationDelay: "240ms" }}
+          >
+            {mode === "daily" && (
+              <p className="text-center text-sm text-muted-foreground tabular-nums">
+                {t("nextPuzzleIn", { time: countdown })}
+              </p>
+            )}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => void handleShare()}
+              className="w-full"
+            >
+              {t("share")}
+            </Button>
+            {mode === "daily" ? (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => void handleOpenLeaderboard()}
+                className="w-full"
+              >
+                {t("viewLeaderboard")}
+              </Button>
+            ) : null}
+            {mode === "practice" ? (
+              <>
+                <Button type="button" onClick={handleRestartPractice} className="w-full">
+                  {t("newPractice")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={handleReturnToDaily}
+                  className="w-full"
+                >
+                  {t("backToDaily")}
+                </Button>
+              </>
+            ) : (
+              <Button type="button" onClick={handlePlayPractice} className="w-full">
+                {t("tryPractice")}
+              </Button>
+            )}
+          </div>
+        </div>
+      </GameModalShell>
 
       <WinConfetti play={showConfetti} onDone={() => setConfettiDone(true)} />
     </div>

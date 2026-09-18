@@ -34,6 +34,26 @@ export const games: GameDefinition[] = [
     },
   },
   {
+    slug: "strands",
+    status: "available",
+    tags: ["daily", "grid", "words"],
+    title: { zh: "连线寻词", en: "Strands" },
+    description: {
+      zh: "在字母网格中连线找出主题词和贯穿全局的主题词。",
+      en: "Find themed words and the spangram in a letter grid.",
+    },
+  },
+  {
+    slug: "wordplay",
+    status: "available",
+    tags: ["levels", "grid", "letters"],
+    title: { zh: "描词闯关", en: "Word Trail" },
+    description: {
+      zh: "在字母棋盘上描出所有隐藏的单词，逐关解锁更大的棋盘。",
+      en: "Trace every hidden word on the letter board to unlock bigger grids.",
+    },
+  },
+  {
     slug: "word-search",
     status: "coming-soon",
     tags: ["grid", "letters"],
@@ -80,4 +100,6 @@ export const gameLoaders: Record<
 > = {
   wordle: () => import("@/games/wordle/wordle-game"),
   stackdown: () => import("@/games/stackdown/stackdown-game"),
+  strands: () => import("@/games/strands/strands-game"),
+  wordplay: () => import("@/games/wordplay/wordplay-game"),
 };

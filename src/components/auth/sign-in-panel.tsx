@@ -18,6 +18,8 @@ interface SignInPanelProps {
   callbackUrl: string;
   errorMessage?: string | null;
   className?: string;
+  titleId?: string;
+  descriptionId?: string;
 }
 
 export function SignInPanel({
@@ -28,12 +30,16 @@ export function SignInPanel({
   callbackUrl,
   errorMessage,
   className,
+  titleId,
+  descriptionId,
 }: SignInPanelProps) {
   return (
     <Card className={className}>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle id={titleId} className="text-2xl">
+          {title}
+        </CardTitle>
+        <CardDescription id={descriptionId}>{description}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         {errorMessage ? (

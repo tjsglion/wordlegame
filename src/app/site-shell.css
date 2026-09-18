@@ -1,0 +1,131 @@
+/* ---------------------------------------------------------------------------
+ * Landing-page atmosphere: ultra-subtle grayscale noise over the paper base.
+ * Fixed, non-interactive, and kept behind the content via isolation on the
+ * shell — it must never fight the board for legibility.
+ * ------------------------------------------------------------------------- */
+.game-shell {
+  isolation: isolate;
+}
+
+.site-header-surface {
+  background-color: var(--header-surface);
+  border-color: var(--header-border);
+}
+
+/* Warm Classic+ playfield: a dedicated layer slightly deeper than the shell,
+ * so the board reads as one focused surface without the rest of the page
+ * becoming visually heavy. Applied server-side by SiteShell (the `playfield`
+ * prop) so the first paint already carries it. */
+.game-shell--playfield {
+  background-color: oklch(0.955 0.015 92);
+}
+
+.dark .game-shell--playfield {
+  background-color: oklch(0.29 0.01 82);
+}
+
+.game-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.42;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+.dark .game-shell::before {
+  opacity: 0.24; /* keep the charcoal surface alive, but let the board stay in front */
+}
+
+/* Settlement panel entrance: fade + slight rise, staggered per section.
+ * transform/opacity only. */
+@keyframes wordle-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wordle-panel-in {
+  animation: wordle-panel-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes menu-drawer-enter {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes menu-drawer-exit {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+
+@keyframes menu-drawer-overlay-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menu-drawer-overlay-exit {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.menu-drawer-enter,
+.menu-drawer-exit {
+  transform-origin: left top;
+  will-change: clip-path;
+}
+
+.menu-drawer-enter {
+  animation: menu-drawer-enter 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.menu-drawer-exit {
+  animation: menu-drawer-exit 180ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.menu-drawer-overlay-enter {
+  animation: menu-drawer-overlay-enter 180ms ease-out both;
+}
+
+.menu-drawer-overlay-exit {
+  animation: menu-drawer-overlay-exit 160ms ease-in both;
+}
+
+/* Reduced motion: results still apply (the back face is already in the DOM),
+ * only the flip/pop/bounce/shake choreography drops out. */
+@media (prefers-reduced-motion: reduce) {
+  .wordle-tile-inner {
+    transition: none !important;
+  }
+  .menu-drawer-enter,
+  .menu-drawer-exit,
+  .menu-drawer-overlay-enter,
+  .menu-drawer-overlay-exit,
+  .wordle-panel-in,
+  .wordle-bounce,
+  .wordle-pending {
+    animation: none;
+  }
+}

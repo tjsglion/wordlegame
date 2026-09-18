@@ -6,6 +6,8 @@ export type GameStatus = "available" | "coming-soon";
 export type GameSlug =
   | "wordle"
   | "stackdown"
+  | "strands"
+  | "wordplay"
   | "word-search"
   | "crossword"
   | "word-connect";

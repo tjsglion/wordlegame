@@ -1,17 +1,16 @@
 "use client";
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { BarChart3, Star, Trophy, X } from "lucide-react";
+import { BarChart3, Star, Trophy } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { openLoginModal } from "@/components/auth/login-dialog";
+import { GameModalShell } from "@/components/game/game-modal-shell";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useOverlayBehavior } from "@/components/ui/use-overlay-behavior";
 import {
   OPEN_STACKDOWN_STATS_EVENT,
   type StackdownLeaderboardEntry,
@@ -238,16 +237,9 @@ export function StackdownStatsModal({
   const [leaderboardSkeletonRows, setLeaderboardSkeletonRows] = useState(
     DEFAULT_LEADERBOARD_SKELETON_ROWS,
   );
-  const portalRef = useRef<HTMLDivElement>(null);
   const leaderboardRef = useRef<StackdownLeaderboardResponse | null>(null);
   const leaderboardRequestRef = useRef<Promise<void> | null>(null);
   const leaderboardLoadedAtRef = useRef(0);
-
-  useOverlayBehavior({
-    open,
-    portalRef,
-    onClose: () => setOpen(false),
-  });
 
   useEffect(() => {
     leaderboardRef.current = leaderboard;
@@ -358,208 +350,177 @@ export function StackdownStatsModal({
         <Trophy aria-hidden />
       </Button>
 
-      {open && typeof document !== "undefined"
-        ? createPortal(
-            <div
-              ref={portalRef}
-              className="fixed inset-0 z-[60]"
-              aria-modal="true"
-              role="dialog"
-              aria-labelledby="stackdown-stats-title"
-              aria-describedby="stackdown-stats-description"
-              tabIndex={-1}
-            >
-              <button
-                type="button"
-                aria-label={tCommon("close")}
-                className="absolute inset-0 touch-none bg-black/28 backdrop-blur-[2px]"
-                onClick={() => setOpen(false)}
-              />
+      <GameModalShell
+        open={open}
+        onClose={() => setOpen(false)}
+        variant="page"
+        closeButtonAriaLabel={tCommon("close")}
+        titleId="stackdown-stats-title"
+        descriptionId="stackdown-stats-description"
+      >
+        <div className="pr-12">
+          <p className="text-[11px] font-medium tracking-[0.24em] text-muted-foreground uppercase">
+            {tCommon("siteName")}
+          </p>
+          <h2
+            id="stackdown-stats-title"
+            className="mt-3 text-3xl font-semibold tracking-[-0.04em]"
+          >
+            {tStackdown("leaderboardTitle")}
+          </h2>
+          <p
+            id="stackdown-stats-description"
+            className="mt-2 max-w-2xl text-sm text-muted-foreground"
+          >
+            {isAuthenticated
+              ? tStackdown("leaderboardSyncedHint")
+              : tStackdown("leaderboardLocalHint")}
+          </p>
+        </div>
 
-              <div className="pointer-events-none absolute inset-0 flex justify-center">
-                <div className="pointer-events-auto relative h-dvh w-full max-w-4xl overflow-hidden bg-card shadow-2xl sm:border-x sm:border-border/80">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="absolute top-[max(0.75rem,env(safe-area-inset-top))] right-3 z-10 size-11 rounded-full text-muted-foreground hover:text-foreground"
-                    aria-label={tCommon("close")}
-                    data-overlay-close
-                    data-overlay-initial-focus
-                    onClick={() => setOpen(false)}
-                  >
-                    <X aria-hidden />
-                  </Button>
+        <section className="mt-8">
+          <div className="flex items-center gap-2">
+            <BarChart3 className="size-4 text-brand" aria-hidden />
+            <h3 className="text-sm font-semibold tracking-[0.16em] uppercase">
+              {tStackdown("leaderboardStatsTitle")}
+            </h3>
+          </div>
 
-                  <div className="h-dvh overflow-y-auto px-5 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-[calc(env(safe-area-inset-bottom)+1.5rem)] sm:px-6 sm:pt-[calc(env(safe-area-inset-top)+1.5rem)]">
-                    <div className="pr-12">
-                      <p className="text-[11px] font-medium tracking-[0.24em] text-muted-foreground uppercase">
-                        {tCommon("siteName")}
-                      </p>
-                      <h2
-                        id="stackdown-stats-title"
-                        className="mt-3 text-3xl font-semibold tracking-[-0.04em]"
-                      >
-                        {tStackdown("leaderboardTitle")}
-                      </h2>
-                      <p
-                        id="stackdown-stats-description"
-                        className="mt-2 max-w-2xl text-sm text-muted-foreground"
-                      >
-                        {isAuthenticated
-                          ? tStackdown("leaderboardSyncedHint")
-                          : tStackdown("leaderboardLocalHint")}
-                      </p>
-                    </div>
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <SummaryStat value={stats.wins} label={tStackdown("stats.wins")} />
+            <SummaryStat
+              value={stats.currentStreak}
+              label={tStackdown("stats.currentStreak")}
+            />
+            <SummaryStat
+              value={stats.maxStreak}
+              label={tStackdown("stats.maxStreak")}
+            />
+            <SummaryStat
+              value={
+                stats.bestTimeMs === null
+                  ? "—"
+                  : formatTime(stats.bestTimeMs)
+              }
+              label={tStackdown("stats.bestTime")}
+            />
+          </div>
+        </section>
 
-                    <section className="mt-8">
-                      <div className="flex items-center gap-2">
-                        <BarChart3 className="size-4 text-brand" aria-hidden />
-                        <h3 className="text-sm font-semibold tracking-[0.16em] uppercase">
-                          {tStackdown("leaderboardStatsTitle")}
-                        </h3>
-                      </div>
+        <section className="mt-8">
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="text-sm font-semibold tracking-[0.16em] uppercase">
+              {tStackdown("leaderboardDistributionTitle")}
+            </h3>
+            <span className="rounded-full border border-brand/20 bg-brand/8 px-2.5 py-1 text-[10px] font-medium tracking-[0.12em] text-brand uppercase">
+              {tStackdown("leaderboardDistributionBadge")}
+            </span>
+          </div>
+          {leaderboard ? (
+            <p className="mt-2 text-sm text-muted-foreground">
+              {tStackdown("leaderboardDistributionHint", {
+                finished: leaderboard.totalFinished,
+              })}
+            </p>
+          ) : showDistributionLoading ? (
+            <DistributionHintSkeleton />
+          ) : null}
 
-                      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        <SummaryStat value={stats.wins} label={tStackdown("stats.wins")} />
-                        <SummaryStat
-                          value={stats.currentStreak}
-                          label={tStackdown("stats.currentStreak")}
-                        />
-                        <SummaryStat
-                          value={stats.maxStreak}
-                          label={tStackdown("stats.maxStreak")}
-                        />
-                        <SummaryStat
-                          value={
-                            stats.bestTimeMs === null
-                              ? "—"
-                              : formatTime(stats.bestTimeMs)
-                          }
-                          label={tStackdown("stats.bestTime")}
-                        />
-                      </div>
-                    </section>
+          {showDistributionLoading ? (
+            <DistributionLoadingSkeleton />
+          ) : (
+            <div className="mt-4 flex flex-col gap-2">
+              {starDistribution.map((count, index) => (
+                <DistributionRow
+                  key={index}
+                  stars={index + 1}
+                  count={count}
+                  maxDistribution={maxDistribution}
+                />
+              ))}
+            </div>
+          )}
+        </section>
 
-                    <section className="mt-8">
-                      <div className="flex items-center justify-between gap-3">
-                        <h3 className="text-sm font-semibold tracking-[0.16em] uppercase">
-                          {tStackdown("leaderboardDistributionTitle")}
-                        </h3>
-                        <span className="rounded-full border border-brand/20 bg-brand/8 px-2.5 py-1 text-[10px] font-medium tracking-[0.12em] text-brand uppercase">
-                          {tStackdown("leaderboardDistributionBadge")}
-                        </span>
-                      </div>
-                      {leaderboard ? (
-                        <p className="mt-2 text-sm text-muted-foreground">
-                          {tStackdown("leaderboardDistributionHint", {
-                            finished: leaderboard.totalFinished,
-                          })}
-                        </p>
-                      ) : showDistributionLoading ? (
-                        <DistributionHintSkeleton />
-                      ) : null}
-
-                      {showDistributionLoading ? (
-                        <DistributionLoadingSkeleton />
-                      ) : (
-                        <div className="mt-4 flex flex-col gap-2">
-                          {starDistribution.map((count, index) => (
-                            <DistributionRow
-                              key={index}
-                              stars={index + 1}
-                              count={count}
-                              maxDistribution={maxDistribution}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </section>
-
-                    <section className="mt-8">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2">
-                          <Trophy className="size-4 text-brand" aria-hidden />
-                          <h3 className="text-sm font-semibold tracking-[0.16em] uppercase">
-                            {tStackdown("todayLeaderboardTitle")}
-                          </h3>
-                        </div>
-                        {leaderboard ? (
-                          <p className="text-xs text-muted-foreground">
-                            {tStackdown("todayLeaderboardCount", {
-                              count: leaderboard.totalFinished,
-                            })}
-                          </p>
-                        ) : null}
-                      </div>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        {tStackdown("todayLeaderboardRule")}
-                      </p>
-                      {!isAuthenticated ? (
-                        <div className="mt-4 rounded-3xl border border-brand/20 bg-brand/8 p-4">
-                          <p className="text-sm text-foreground">
-                            {tStackdown("leaderboardLoginPrompt")}
-                          </p>
-                          <div className="mt-3">
-                              <Button
-                                type="button"
-                                variant="default"
-                                className="min-w-36"
-                                aria-label={tCommon("login")}
-                                onClick={handleLoginPrompt}
-                              >
-                                {tStackdown("leaderboardLoginCta")}
-                              </Button>
-                          </div>
-                        </div>
-                      ) : null}
-
-                      <div className="mt-4 overflow-hidden rounded-3xl border border-border/70 bg-background/60">
-                        {loadingLeaderboard ? (
-                          <LeaderboardLoadingSkeleton rows={skeletonRows} />
-                        ) : leaderboardError ? (
-                          <p className="px-4 py-6 text-sm text-muted-foreground">
-                            {tStackdown("todayLeaderboardError")}
-                          </p>
-                        ) : leaderboard && leaderboard.entries.length > 0 ? (
-                          <div className="h-[min(22rem,46dvh)] overflow-y-auto overscroll-contain">
-                            <ol className="divide-y divide-border/70">
-                              {leaderboard.entries.map((entry) => (
-                                <li key={entry.userId}>
-                                  <LeaderboardEntryRow
-                                    entry={entry}
-                                    youLabel={tStackdown("todayLeaderboardYou")}
-                                    highlighted={entry.isCurrentUser}
-                                  />
-                                </li>
-                              ))}
-                            </ol>
-                            {showPinnedCurrentUser && leaderboard.currentUserEntry ? (
-                              <div className="sticky bottom-0 border-t border-border/70 bg-background/95 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur supports-[backdrop-filter]:bg-background/80">
-                                <p className="px-4 pt-3 text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase">
-                                  {tStackdown("todayLeaderboardMyRank")}
-                                </p>
-                                <LeaderboardEntryRow
-                                  entry={leaderboard.currentUserEntry}
-                                  youLabel={tStackdown("todayLeaderboardYou")}
-                                  highlighted
-                                />
-                              </div>
-                            ) : null}
-                          </div>
-                        ) : (
-                          <p className="px-4 py-6 text-sm text-muted-foreground">
-                            {tStackdown("todayLeaderboardEmpty")}
-                          </p>
-                        )}
-                      </div>
-                    </section>
-                  </div>
-                </div>
+        <section className="mt-8">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Trophy className="size-4 text-brand" aria-hidden />
+              <h3 className="text-sm font-semibold tracking-[0.16em] uppercase">
+                {tStackdown("todayLeaderboardTitle")}
+              </h3>
+            </div>
+            {leaderboard ? (
+              <p className="text-xs text-muted-foreground">
+                {tStackdown("todayLeaderboardCount", {
+                  count: leaderboard.totalFinished,
+                })}
+              </p>
+            ) : null}
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {tStackdown("todayLeaderboardRule")}
+          </p>
+          {!isAuthenticated ? (
+            <div className="mt-4 rounded-3xl border border-brand/20 bg-brand/8 p-4">
+              <p className="text-sm text-foreground">
+                {tStackdown("leaderboardLoginPrompt")}
+              </p>
+              <div className="mt-3">
+                <Button
+                  type="button"
+                  variant="default"
+                  className="min-w-36"
+                  aria-label={tCommon("login")}
+                  onClick={handleLoginPrompt}
+                >
+                  {tStackdown("leaderboardLoginCta")}
+                </Button>
               </div>
-            </div>,
-            document.body,
-          )
-        : null}
+            </div>
+          ) : null}
+
+          <div className="mt-4 overflow-hidden rounded-3xl border border-border/70 bg-background/60">
+            {loadingLeaderboard ? (
+              <LeaderboardLoadingSkeleton rows={skeletonRows} />
+            ) : leaderboardError ? (
+              <p className="px-4 py-6 text-sm text-muted-foreground">
+                {tStackdown("todayLeaderboardError")}
+              </p>
+            ) : leaderboard && leaderboard.entries.length > 0 ? (
+              <div className="h-[min(22rem,46dvh)] overflow-y-auto overscroll-contain">
+                <ol className="divide-y divide-border/70">
+                  {leaderboard.entries.map((entry) => (
+                    <li key={entry.userId}>
+                      <LeaderboardEntryRow
+                        entry={entry}
+                        youLabel={tStackdown("todayLeaderboardYou")}
+                        highlighted={entry.isCurrentUser}
+                      />
+                    </li>
+                  ))}
+                </ol>
+                {showPinnedCurrentUser && leaderboard.currentUserEntry ? (
+                  <div className="sticky bottom-0 border-t border-border/70 bg-background/95 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur supports-[backdrop-filter]:bg-background/80">
+                    <p className="px-4 pt-3 text-[11px] font-medium tracking-[0.16em] text-muted-foreground uppercase">
+                      {tStackdown("todayLeaderboardMyRank")}
+                    </p>
+                    <LeaderboardEntryRow
+                      entry={leaderboard.currentUserEntry}
+                      youLabel={tStackdown("todayLeaderboardYou")}
+                      highlighted
+                    />
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <p className="px-4 py-6 text-sm text-muted-foreground">
+                {tStackdown("todayLeaderboardEmpty")}
+              </p>
+            )}
+          </div>
+        </section>
+      </GameModalShell>
     </>
   );
 }

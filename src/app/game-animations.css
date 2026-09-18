@@ -1,0 +1,48 @@
+/* Cross-game feedback animations. Keep these independent of each game's
+ * visual system so a shared interaction never needs duplicated keyframes. */
+@keyframes game-pop {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.game-pop {
+  animation: game-pop 0.1s ease-in-out;
+}
+
+@keyframes game-shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
+}
+
+.game-shake {
+  animation: game-shake 0.5s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-pop,
+  .game-shake {
+    animation: none;
+  }
+}

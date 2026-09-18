@@ -74,5 +74,13 @@ export default async function GamePage({
 
     permanentRedirect(`${redirectUrl.pathname}${redirectUrl.search}`);
   }
-  return GameRoutePage({ locale, slug });
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  return GameRoutePage({
+    locale,
+    slug,
+    mode: resolvedSearchParams.mode === "practice" ? "practice" : "daily",
+    practicePuzzleId: resolvedSearchParams.mode === "practice" && typeof resolvedSearchParams.puzzle === "string"
+      ? resolvedSearchParams.puzzle
+      : undefined,
+  });
 }

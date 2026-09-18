@@ -1,16 +1,23 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { CircleHelp, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { CircleHelp } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { GameModalShell } from "@/components/game/game-modal-shell";
 import { HelpContent, type HelpContentCopy } from "@/components/help/help-content";
 import {
   buildStackdownHelpCopy,
   StackdownHelpContent,
 } from "@/components/help/stackdown-help-content";
+import {
+  StrandsHelpContent,
+  type StrandsHelpCopy,
+} from "@/components/help/strands-help-content";
+import {
+  buildWordplayHelpCopy,
+  WordplayHelpContent,
+} from "@/components/help/wordplay-help-content";
 import { Button } from "@/components/ui/button";
-import { useOverlayBehavior } from "@/components/ui/use-overlay-behavior";
 import type { GameSlug } from "@/lib/game/types";
 import { WORDS_PER_PUZZLE } from "@/games/stackdown/shared";
 
@@ -73,19 +80,48 @@ function buildWordleCopy(tHelp: (key: string) => string): HelpContentCopy {
   };
 }
 
+export const OPEN_HELP_MODAL_EVENT = "help:open";
+
+/** Ask the site header's HelpModal to open for `game` (first-visit guidance). */
+export function requestHelpModal(game: GameSlug): void {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent(OPEN_HELP_MODAL_EVENT, { detail: { game } }));
+}
+
 export function HelpModal({ game }: { game?: GameSlug }) {
   const tCommon = useTranslations("Common");
   const tHelp = useTranslations("HelpModal");
   const tStackdown = useTranslations("StackdownHelp");
   const tStackdownGame = useTranslations("Stackdown");
+  const tStrandsHelp = useTranslations("StrandsHelp");
+  const tWordplayHelp = useTranslations("WordplayHelp");
   const [open, setOpen] = useState(false);
-  const portalRef = useRef<HTMLDivElement>(null);
 
-  useOverlayBehavior({
-    open,
-    portalRef,
-    onClose: () => setOpen(false),
-  });
+  // Games can ask this modal to open (e.g. first-visit guidance) via a
+  // window event — same pattern as the strands results event.
+  useEffect(() => {
+    const handler = (event: Event) => {
+      if ((event as CustomEvent<{ game?: string }>).detail?.game === game) setOpen(true);
+    };
+    window.addEventListener(OPEN_HELP_MODAL_EVENT, handler);
+    return () => window.removeEventListener(OPEN_HELP_MODAL_EVENT, handler);
+  }, [game]);
+  const strandsCopy: StrandsHelpCopy = {
+    title: tStrandsHelp("title"),
+    description: tStrandsHelp("description"),
+    basicsTitle: tStrandsHelp("basicsTitle"),
+    basics: [
+      tStrandsHelp("basics.drag"),
+      tStrandsHelp("basics.submit"),
+      tStrandsHelp("basics.find"),
+    ],
+    spangramTitle: tStrandsHelp("spangramTitle"),
+    spangram: tStrandsHelp("spangram"),
+    hintsTitle: tStrandsHelp("hintsTitle"),
+    hints: [tStrandsHelp("hints.charge"), tStrandsHelp("hints.reveal")],
+    tipsTitle: tStrandsHelp("tipsTitle"),
+    tips: [tStrandsHelp("tips.words"), tStrandsHelp("tips.mode")],
+  };
 
   return (
     <>
@@ -99,82 +135,66 @@ export function HelpModal({ game }: { game?: GameSlug }) {
         <CircleHelp aria-hidden />
       </Button>
 
-      {open && typeof document !== "undefined"
-        ? createPortal(
-            <div
-              ref={portalRef}
-              className="fixed inset-0 z-[60]"
-              aria-modal="true"
-              role="dialog"
-              aria-labelledby="help-modal-title"
-              aria-describedby="help-modal-description"
-              tabIndex={-1}
-            >
-              <button
-                type="button"
-                aria-label={tCommon("close")}
-                className="absolute inset-0 touch-none bg-black/28 backdrop-blur-[2px]"
-                onClick={() => setOpen(false)}
-              />
-
-              <div className="pointer-events-none absolute inset-0 flex justify-center">
-                <div
-                  className={`pointer-events-auto relative h-dvh w-full max-w-4xl overflow-hidden bg-card shadow-2xl sm:border-x sm:border-border/80 ${
-                    game === "stackdown" ? "stackdown-help-modal" : ""
-                  }`}
-                >
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="absolute top-[max(0.75rem,env(safe-area-inset-top))] right-3 z-10 size-11 rounded-full text-muted-foreground hover:text-foreground"
-                    aria-label={tCommon("close")}
-                    data-overlay-close
-                    data-overlay-initial-focus
-                    onClick={() => setOpen(false)}
-                  >
-                    <X aria-hidden />
-                  </Button>
-
-                  <div className="h-dvh overflow-y-auto px-5 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-[calc(env(safe-area-inset-bottom)+1.5rem)] sm:px-6 sm:pt-[calc(env(safe-area-inset-top)+1.5rem)]">
-                    <div className="pr-12">
-                      <p className="text-[11px] font-medium tracking-[0.24em] text-muted-foreground uppercase">
-                        {tCommon("siteName")}
-                      </p>
-                    </div>
-                    {game === "stackdown" ? (
-                      <StackdownHelpContent
-                        copy={buildStackdownHelpCopy(tStackdown, {
-                          title: tStackdown("title"),
-                          description: tStackdown("description"),
-                          demoLabels: {
-                            wordsLeft: tStackdownGame("wordsRemaining", {
-                              count: WORDS_PER_PUZZLE,
-                            }),
-                            hintSlide: tStackdownGame("hintSlide"),
-                            hintRevealCta: tStackdownGame("hintRevealCta"),
-                            hintRevealDetail: tStackdownGame("hintRevealDetail"),
-                            hintClue: tStackdown("demoClue"),
-                          },
-                        })}
-                        variant="modal"
-                        titleId="help-modal-title"
-                        descriptionId="help-modal-description"
-                      />
-                    ) : (
-                      <HelpContent
-                        copy={buildWordleCopy(tHelp)}
-                        variant="modal"
-                        titleId="help-modal-title"
-                        descriptionId="help-modal-description"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>,
-            document.body,
-          )
-        : null}
+      <GameModalShell
+        open={open}
+        onClose={() => setOpen(false)}
+        variant="page"
+        closeButtonAriaLabel={tCommon("close")}
+        titleId="help-modal-title"
+        descriptionId="help-modal-description"
+      >
+        <div>
+          <div className="pr-12">
+            <p className="text-[11px] font-medium tracking-[0.24em] text-muted-foreground uppercase">
+              {tCommon("siteName")}
+            </p>
+          </div>
+          {game === "stackdown" ? (
+            <StackdownHelpContent
+              copy={buildStackdownHelpCopy(tStackdown, {
+                title: tStackdown("title"),
+                description: tStackdown("description"),
+                demoLabels: {
+                  wordsLeft: tStackdownGame("wordsRemaining", {
+                    count: WORDS_PER_PUZZLE,
+                  }),
+                  hintSlide: tStackdownGame("hintSlide"),
+                  hintRevealCta: tStackdownGame("hintRevealCta"),
+                  hintRevealDetail: tStackdownGame("hintRevealDetail"),
+                  hintClue: tStackdown("demoClue"),
+                },
+              })}
+              variant="modal"
+              titleId="help-modal-title"
+              descriptionId="help-modal-description"
+            />
+          ) : game === "strands" ? (
+            <StrandsHelpContent
+              copy={strandsCopy}
+              variant="modal"
+              titleId="help-modal-title"
+              descriptionId="help-modal-description"
+            />
+          ) : game === "wordplay" ? (
+            <WordplayHelpContent
+              copy={buildWordplayHelpCopy(tWordplayHelp, {
+                title: tWordplayHelp("title"),
+                description: tWordplayHelp("description"),
+              })}
+              variant="modal"
+              titleId="help-modal-title"
+              descriptionId="help-modal-description"
+            />
+          ) : (
+            <HelpContent
+              copy={buildWordleCopy(tHelp)}
+              variant="modal"
+              titleId="help-modal-title"
+              descriptionId="help-modal-description"
+            />
+          )}
+        </div>
+      </GameModalShell>
     </>
   );
 }
