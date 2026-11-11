@@ -6,7 +6,10 @@ import { NextResponse } from "next/server";
  */
 export async function POST() {
   return NextResponse.json(
-    { error: "Strands score submission is unavailable until verified sessions are implemented." },
+    {
+      error:
+        "Theme Weave score submission is unavailable until verified sessions are implemented.",
+    },
     { status: 410 },
   );
 }

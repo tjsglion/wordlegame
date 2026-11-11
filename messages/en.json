@@ -1,22 +1,32 @@
 {
   "Metadata": {
-    "title": "WordleGame — H5 Word Games",
-    "description": "Wordle, word search, crossword and more word games. Daily puzzles, play instantly."
+    "title": "LetterLoop — Daily Word Puzzle Collection",
+    "description": "Daily Guess, Theme Weave, Stackdown, and more word puzzles on LetterLoop."
   },
   "HomeMetadata": {
-    "title": "Free Online Wordle, Crossword & Word Games | WordleGame",
-    "description": "Play Wordle, word search, crossword and more free online word games. New daily puzzles, instant play, no download.",
+    "title": "LetterLoop | Daily Word Puzzles and Letter Games",
+    "description": "Play Daily Guess, Theme Weave, Stackdown, and more free online word puzzles. Fresh challenges, instant play, no download.",
     "keywords": [
       "free online word games",
-      "play wordle online",
       "daily word puzzle",
-      "word search game",
-      "crossword puzzle online",
+      "letter puzzle game",
+      "browser word puzzle",
       "browser word games"
     ]
   },
+  "HomePage": {
+    "eyebrow": "LetterLoop Collection",
+    "title": "Daily word puzzles, all in one place",
+    "description": "Jump between daily guesswork, themed tracing, stack-clearing, and level-based word paths without leaving the same hub.",
+    "instantPlay": "No download. Built for quick play on desktop and mobile.",
+    "availableTitle": "Play now",
+    "comingSoonTitle": "Coming next",
+    "playDailyGuess": "Open daily puzzle",
+    "practiceDailyGuess": "Practice freely",
+    "openGame": "Open {game}"
+  },
   "Common": {
-    "siteName": "WordleGame",
+    "siteName": "LetterLoop",
     "help": "How to play",
     "leaderboard": "Stats and leaderboard",
     "login": "Sign in",
@@ -39,7 +49,7 @@
   },
   "LoginPage": {
     "title": "Sign in",
-    "description": "Choose a provider to sign in to WordleGame",
+    "description": "Choose a provider to sign in to LetterLoop",
     "signInWithGoogle": "Continue with Google",
     "signInWithGitHub": "Continue with GitHub",
     "errors": {
@@ -61,25 +71,31 @@
     "userId": "User ID"
   },
   "GamePage": {
-    "comingSoonDescription": "This game is still in development. Play today's Wordle meanwhile."
+    "comingSoonDescription": "This game is still in development. Try one of the live word puzzles meanwhile."
   },
   "WordleMetadata": {
-    "title": "Play Wordle Online - Daily 5-Letter Word Puzzle | WordleGame",
-    "description": "Play Wordle online for free. Guess the daily 5-letter word in 6 tries, track your stats, and compare on today's leaderboard.",
+    "title": "Daily Guess - Daily 5-Letter Word Puzzle | LetterLoop",
+    "description": "Guess the daily 5-letter word in 6 tries, track your stats, and compare your run on today's leaderboard.",
     "keywords": [
-      "play wordle online",
-      "daily wordle puzzle",
+      "daily guess puzzle",
       "5 letter word game",
-      "free wordle game",
-      "wordle leaderboard",
+      "free word puzzle game",
+      "daily word leaderboard",
       "word puzzle online"
     ]
   },
   "HelpModal": {
-    "title": "How to play",
+    "title": "Daily Guess field guide",
     "description": "Guess the hidden 5-letter word in 6 tries. After each guess, the colors point you in the right direction so you can narrow it down fast.",
-    "seoTitle": "How to play Wordle",
-    "seoDescription": "Learn how Wordle works, what each tile color means, and how to read a guess with a real example.",
+    "seoTitle": "How to play Daily Guess",
+    "seoDescription": "Learn how Daily Guess works, what each tile color means, and how to read a guess with a real example.",
+    "spotlightTitle": "Read the signal, then narrow it",
+    "spotlightDescription": "Each row does two jobs at once: it locks confirmed letters and reroutes the ones that still need a better spot.",
+    "spotlightPoints": {
+      "lock": "Lock green letters first so the next guess has an anchor.",
+      "move": "Keep yellow letters moving until they land in the right slot.",
+      "track": "Use the keyboard as your running notebook between guesses."
+    },
     "basicsTitle": "The Basics",
     "basics": {
       "guess": "Guess the hidden 5-letter word before you run out of tries.",
@@ -134,12 +150,12 @@
     "dailyRound": "Daily puzzle",
     "practiceRound": "Practice round",
     "roundProgress": "{current} of {total} attempts used",
-    "dailyQuest": "Today’s word trail",
-    "practiceQuest": "Free word trail",
+    "dailyQuest": "Today’s signal",
+    "practiceQuest": "Practice run",
     "questObjective": "Find the hidden word in {total} tries",
     "streak": "{count}-day streak",
-    "startStreak": "Start a streak",
-    "tryPractice": "Keep playing (practice)",
+    "startStreak": "Start your streak",
+    "tryPractice": "Open practice run",
     "backToDaily": "Back to daily challenge",
     "newPractice": "Play again",
     "leaderboardTitle": "Stats",
@@ -163,14 +179,14 @@
     "leaderboardLoginCta": "Sign in to join",
     "viewLeaderboard": "View leaderboard",
     "viewResult": "View result",
-    "resultsCta": "Result",
-    "shareCta": "Share",
-    "notEnoughLetters": "Not enough letters",
-    "notInWordList": "Not in word list",
-    "networkError": "Network error — please try again",
-    "winMessage": "Brilliant! You got it",
-    "loseMessage": "Game over — the answer was {answer}",
-    "share": "Share result",
+    "resultsCta": "Open recap",
+    "shareCta": "Share signal",
+    "notEnoughLetters": "Need all 5 letters",
+    "notInWordList": "That signal is not in the list",
+    "networkError": "Signal check failed — try again",
+    "winMessage": "Signal locked in",
+    "loseMessage": "Signal lost — the answer was {answer}",
+    "share": "Share signal",
     "copied": "Copied to clipboard",
     "nextPuzzleIn": "Next puzzle in {time}",
     "enter": "Enter",
@@ -212,7 +228,7 @@
     "nextPuzzleIn": "Next puzzle in {time}",
     "finishedStageSummary": "Solved {solved} / {total} words",
     "finishedStageHint": "Use the top-right shortcut to review solved words, and the result panel keeps the full timecard too.",
-    "tryPractice": "Keep playing (practice)",
+    "tryPractice": "Open practice weave",
     "backToDaily": "Back to daily challenge",
     "newPractice": "Play again",
     "viewResult": "View result",
@@ -291,7 +307,7 @@
     }
   },
   "Strands": {
-    "title": "Strands",
+    "title": "Theme Weave",
     "modeDaily": "Daily",
     "modePractice": "Practice",
     "complete": "Complete",
@@ -299,24 +315,24 @@
     "gameControls": "Game controls",
     "tryPractice": "Keep playing (practice)",
     "backToDaily": "Back to daily challenge",
-    "hint": "Hint",
-    "results": "Results",
+    "hint": "Path hint",
+    "results": "Pattern recap",
     "foundWords": "Found words",
     "removeWord": "Remove {word}",
     "meterAria": "{current} of 3 hint charges",
-    "gridAria": "Strands grid",
+    "gridAria": "Theme Weave grid",
     "gridInstructions": "Use arrow keys to move between letters. Press Enter or Space to add a letter; activate the last selected letter again to submit.",
     "cellAria": "Letter {letter}, row {row}, column {column}{states}",
     "cellStatePrefix": ", ",
     "cellStateDivider": ", ",
     "cellStateFound": "found word",
-    "cellStateFoundSpangram": "found spangram",
+    "cellStateFoundSpangram": "found main path",
     "cellStateSelected": "selected",
     "cellStateHint": "hint",
     "cellStateError": "error",
-    "winSummary": "Hints: {count}",
-    "progressSummary": "Found {found} of {total} words",
-    "share": "Share",
+    "winSummary": "Main path found, hints used: {count}",
+    "progressSummary": "Found {found} of {total} words in this weave",
+    "share": "Share weave",
     "shareCopied": "Share text copied",
     "shareFailed": "Could not share. Try again.",
     "nextPuzzleIn": "Next puzzle in {time}",
@@ -328,37 +344,49 @@
       "hintsUsed": "Hints used"
     },
     "feedback": {
-      "alreadyFound": "Already found",
-      "alreadyCounted": "Already counted",
-      "spangramEdge": "Spangram must touch opposite edges",
-      "tooShort": "Too short",
-      "unknown": "Not in word list",
-      "charged": "Good word!",
-      "noHint": "No hint available"
+      "alreadyFound": "Already woven",
+      "alreadyCounted": "Bonus already banked",
+      "spangramEdge": "Main path has to touch opposite edges",
+      "tooShort": "Need a longer thread",
+      "unknown": "That thread is not in the list",
+      "charged": "Meter charged",
+      "noHint": "Charge the meter first"
     },
     "shareText": {
-      "dailyTitle": "Strands",
-      "practiceTitle": "Strands (Practice)",
+      "dailyTitle": "Theme Weave",
+      "practiceTitle": "Theme Weave (Practice)",
       "hintsUsed": "Hints used: {count}",
       "none": "None",
       "playAt": "Play at: {url}"
     }
   },
   "StrandsHelp": {
-    "title": "How to play",
-    "description": "Build words by tracing connected letters across the board. Find every theme word, plus the Spangram that spans the puzzle.",
+    "title": "Theme Weave field guide",
+    "description": "Build words by tracing connected letters across the board. Find every theme word, plus the main path that spans the puzzle.",
+    "boardReadTitle": "Read the board in passes",
+    "boardRead": {
+      "edges": "Sweep the outside edge early. Main paths often reveal themselves there first.",
+      "clusters": "When a word cluster appears, clear the short theme words before chasing the longest route.",
+      "pivot": "Once the theme clicks, trace the main path across the opposite edges to close the weave."
+    },
     "basicsTitle": "The basics",
     "basics": {
       "drag": "Trace through neighboring letters in any of the eight directions, or click one letter at a time to build a path.",
       "submit": "Tap the last selected letter again to submit the word you traced.",
       "find": "Find all theme words hidden on the board to finish the puzzle. Theme words can be traced forward or backward."
     },
-    "spangramTitle": "Spangram",
-    "spangram": "One answer is the Spangram. It describes the theme and must connect two opposite edges of the board.",
+    "spangramTitle": "Main Path",
+    "spangram": "One answer is the main path. It describes the theme and must connect two opposite edges of the board.",
     "hintsTitle": "Hints",
     "hints": {
       "charge": "Three extra valid words that are not theme answers fill the hint meter.",
       "reveal": "When the meter is full, use Hint to reveal part of an unfinished answer."
+    },
+    "hintLoopTitle": "How charge turns into a reveal",
+    "hintLoop": {
+      "bank": "Every extra valid word banks progress toward the next reveal.",
+      "spend": "A full meter reveals a live segment from one unfinished answer.",
+      "timing": "Spend it after your scan slows down, not on the first stall."
     },
     "tipsTitle": "Good to know",
     "tips": {

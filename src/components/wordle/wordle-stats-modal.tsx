@@ -280,7 +280,7 @@ export function WordleStatsModal({
 
     const request = (async () => {
       try {
-        const response = await fetch("/api/wordle/leaderboard", {
+        const response = await fetch("/api/daily-guess/leaderboard", {
           method: "GET",
           cache: isAuthenticated ? "no-store" : "default",
         });

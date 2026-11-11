@@ -6,11 +6,11 @@
  *
  * `ANSWERS` (2500 words): common 5-letter words eligible as the
  * solution. `ALLOWED_GUESSES` (12625 words) additionally
- * accepts plausible but less common words (Wordle-only).
+ * accepts plausible but less common words (Daily Guess only).
  *
  * Never import this from client code: the lists (and thus the daily answer)
  * must not ship in the client bundle. Evaluation happens in
- * src/app/api/wordle/guess/route.ts.
+ * src/app/api/daily-guess/guess/route.ts.
  */
 import "server-only";
 

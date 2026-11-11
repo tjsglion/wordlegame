@@ -10,9 +10,10 @@ import {
   type GuessResponse,
   type LetterState,
 } from "@/games/wordle/shared";
+import { signPayload, verifyPayload } from "@/lib/game/token";
 
 /**
- * Server-authoritative Wordle evaluation.
+ * Server-authoritative Daily Guess evaluation.
  *
  * The answer never leaves the server while a round is in progress:
  * - daily: prefer the seeded `wordle_daily_puzzles` row for the UTC date;
@@ -20,12 +21,10 @@ import {
  *   back to the deterministic local picker so the game still works.
  * - practice: `start` (a request without token) picks a random answer and
  *   returns it as an HMAC-signed token (base64url(payload).base64url(sig),
- *   keyed with AUTH_SECRET via Web Crypto — Workers-compatible). Subsequent
- *   guesses must carry that token; a tampered or expired token gets a 401.
+ *   keyed with AUTH_SECRET via Web Crypto). Subsequent guesses must carry
+ *   that token; a tampered or expired token gets a 401.
  * The answer is only included in the response once the round is finished.
  */
-
-import { signPayload, verifyPayload } from "@/lib/game/token";
 
 /** Practice rounds are casual; a day is plenty. */
 const TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
@@ -109,7 +108,6 @@ export async function POST(request: Request) {
   const response: GuessResponse = {
     results,
     status,
-    // The answer is revealed only once the round is over.
     ...(status !== "playing" ? { answer } : {}),
     ...(freshToken ? { token: freshToken } : {}),
   };

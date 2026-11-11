@@ -116,8 +116,8 @@ export function getStrandsVictorySchedule(shouldCelebrate: boolean) {
 const VICTORY_TIMER_KEYS = ["victory-start-confetti", "victory-stop-confetti", "victory-show-win-modal"] as const;
 
 const DEFAULT_STRANDS_SHARE_COPY: StrandsShareCopy = {
-  dailyTitle: "Strands",
-  practiceTitle: "Strands (Practice)",
+  dailyTitle: "Theme Weave",
+  practiceTitle: "Theme Weave (Practice)",
   hintsUsedLabel: "Hints used: {count}",
   noneLabel: "None",
   playAtLabel: "Play at: {url}",
@@ -128,7 +128,7 @@ const DEFAULT_STRANDS_SHARE_COPY: StrandsShareCopy = {
 const DEFAULT_STRANDS_FEEDBACK_COPY: StrandsFeedbackCopy = {
   "already-found": "Already found",
   "already-counted": "Already counted",
-  "spangram-edge": "Spangram must touch opposite edges",
+  "spangram-edge": "Main path must touch opposite edges",
   "too-short": "Too short",
   unknown: "Not in word list",
   charged: "Good word!",
@@ -292,7 +292,7 @@ export function useStrands(data: StrandsPuzzleData, mode: StrandsMode, victoryCa
     setCurrent("message", () => null);
     setCurrent("stats", () => loadStrandsStats());
     setCurrent("loadedDate", () => data.date);
-  }, [cancelTimer, data.date, mode, puzzleIdentity, setCurrent]);
+  }, [cancelTimer, data.date, data.puzzle.id, mode, puzzleIdentity, setCurrent]);
 
   useEffect(() => {
     if (!isLoaded) return;

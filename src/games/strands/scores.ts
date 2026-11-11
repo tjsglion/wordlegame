@@ -22,7 +22,7 @@ export function getStrandsAnonymousId(): string | undefined {
 
 export function getStrandsScoreEndpoint(apiBase: string | undefined): string | null {
   if (!apiBase) return null;
-  return `${apiBase.replace(/\/$/, "")}/api/strands/scores`;
+  return `${apiBase.replace(/\/$/, "")}/api/theme-weave/scores`;
 }
 
 export function buildStrandsScoreRequest({

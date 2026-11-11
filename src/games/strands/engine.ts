@@ -7,7 +7,7 @@ import {
   pointKey,
   touchesOppositeEdges,
 } from "./shared";
-import { findPathForAnswer, findPathForWord, getStrandsSolutionPaths } from "./solution-paths";
+import { findPathForAnswer, getStrandsSolutionPaths } from "./solution-paths";
 export { findPathForWord } from "./solution-paths";
 
 export interface SubmissionInput {

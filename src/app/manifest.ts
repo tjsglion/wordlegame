@@ -5,10 +5,10 @@ import { BRAND_COLORS } from "@/lib/brand";
 // file extension, so this route is never locale-prefixed.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "WordleGame — H5 Word Games",
-    short_name: "WordleGame",
+    name: "LetterLoop — Daily Word Puzzles",
+    short_name: "LetterLoop",
     description:
-      "Wordle, word search, crossword and more word games. Daily puzzles, play instantly.",
+      "Daily Guess, Theme Weave, Stackdown, and more word puzzles. Play instantly on LetterLoop.",
     start_url: "/",
     display: "standalone",
     // Colors come from the shared brand palette (mirrors globals.css).

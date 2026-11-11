@@ -74,7 +74,7 @@ export function evaluateGuess(guess: string, answer: string): LetterState[] {
   return result;
 }
 
-/** Wire format for POST /api/wordle/guess. */
+/** Wire format for POST /api/daily-guess/guess. */
 export interface GuessRequest {
   mode: GameMode;
   /** Full guess history, latest last. Server re-evaluates all of them. */

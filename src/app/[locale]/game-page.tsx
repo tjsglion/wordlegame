@@ -13,6 +13,7 @@ import { SiteShell } from "@/components/layout/site-shell";
 import { buildLanguageAlternates, localizedPath } from "@/lib/site";
 import { getDailyStrandsPuzzle, getRandomStrandsPracticePuzzle } from "@/games/strands/server";
 import { todayKey, utcDateKeyToEpochMillis } from "@/lib/game/daily";
+import { getPublicGameSlug } from "@/lib/game/public-slugs";
 
 interface GameRouteParams {
   locale: string;
@@ -34,7 +35,8 @@ export async function generateGameMetadata({
     };
   }
 
-  const canonicalPath = localizedPath(currentLocale, `/${slug}`);
+  const publicSlug = getPublicGameSlug(slug);
+  const canonicalPath = localizedPath(currentLocale, `/${publicSlug}`);
   const isWordle = slug === "wordle";
   const tCommon = await getTranslations({ locale, namespace: "Common" });
   const tWordle = isWordle
@@ -54,7 +56,7 @@ export async function generateGameMetadata({
     keywords,
     alternates: {
       canonical: canonicalPath,
-      languages: buildLanguageAlternates(`/${slug}`),
+      languages: buildLanguageAlternates(`/${publicSlug}`),
     },
     openGraph: {
       title: pageTitle,

@@ -16,7 +16,7 @@ export type GameSlug =
 export type LocalizedText = Record<Locale, string>;
 
 export interface GameDefinition {
-  /** URL segment, e.g. "wordle" -> /[locale]/wordle */
+  /** Internal registry slug; public paths may remap via `public-slugs.ts`. */
   slug: GameSlug;
   status: GameStatus;
   /** Free-form tags shown on the game card, e.g. ["daily", "letters"]. */

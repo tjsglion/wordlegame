@@ -9,6 +9,7 @@ import { games } from "@/games/registry";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import type { GameSlug } from "@/lib/game/types";
+import { buildPublicGamePath } from "@/lib/game/public-slugs";
 import { cn } from "@/lib/utils";
 import { LoginModal } from "@/components/auth/login-dialog";
 import { HelpModal } from "@/components/help/help-modal";
@@ -55,7 +56,7 @@ export function SiteHeader({
   const isWordleDailyActive = currentSlug === "wordle" && !isWordlePracticeActive;
   const isStrandsDailyActive =
     currentSlug === "strands" && searchParams.get("mode") !== "practice";
-  const wordleBaseHref = "/";
+  const wordleBaseHref = buildPublicGamePath("wordle");
 
   const closeDrawer = useCallback(() => {
     setDrawerState((current) =>
@@ -302,7 +303,7 @@ export function SiteHeader({
                             ) : (
                               <Link
                                 key={game.slug}
-                                href={`/${game.slug}`}
+                                href={buildPublicGamePath(game.slug)}
                                 onClick={closeDrawer}
                                 aria-current={active ? "page" : undefined}
                                 className={cn(

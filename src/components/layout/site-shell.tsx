@@ -40,7 +40,7 @@ export function SiteShell({
         isAuthenticated={isAuthenticated}
         user={user}
       />
-      <main className="flex flex-1 flex-col">{children}</main>
+      <main className={playfield ? "flex min-h-0 flex-1 flex-col overflow-hidden" : "flex flex-1 flex-col"}>{children}</main>
     </div>
   );
 }

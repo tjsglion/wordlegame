@@ -12,6 +12,9 @@ export interface HelpLegendItemCopy {
 export interface HelpContentCopy {
   title: string;
   description: string;
+  spotlightTitle?: string;
+  spotlightDescription?: string;
+  spotlightPoints?: string[];
   basicsTitle: string;
   basics: string[];
   colorsTitle: string;
@@ -188,6 +191,37 @@ export function HelpContent({
         </p>
       </div>
 
+      {copy.spotlightTitle && copy.spotlightDescription ? (
+        <section className="mt-5 overflow-hidden rounded-[1.5rem] border border-[oklch(0.72_0.075_98_/_0.2)] bg-[linear-gradient(180deg,oklch(0.2_0.022_157_/_0.96),oklch(0.16_0.02_156_/_0.98))] p-4 text-[oklch(0.94_0.017_92)] shadow-[0_24px_60px_-36px_rgba(0,0,0,0.7)] sm:p-5">
+          <p className="text-[11px] font-semibold tracking-[0.24em] text-[oklch(0.77_0.073_95)] uppercase">
+            LetterLoop
+          </p>
+          <h3 className="mt-2 text-lg font-semibold tracking-[-0.02em] sm:text-xl">
+            {copy.spotlightTitle}
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-[oklch(0.86_0.022_92)] sm:text-base">
+            {copy.spotlightDescription}
+          </p>
+          {copy.spotlightPoints?.length ? (
+            <div className="mt-4 grid gap-2 sm:grid-cols-3">
+              {copy.spotlightPoints.map((point, index) => (
+                <div
+                  key={point}
+                  className="rounded-[1rem] border border-white/10 bg-white/6 px-3 py-3"
+                >
+                  <p className="text-[11px] font-semibold tracking-[0.18em] text-[oklch(0.75_0.085_92)] uppercase">
+                    {`0${index + 1}`}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-[oklch(0.91_0.016_92)]">
+                    {point}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </section>
+      ) : null}
+
       <section className={sectionClass}>
         <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
           {copy.basicsTitle}
@@ -237,7 +271,7 @@ export function HelpContent({
             word={copy.exampleGuess}
             tones={WALKTHROUGH_TONES}
             caption={copy.walkthroughSummary}
-            label="Full Wordle walkthrough example"
+            label="Full Daily Guess walkthrough example"
             footer={
               <ul className="space-y-1.5 text-sm leading-6 text-muted-foreground">
                 {copy.walkthroughPoints.map((point) => (

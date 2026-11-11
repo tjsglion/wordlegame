@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { getSmoothPath, pointKey, type FoundWord, type Point } from "./shared";
 
@@ -66,12 +66,15 @@ export function StrandsGrid({
   onActivate,
 }: StrandsGridProps) {
   const t = useTranslations("Strands");
-  const foundCells = new Map<string, FoundWord>();
-  for (const found of foundWords) {
-    for (const point of found.path) {
-      foundCells.set(pointKey(point), found);
+  const foundCells = useMemo(() => {
+    const cells = new Map<string, FoundWord>();
+    for (const found of foundWords) {
+      for (const point of found.path) {
+        cells.set(pointKey(point), found);
+      }
     }
-  }
+    return cells;
+  }, [foundWords]);
   const activeCells = new Set(path.map(pointKey));
   const errorCells = new Set(errorPath.map(pointKey));
   const hintCellKeys = new Set(hintCells.map(pointKey));

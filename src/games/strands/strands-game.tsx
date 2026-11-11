@@ -102,34 +102,44 @@ function StrandsGameBody({ mode, puzzle }: { mode: StrandsMode; puzzle: StrandsP
     return () => window.removeEventListener(OPEN_STRANDS_RESULTS_EVENT, openResults);
   }, [mode]);
 
-  return <div className="strands-game mx-auto flex w-full max-w-lg flex-1 touch-manipulation flex-col px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-4">
-    <header className="strands-header">
-      <div>
-        <p className="strands-eyebrow">{mode === "daily" ? t("modeDaily") : t("modePractice")}</p>
-        <h2>{getStrandsThemeLabel(puzzle.puzzle)}</h2>
-      </div>
-      <div className="strands-header-meta">
-        {state.isWon ? <span className="strands-complete-label">{t("complete")}</span> : null}
-        <p className="strands-progress">{state.foundWords.length}/{puzzle.puzzle.words.length + 1}</p>
-      </div>
-    </header>
-
+  return <div className="strands-game mx-auto flex min-h-0 w-full max-w-4xl flex-1 touch-manipulation flex-col px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:px-4">
     {/* Toast slot: absolutely positioned so a notice never shifts the play area. */}
     <div className="relative h-0">{state.message && <div className="strands-toast" role="status">{state.message}</div>}</div>
 
+    {/* On desktop this becomes a two-column game desk. On mobile it remains a
+     * single play stack, so the board follows the controls naturally. */}
     {/* my-auto centers the play group without justify-center's top-clipping:
      * on short viewports the auto margins collapse to zero and the group
      * flows from the top instead of being cut off. */}
     <div className="strands-play-area my-auto w-full">
-      <section className="strands-controls" aria-label={t("gameControls")}>
-        <button type="button" className="strands-hint-button" disabled={state.meter < 3 || state.isWon} onClick={game.useHint}>
-          <span>{t("hint")} <b>{state.meter}/3</b></span>
-          <span className="strands-meter" aria-hidden>{[0, 1, 2].map((index) => <i key={index} className={index < state.meter ? "is-filled" : undefined} />)}</span>
-        </button>
-        {state.isWon && <button type="button" className="strands-results-button" onClick={() => setResultOpen(true)}>{t("results")}</button>}
-      </section>
-      <StrandsGrid grid={puzzle.puzzle.grid} foundWords={state.foundWords} path={state.path} errorPath={state.errorPath} hintCells={state.hintCells} locked={state.isWon || !state.isLoaded} onPointerDown={game.pointerDown} onPointerMove={game.pointerMove} onPointerUp={game.pointerUp} onActivate={game.activateCell} />
-      <section className="strands-found" aria-label={t("foundWords")}>{state.foundWords.map((found) => { const label = getStrandsWordLabel(puzzle.puzzle, found.word); return <span key={found.word} className={found.isSpangram ? "strands-chip is-spangram" : "strands-chip"}>{label}</span>; })}</section>
+      <aside className="strands-sidebar">
+        <header className="strands-header">
+          <div>
+            <p className="strands-eyebrow">{mode === "daily" ? t("modeDaily") : t("modePractice")}</p>
+            <h2>{getStrandsThemeLabel(puzzle.puzzle)}</h2>
+          </div>
+          <div className="strands-header-meta">
+            {state.isWon ? <span className="strands-complete-label">{t("complete")}</span> : null}
+            <p className="strands-progress">{state.foundWords.length}/{puzzle.puzzle.words.length + 1}</p>
+          </div>
+        </header>
+        <section className="strands-controls" aria-label={t("gameControls")}>
+          <button type="button" className="strands-hint-button" disabled={state.meter < 3 || state.isWon} onClick={game.useHint}>
+            <span>{t("hint")} <b>{state.meter}/3</b></span>
+            <span className="strands-meter" aria-hidden>{[0, 1, 2].map((index) => <i key={index} className={index < state.meter ? "is-filled" : undefined} />)}</span>
+          </button>
+          {state.isWon && <button type="button" className="strands-results-button" onClick={() => setResultOpen(true)}>{t("results")}</button>}
+        </section>
+        <section className="strands-found" aria-label={t("foundWords")}>
+          <p className="strands-sidebar-label">{t("foundWords")}</p>
+          <div className="strands-found-list">
+            {state.foundWords.map((found) => { const label = getStrandsWordLabel(puzzle.puzzle, found.word); return <span key={found.word} className={found.isSpangram ? "strands-chip is-spangram" : "strands-chip"}>{label}</span>; })}
+          </div>
+        </section>
+      </aside>
+      <div className="strands-board-stage">
+        <StrandsGrid grid={puzzle.puzzle.grid} foundWords={state.foundWords} path={state.path} errorPath={state.errorPath} hintCells={state.hintCells} locked={state.isWon || !state.isLoaded} onPointerDown={game.pointerDown} onPointerMove={game.pointerMove} onPointerUp={game.pointerUp} onActivate={game.activateCell} />
+      </div>
     </div>
 
     <StrandsWinModal open={resultOpen} mode={mode} hints={state.hints} stats={state.stats} isWon={state.isWon} found={state.foundWords.length} total={puzzle.puzzle.words.length + 1} onClose={() => setResultOpen(false)} onShare={share} onPlayPractice={() => navigateToMode("practice")} onBackToDaily={() => navigateToMode("daily")} />

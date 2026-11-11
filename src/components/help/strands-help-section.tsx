@@ -9,12 +9,24 @@ export async function StrandsHelpSection() {
   const copy: StrandsHelpCopy = {
     title: t("title"),
     description: t("description"),
+    boardReadTitle: t("boardReadTitle"),
+    boardRead: [
+      t("boardRead.edges"),
+      t("boardRead.clusters"),
+      t("boardRead.pivot"),
+    ],
     basicsTitle: t("basicsTitle"),
     basics: [t("basics.drag"), t("basics.submit"), t("basics.find")],
     spangramTitle: t("spangramTitle"),
     spangram: t("spangram"),
     hintsTitle: t("hintsTitle"),
     hints: [t("hints.charge"), t("hints.reveal")],
+    hintLoopTitle: t("hintLoopTitle"),
+    hintLoop: [
+      t("hintLoop.bank"),
+      t("hintLoop.spend"),
+      t("hintLoop.timing"),
+    ],
     tipsTitle: t("tipsTitle"),
     tips: [t("tips.words"), t("tips.mode")],
   };

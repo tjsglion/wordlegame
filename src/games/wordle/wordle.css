@@ -152,11 +152,11 @@
 }
 
 /* ---------------------------------------------------------------------------
- * Wordle Quest — a scene-led H5 word adventure.
+ * Daily Guess scene — a LetterLoop-specific ink desk.
  *
- * The game owns its visual world: a dark pine/ink field, warm-gold progress
- * accent, tactile tile material and a dedicated keyboard dock. The board
- * remains deliberately dominant so the theme never obscures the puzzle.
+ * The board stays dominant, but the surrounding chrome reads like a focused
+ * puzzle console: deep teal paper, warm signal accents, and subtle orbit
+ * lines that echo the LetterLoop mark.
  * ------------------------------------------------------------------------- */
 .game-shell--wordle.game-shell--playfield {
   --background: oklch(0.18 0.025 158);
@@ -194,6 +194,7 @@
   --wordle-key-primary-fg: oklch(0.17 0.019 155);
   background:
     radial-gradient(circle at 50% -18%, oklch(0.35 0.09 159 / 0.58), transparent 40%),
+    radial-gradient(circle at 88% 18%, oklch(0.67 0.09 94 / 0.18), transparent 30%),
     radial-gradient(circle at 100% 68%, oklch(0.3 0.065 94 / 0.23), transparent 38%),
     radial-gradient(circle at 0 82%, oklch(0.12 0.034 145 / 0.65), transparent 42%),
     linear-gradient(180deg, oklch(0.15 0.03 157), oklch(0.18 0.025 158) 48%, oklch(0.12 0.024 154));
@@ -211,6 +212,7 @@
   content: "";
   background:
     radial-gradient(circle at 50% 28%, transparent 0 20%, oklch(0.66 0.07 106 / 0.13) 20.2% 20.4%, transparent 20.7% 27%, oklch(0.66 0.07 106 / 0.08) 27.2% 27.35%, transparent 27.6%),
+    radial-gradient(circle at 50% 28%, transparent 0 34%, oklch(0.6 0.08 176 / 0.08) 34.2% 34.35%, transparent 34.55%),
     repeating-radial-gradient(ellipse at 50% 25%, transparent 0 4.8rem, oklch(0.7 0.07 102 / 0.025) 4.85rem 4.95rem);
   opacity: 0.7;
 }
@@ -253,7 +255,8 @@
   opacity: 0.9;
   background:
     radial-gradient(ellipse at 50% 32%, oklch(0.34 0.085 158 / 0.27), transparent 44%),
-    linear-gradient(90deg, transparent, oklch(0.73 0.09 94 / 0.08), transparent);
+    linear-gradient(90deg, transparent, oklch(0.73 0.09 94 / 0.08), transparent),
+    repeating-linear-gradient(115deg, transparent 0 2.75rem, oklch(0.76 0.08 98 / 0.04) 2.75rem calc(2.75rem + 1px));
 }
 
 .wordle-quest-hud {
@@ -262,8 +265,13 @@
   min-height: 4rem;
   align-items: center;
   gap: 1rem;
-  padding: 0.35rem 0.2rem 0.75rem;
+  margin-bottom: clamp(0.2rem, 1.2dvh, 0.55rem);
+  padding: 0.5rem 0.35rem 0.85rem;
   border-bottom: 1px solid oklch(0.62 0.064 101 / 0.18);
+  border-radius: 1rem;
+  background:
+    linear-gradient(180deg, oklch(0.16 0.026 156 / 0.46), transparent),
+    radial-gradient(circle at 0 0, oklch(0.64 0.08 97 / 0.08), transparent 38%);
 }
 
 .wordle-quest-intro {
@@ -281,7 +289,7 @@
   flex: none;
   place-items: center;
   border: 1px solid oklch(0.68 0.085 94 / 0.46);
-  border-radius: 0.75rem 0.75rem 0.75rem 0.2rem;
+  border-radius: 999px;
   background: linear-gradient(145deg, oklch(0.4 0.05 154 / 0.9), oklch(0.2 0.024 157 / 0.84));
   box-shadow: inset 0 1px 0 oklch(0.86 0.08 96 / 0.16), 0 8px 16px -12px var(--shadow-color);
 }
@@ -299,7 +307,7 @@
   color: oklch(0.77 0.073 95);
   font-size: 0.69rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   line-height: 1.1;
   text-transform: uppercase;
 }

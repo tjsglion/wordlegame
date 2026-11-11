@@ -1,22 +1,33 @@
 {
   "Metadata": {
-    "title": "WordleGame — H5 单词游戏平台",
-    "description": "Wordle、单词搜索、填字等文字类小游戏，每日一题，即开即玩。"
+    "title": "LetterLoop — 每日文字谜题集合",
+    "description": "LetterLoop 提供每日猜词、主题穿线、单词堆栈与描词闯关等文字谜题，即开即玩。"
   },
   "HomeMetadata": {
-    "title": "WordleGame - 在线 Wordle、填字与单词游戏",
-    "description": "免费在线玩 Wordle、单词搜索、填字等文字游戏。每日更新，即点即玩，无需下载。",
+    "title": "LetterLoop - 在线每日猜词与文字谜题",
+    "description": "在线体验每日猜词、主题穿线、单词堆栈与描词闯关等文字谜题。每日更新，即点即玩，无需下载。",
     "keywords": [
       "在线单词游戏",
-      "Wordle 在线玩",
+      "每日猜词",
       "每日单词谜题",
-      "单词搜索游戏",
-      "在线填字游戏",
+      "字母解谜游戏",
+      "在线文字谜题",
       "浏览器文字游戏"
     ]
   },
+  "HomePage": {
+    "eyebrow": "LetterLoop 谜题集合",
+    "title": "把每日文字谜题放进同一个入口",
+    "description": "在同一个站点里切换每日猜词、主题穿线、单词堆栈和描词闯关，不用来回跳转就能继续玩。",
+    "instantPlay": "无需下载，桌面和移动端都能直接开玩。",
+    "availableTitle": "现在可玩",
+    "comingSoonTitle": "下一批玩法",
+    "playDailyGuess": "打开每日题",
+    "practiceDailyGuess": "自由练习",
+    "openGame": "进入{game}"
+  },
   "Common": {
-    "siteName": "WordleGame",
+    "siteName": "LetterLoop",
     "help": "玩法说明",
     "leaderboard": "战绩与排行榜",
     "login": "登录",
@@ -39,7 +50,7 @@
   },
   "LoginPage": {
     "title": "登录",
-    "description": "选择一种方式登录 WordleGame",
+    "description": "选择一种方式登录 LetterLoop",
     "signInWithGoogle": "使用 Google 登录",
     "signInWithGitHub": "使用 GitHub 登录",
     "errors": {
@@ -61,25 +72,32 @@
     "userId": "用户 ID"
   },
   "GamePage": {
-    "comingSoonDescription": "这款游戏正在开发中，先去玩今日 Wordle 吧。"
+    "comingSoonDescription": "这款游戏正在开发中，先看看其他已上线的文字谜题吧。"
   },
   "WordleMetadata": {
-    "title": "Wordle 在线玩 - 每日 5 字母猜词游戏 | WordleGame",
-    "description": "免费在线玩 Wordle。6 次机会猜出今日 5 字母单词，查看个人战绩，并在今日排行榜中和其他玩家比较成绩。",
+    "title": "每日猜词 - 5 字母每日挑战 | LetterLoop",
+    "description": "6 次机会猜出当天的 5 字母单词，查看个人战绩、连胜表现，并在每日排行榜中比较成绩。",
     "keywords": [
-      "Wordle 在线玩",
+      "每日猜词",
       "每日猜单词",
       "5字母单词游戏",
-      "免费 Wordle 游戏",
-      "Wordle 排行榜",
+      "免费猜词游戏",
+      "每日猜词排行榜",
       "在线文字谜题"
     ]
   },
   "HelpModal": {
-    "title": "How to play",
+    "title": "每日猜词导览",
     "description": "在 6 次机会内猜出隐藏的 5 字母单词。每次提交后，颜色都会给你清晰提示，帮你一步步缩小范围。",
-    "seoTitle": "Wordle 怎么玩",
-    "seoDescription": "了解 Wordle 的基本规则、每种颜色代表的含义，以及如何通过一个真实示例读懂整行结果。",
+    "seoTitle": "每日猜词怎么玩",
+    "seoDescription": "了解每日猜词的基本规则、每种颜色代表的含义，以及如何通过一个真实示例读懂整行结果。",
+    "spotlightTitle": "先读信号，再缩范围",
+    "spotlightDescription": "每一行都会同时做两件事：锁定已经确认的字母，并把还没站对位置的字母继续往外推。",
+    "spotlightPoints": {
+      "lock": "先把绿色字母锁住，让下一次猜测有锚点。",
+      "move": "黄色字母先保留，继续换位，直到它回到正确位置。",
+      "track": "把下方键盘当作你的随手笔记，别让已知信息丢掉。"
+    },
     "basicsTitle": "基本规则",
     "basics": {
       "guess": "在机会用完之前，猜出这个隐藏的 5 字母单词。",
@@ -134,12 +152,12 @@
     "dailyRound": "每日挑战",
     "practiceRound": "练习模式",
     "roundProgress": "已用 {current} / {total} 次机会",
-    "dailyQuest": "今日词语远征",
-    "practiceQuest": "自由词语远征",
+    "dailyQuest": "今日信号",
+    "practiceQuest": "自由练习",
     "questObjective": "在 {total} 次内找出隐藏单词",
     "streak": "连续 {count} 天",
     "startStreak": "开启连胜",
-    "tryPractice": "再来一局（练习）",
+    "tryPractice": "打开练习局",
     "backToDaily": "返回每日挑战",
     "newPractice": "再来一局",
     "leaderboardTitle": "战绩榜",
@@ -163,14 +181,14 @@
     "leaderboardLoginCta": "登录参与排行",
     "viewLeaderboard": "查看排行榜",
     "viewResult": "查看结果",
-    "resultsCta": "查看成绩",
-    "shareCta": "分享战绩",
-    "notEnoughLetters": "字母不够",
-    "notInWordList": "不在词库中",
-    "networkError": "网络异常，请重试",
-    "winMessage": "太棒了！你猜对了",
-    "loseMessage": "很遗憾，答案是 {answer}",
-    "share": "分享战绩",
+    "resultsCta": "打开回顾",
+    "shareCta": "分享信号",
+    "notEnoughLetters": "还需要补满 5 个字母",
+    "notInWordList": "这个信号不在词库里",
+    "networkError": "信号校验失败，请重试",
+    "winMessage": "信号已锁定",
+    "loseMessage": "信号中断，答案是 {answer}",
+    "share": "分享信号",
     "copied": "已复制到剪贴板",
     "nextPuzzleIn": "距下一题还有 {time}",
     "enter": "回车",
@@ -291,32 +309,32 @@
     }
   },
   "Strands": {
-    "title": "连线寻词",
+    "title": "主题穿线",
     "modeDaily": "每日",
     "modePractice": "练习",
     "complete": "完成",
     "unavailable": "今天的谜题暂未准备好。",
     "gameControls": "游戏控制",
-    "tryPractice": "再来一局（练习）",
+    "tryPractice": "打开练习织局",
     "backToDaily": "返回每日挑战",
-    "hint": "提示",
-    "results": "结果",
+    "hint": "路径提示",
+    "results": "本局回顾",
     "foundWords": "已找到单词",
     "removeWord": "移除 {word}",
     "meterAria": "提示能量 {current} / 3",
-    "gridAria": "连线寻词网格",
+    "gridAria": "主题穿线网格",
     "gridInstructions": "使用方向键在字母间移动。按回车或空格添加字母；再次激活最后一个已选字母即可提交。",
     "cellAria": "字母 {letter}，第 {row} 行，第 {column} 列{states}",
     "cellStatePrefix": "，",
     "cellStateDivider": "，",
     "cellStateFound": "已找到",
-    "cellStateFoundSpangram": "已找到 Spangram",
+    "cellStateFoundSpangram": "已找到主线词",
     "cellStateSelected": "当前选中",
     "cellStateHint": "提示",
     "cellStateError": "错误",
-    "winSummary": "使用提示：{count}",
-    "progressSummary": "已找到 {found}/{total} 个单词",
-    "share": "分享",
+    "winSummary": "主线词已连通，使用提示：{count}",
+    "progressSummary": "这一局已找到 {found}/{total} 个单词",
+    "share": "分享织局",
     "shareCopied": "分享内容已复制",
     "shareFailed": "分享失败，请重试。",
     "nextPuzzleIn": "距下一题还有 {time}",
@@ -328,37 +346,49 @@
       "hintsUsed": "提示使用"
     },
     "feedback": {
-      "alreadyFound": "这个词已经找到了",
-      "alreadyCounted": "这个额外单词已经计过分了",
-      "spangramEdge": "Spangram 必须连接两条相对边",
-      "tooShort": "太短了",
-      "unknown": "不在词库中",
-      "charged": "好词，提示已充能",
-      "noHint": "当前没有可用提示"
+      "alreadyFound": "这条线已经织出来了",
+      "alreadyCounted": "这个额外单词已经记过了",
+      "spangramEdge": "主线词需要连到两条相对边",
+      "tooShort": "这条线还不够长",
+      "unknown": "这条路径不在词库里",
+      "charged": "提示槽已充满",
+      "noHint": "先把提示槽充满"
     },
     "shareText": {
-      "dailyTitle": "连线寻词",
-      "practiceTitle": "连线寻词（练习）",
+      "dailyTitle": "主题穿线",
+      "practiceTitle": "主题穿线（练习）",
       "hintsUsed": "使用提示：{count}",
       "none": "无",
       "playAt": "游玩地址：{url}"
     }
   },
   "StrandsHelp": {
-    "title": "玩法说明",
-    "description": "沿着相邻字母连出单词，找全所有主题词，再找到那条横跨棋盘的 Spangram。",
+    "title": "主题穿线导览",
+    "description": "沿着相邻字母连出单词，找全所有主题词，再找到那条横跨棋盘的主线词。",
+    "boardReadTitle": "分几遍读这张棋盘",
+    "boardRead": {
+      "edges": "先扫边缘。很多主线词会先在外圈露出形状。",
+      "clusters": "如果某一片字母明显成团，先把短的主题词清出来，再追最长路线。",
+      "pivot": "当主题方向已经明朗，就去找那条能贯穿两条相对边的主线词。"
+    },
     "basicsTitle": "基本规则",
     "basics": {
       "drag": "可以沿八个方向连续拖动相邻字母，也可以逐个点击字母来组成一条路径。",
       "submit": "再次点击最后一个已选字母，就会提交你刚刚连出的单词。",
       "find": "把棋盘里所有主题词都找出来，这局就算完成；主题词正着或倒着连都可以。"
     },
-    "spangramTitle": "什么是 Spangram",
-    "spangram": "其中一个答案是 Spangram。它会点明整局主题，而且必须连接棋盘的两条相对边。",
+    "spangramTitle": "什么是主线词",
+    "spangram": "其中一个答案是主线词。它会点明整局主题，而且必须连接棋盘的两条相对边。",
     "hintsTitle": "提示机制",
     "hints": {
       "charge": "找到三个不属于主题答案的有效单词，可以充满提示槽。",
       "reveal": "提示槽充满后，点击“提示”会揭示某个未完成答案的一段路径。"
+    },
+    "hintLoopTitle": "提示槽是怎么转起来的",
+    "hintLoop": {
+      "bank": "每找到一个额外有效词，都会往下一次揭示累计能量。",
+      "spend": "能量满格后，会揭示一个还没完成答案里的真实路径片段。",
+      "timing": "等你扫盘速度慢下来再用，通常比一开始就点更划算。"
     },
     "tipsTitle": "补充说明",
     "tips": {

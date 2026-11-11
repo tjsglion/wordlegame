@@ -57,24 +57,6 @@ function getCanonicalRedirect(request: NextRequest): URL | null {
   return redirectUrl;
 }
 
-function resolvePreferredLocale(request: NextRequest, locale: string | null): string {
-  if (locale && hasLocale(routing.locales, locale)) {
-    return locale;
-  }
-
-  const localeCookie = request.cookies.get("NEXT_LOCALE")?.value;
-  if (localeCookie && hasLocale(routing.locales, localeCookie)) {
-    return localeCookie;
-  }
-
-  const acceptLanguage = request.headers.get("accept-language")?.toLowerCase() ?? "";
-  if (acceptLanguage.includes("zh")) {
-    return "zh";
-  }
-
-  return routing.defaultLocale;
-}
-
 export function proxy(request: NextRequest) {
   const canonicalRedirect = getCanonicalRedirect(request);
   if (canonicalRedirect) {
@@ -83,15 +65,6 @@ export function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
   const { pathname: barePathname, locale } = splitLocalePrefix(pathname);
-
-  // Wordle now lives on the locale homepage. Redirect old short links before
-  // route rendering so metadata headers do not leak the stale `/wordle` URL.
-  if (barePathname === "/wordle") {
-    const redirectUrl = request.nextUrl.clone();
-    const targetLocale = resolvePreferredLocale(request, locale);
-    redirectUrl.pathname = `/${targetLocale}`;
-    return NextResponse.redirect(redirectUrl, 308);
-  }
 
   const isProtected = protectedPrefixes.some((prefix) =>
     barePathname.startsWith(prefix),

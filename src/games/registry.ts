@@ -17,9 +17,9 @@ export const games: GameDefinition[] = [
     slug: "wordle",
     status: "available",
     tags: ["daily", "letters"],
-    title: { zh: "Wordle 猜单词", en: "Wordle" },
+    title: { zh: "每日猜词", en: "Daily Guess" },
     description: {
-      zh: "6 次猜中每日 5 字母单词。",
+      zh: "6 次机会猜出当天的 5 字母单词。",
       en: "Guess the daily 5-letter word in 6 tries.",
     },
   },
@@ -37,10 +37,10 @@ export const games: GameDefinition[] = [
     slug: "strands",
     status: "available",
     tags: ["daily", "grid", "words"],
-    title: { zh: "连线寻词", en: "Strands" },
+    title: { zh: "主题穿线", en: "Theme Weave" },
     description: {
-      zh: "在字母网格中连线找出主题词和贯穿全局的主题词。",
-      en: "Find themed words and the spangram in a letter grid.",
+      zh: "在字母网格中连线找出主题词与贯穿棋盘的主线词。",
+      en: "Trace themed words and the board-spanning main path in a letter grid.",
     },
   },
   {

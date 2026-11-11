@@ -1,5 +1,5 @@
 "$schema" = "./node_modules/wrangler/config-schema.json"
-name = "wordlegame"
+name = "letterloop"
 main = "worker.js"
 compatibility_date = "2026-08-31"
 compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
@@ -10,18 +10,18 @@ binding = "ASSETS"
 
 [vars]
 NEXTJS_ENV = "production"
-APP_ORIGIN = "https://wordlegame.app"
-AUTH_URL = "https://wordlegame.app"
+APP_ORIGIN = "https://letterloop.link"
+AUTH_URL = "https://letterloop.link"
 AUTH_TRUST_HOST = "true"
 AUTH_GOOGLE_ID = "798203036146-c8fp38cbagd2segged3s4ll4gd3htogr.apps.googleusercontent.com"
 AUTH_GITHUB_ID = "Ov23liWhm4UXsReplcOV"
 
 [[routes]]
-pattern = "wordlegame.app"
+pattern = "letterloop.link"
 custom_domain = true
 
 [[routes]]
-pattern = "www.wordlegame.app"
+pattern = "www.letterloop.link"
 custom_domain = true
 
 [triggers]

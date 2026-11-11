@@ -44,8 +44,8 @@ export type NoticeKey =
   | "loseMessage";
 
 const SLUG = WORDLE_SLUG;
-const GUESS_API = "/api/wordle/guess";
-const SYNC_API = "/api/wordle/sync";
+const GUESS_API = "/api/daily-guess/guess";
+const SYNC_API = "/api/daily-guess/sync";
 
 type GuessErrorKind = "invalid" | "unauthorized" | "network";
 

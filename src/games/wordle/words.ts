@@ -1,5 +1,5 @@
 /**
- * Wordle word lists — SERVER ONLY.
+ * Daily Guess word lists — SERVER ONLY.
  *
  * `ANSWERS` are common 5-letter English words that can be picked as the
  * solution. `ALLOWED_GUESSES` additionally accepts a set of plausible but
@@ -8,7 +8,7 @@
  *
  * Never import this from client code: the lists (and thus the daily answer)
  * must not ship in the client bundle. Evaluation happens in
- * src/app/api/games/wordle/guess/route.ts.
+ * src/app/api/daily-guess/guess/route.ts.
  */
 import "server-only";
 

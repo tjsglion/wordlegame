@@ -7,11 +7,22 @@ initOpenNextCloudflareForDev();
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
+const allowedDevOrigins = [
+  "127.0.0.1",
+  "localhost",
+  "*.ngrok-free.app",
+  "*.ngrok.app",
+  ...(process.env.ALLOWED_DEV_ORIGINS?.split(",")
+    .map((value) => value.trim())
+    .filter(Boolean) ?? []),
+];
+
 const nextConfig: NextConfig = {
   // Only the isomorphic WebSocket helper needs to stay external.
   // Do NOT externalize `@libsql/client` — it must be bundled so the
   // `@libsql/client/web` import works inside the Workers runtime.
   serverExternalPackages: ["@libsql/isomorphic-ws"],
+  allowedDevOrigins: Array.from(new Set(allowedDevOrigins)),
   // Allow building into a separate dir (NEXT_DIST_DIR=.next-build npm run build)
   // so a production build does not clobber a running dev server's .next.
   distDir: process.env.NEXT_DIST_DIR ?? ".next",

@@ -7,6 +7,13 @@ export async function WordleHelpSection() {
   const copy: HelpContentCopy = {
     title: t("seoTitle"),
     description: t("seoDescription"),
+    spotlightTitle: t("spotlightTitle"),
+    spotlightDescription: t("spotlightDescription"),
+    spotlightPoints: [
+      t("spotlightPoints.lock"),
+      t("spotlightPoints.move"),
+      t("spotlightPoints.track"),
+    ],
     basicsTitle: t("basicsTitle"),
     basics: [t("basics.guess"), t("basics.submit"), t("basics.clues")],
     colorsTitle: t("colorsTitle"),

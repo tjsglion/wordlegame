@@ -1,4 +1,4 @@
-# wordlegame
+# LetterLoop
 
 > H5 word games platform
 
@@ -32,7 +32,7 @@ Open http://localhost:3000
 ## 📁 Structure
 
 ```
-wordlegame/
+letterloop/
 ├── src/
 │   ├── app/
 │   ├── components/

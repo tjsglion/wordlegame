@@ -24,7 +24,8 @@ export function StrandsWinModal({ open, mode, hints, stats, isWon, found, total,
       titleId="strands-win-title"
       descriptionId="strands-win-summary"
       classNames={{
-        panel: "max-h-[calc(100dvh-1.5rem)] max-w-[23rem] overflow-y-auto px-[1.35rem] pt-8 pb-[1.35rem]",
+        panel:
+          "max-h-[calc(100dvh-1.5rem)] max-w-[23rem] overflow-y-auto border-[color-mix(in_oklab,var(--strands-blue)_28%,var(--border))] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--card)_96%,white),color-mix(in_oklab,var(--card)_92%,var(--background)))] px-[1.35rem] pt-8 pb-[1.35rem]",
         content: "text-center",
       }}
     >
@@ -32,11 +33,11 @@ export function StrandsWinModal({ open, mode, hints, stats, isWon, found, total,
       <h2 id="strands-win-title" className="mt-[0.35rem] text-[2rem] leading-none font-semibold">
         {t("title")}
       </h2>
-      <p id="strands-win-summary" className="mt-[0.3rem]">
+      <p id="strands-win-summary" className="mt-[0.3rem] text-balance">
         {isWon ? t("winSummary", { count: hints }) : t("progressSummary", { found, total })}
       </p>
       {mode === "daily" ? (
-        <dl className="strands-modal-stats">
+        <dl className="strands-modal-stats rounded-[1rem] border border-border/60 bg-white/40 px-2 py-3">
           <div>
             <dt>{t("stats.played")}</dt>
             <dd>{stats.played}</dd>
@@ -52,7 +53,7 @@ export function StrandsWinModal({ open, mode, hints, stats, isWon, found, total,
         </dl>
       ) : null}
       {mode === "daily" && stats.played > 0 ? (
-        <div className="strands-modal-distribution" role="img" aria-label={t("hintsDistribution")}>
+        <div className="strands-modal-distribution rounded-[1rem] border border-border/60 bg-white/35 px-3 py-3" role="img" aria-label={t("hintsDistribution")}>
           <p className="strands-modal-kicker">{t("stats.hintsUsed")}</p>
           {stats.hintDistribution.map((count, index) => (
             <div key={index} className="strands-modal-distribution-row">

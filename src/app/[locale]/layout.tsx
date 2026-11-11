@@ -36,7 +36,7 @@ export async function generateMetadata({
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",
-      title: "WordleGame",
+      title: "LetterLoop",
     },
   };
 }

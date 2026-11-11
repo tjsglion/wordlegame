@@ -1,12 +1,16 @@
 export interface StrandsHelpCopy {
   title: string;
   description: string;
+  boardReadTitle?: string;
+  boardRead?: string[];
   basicsTitle: string;
   basics: string[];
   spangramTitle: string;
   spangram: string;
   hintsTitle: string;
   hints: string[];
+  hintLoopTitle?: string;
+  hintLoop?: string[];
   tipsTitle: string;
   tips: string[];
 }
@@ -47,6 +51,32 @@ export function StrandsHelpContent({
         </p>
       </div>
 
+      {copy.boardReadTitle && copy.boardRead?.length ? (
+        <section className="mt-5 overflow-hidden rounded-[1.5rem] border border-[color-mix(in_oklab,var(--strands-blue)_28%,var(--border))] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--card)_96%,white),color-mix(in_oklab,var(--card)_90%,var(--background)))] p-4 shadow-[0_24px_60px_-42px_rgba(0,0,0,0.55)] sm:p-5">
+          <p className="text-[11px] font-semibold tracking-[0.24em] text-[color-mix(in_oklab,var(--strands-blue)_70%,var(--muted-foreground))] uppercase">
+            LetterLoop
+          </p>
+          <h3 className="mt-2 text-lg font-semibold tracking-[-0.02em] sm:text-xl">
+            {copy.boardReadTitle}
+          </h3>
+          <div className="mt-4 grid gap-2 sm:grid-cols-3">
+            {copy.boardRead.map((item, index) => (
+              <div
+                key={item}
+                className="rounded-[1rem] border border-border/70 bg-white/55 px-3 py-3"
+              >
+                <p className="text-[11px] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
+                  {`0${index + 1}`}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-foreground/88">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       <section className={sectionClass}>
         <h3 className={headingClass}>{copy.basicsTitle}</h3>
         <ol className="mt-4 space-y-3 text-sm leading-6 text-foreground/92 sm:text-base">
@@ -76,6 +106,25 @@ export function StrandsHelpContent({
           ))}
         </ul>
       </section>
+
+      {copy.hintLoopTitle && copy.hintLoop?.length ? (
+        <section className="mt-5 rounded-[1.5rem] border border-border/80 bg-background p-4 sm:p-5">
+          <h3 className={headingClass}>{copy.hintLoopTitle}</h3>
+          <div className="mt-3 space-y-2">
+            {copy.hintLoop.map((item, index) => (
+              <div
+                key={item}
+                className="rounded-[1rem] bg-muted/35 px-3 py-3 text-sm leading-6 text-muted-foreground"
+              >
+                <span className="mr-2 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/70">
+                  {`0${index + 1}`}
+                </span>
+                {item}
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="mt-5 rounded-[1.5rem] border border-border/80 bg-background p-4 sm:p-5">
         <h3 className={headingClass}>{copy.tipsTitle}</h3>

@@ -125,7 +125,7 @@ function WordleRound({
   const showConfetti = game.status === "won" && game.justWon && !confettiDone;
 
   const finished = game.status !== "playing";
-  // const attemptsUsed = game.guesses.length;
+  const attemptsUsed = game.guesses.length;
   const countdown = useNextPuzzleCountdown(mode === "daily" && finished);
   const winRate =
     game.stats.played > 0
@@ -175,8 +175,8 @@ function WordleRound({
       game.status === "won"
         ? `${game.guesses.length}/${MAX_GUESSES}`
         : `X/${MAX_GUESSES}`;
-    const label = mode === "daily" ? `Daily ${todayKey()}` : "Practice";
-    const text = `WordleGame ${label} ${score}\n${lines.join("\n")}`;
+    const title = mode === "daily" ? `LetterLoop Daily Guess ${todayKey()}` : "LetterLoop Practice Guess";
+    const text = `${title} ${score}\n${lines.join("\n")}`;
 
     if (typeof navigator.share === "function") {
       try {
@@ -212,7 +212,7 @@ function WordleRound({
 
   return (
     <div className="wordle-stage mx-auto flex w-full max-w-lg flex-1 touch-manipulation flex-col px-3 py-3 sm:px-4">
-      {/* <div className="wordle-quest-hud">
+      <div className="wordle-quest-hud">
         <div className="wordle-quest-intro">
           <span className="wordle-quest-marker" aria-hidden />
           <div className="min-w-0">
@@ -247,7 +247,7 @@ function WordleRound({
             {t("roundProgress", { current: attemptsUsed, total: MAX_GUESSES })}
           </p>
         </div>
-      </div> */}
+      </div>
 
       {/* Toast notice */}
       <div className="relative h-0">
@@ -317,12 +317,18 @@ function WordleRound({
         closeButtonAriaLabel={tCommon("close")}
         titleId="wordle-result-title"
         descriptionId="wordle-result-description"
-        classNames={{ panel: "max-w-sm" }}
+        classNames={{
+          panel:
+            "max-w-sm border-[oklch(0.72_0.075_98_/_0.24)] bg-[linear-gradient(180deg,oklch(0.22_0.022_157_/_0.98),oklch(0.17_0.02_155_/_0.98))] text-[oklch(0.94_0.017_92)] shadow-[0_30px_90px_-28px_rgba(0,0,0,0.62)]",
+        }}
       >
         <div className="wordle-panel-in flex flex-col gap-3">
+          <p className="wordle-panel-in text-center text-[11px] font-medium tracking-[0.24em] text-[oklch(0.77_0.073_95)] uppercase">
+            {mode === "daily" ? t("dailyQuest") : t("practiceQuest")}
+          </p>
           <p
             id="wordle-result-title"
-            className="wordle-panel-in flex items-center justify-center gap-1.5 pt-2 pr-10 pl-10 text-center font-semibold"
+            className="wordle-panel-in flex items-center justify-center gap-1.5 px-10 text-center text-lg font-semibold"
           >
             {game.stats.currentStreak > 0 && (
               <Flame className="size-4 text-brand" aria-hidden />
@@ -331,7 +337,7 @@ function WordleRound({
           </p>
 
           <div
-            className="wordle-panel-in grid grid-cols-4 gap-2 text-center text-xs"
+            className="wordle-panel-in grid grid-cols-4 gap-2 rounded-[1.2rem] border border-white/10 bg-white/6 p-3 text-center text-xs"
             style={{ animationDelay: "80ms" }}
           >
             <StatBlock value={game.stats.played} label={t("stats.played")} />
@@ -347,7 +353,7 @@ function WordleRound({
           </div>
 
           <div
-            className="wordle-panel-in flex flex-col gap-1"
+            className="wordle-panel-in flex flex-col gap-1 rounded-[1rem] border border-white/8 bg-black/10 p-3"
             style={{ animationDelay: "160ms" }}
           >
             {game.stats.distribution.map((count, i) => (
@@ -374,15 +380,15 @@ function WordleRound({
             style={{ animationDelay: "240ms" }}
           >
             {mode === "daily" && (
-              <p className="text-center text-sm text-muted-foreground tabular-nums">
+              <p className="text-center text-sm text-[oklch(0.8_0.03_92)] tabular-nums">
                 {t("nextPuzzleIn", { time: countdown })}
               </p>
             )}
             <Button
               type="button"
-              variant="outline"
+              variant="secondary"
               onClick={() => void handleShare()}
-              className="w-full"
+              className="w-full bg-[oklch(0.72_0.1_84)] text-[oklch(0.19_0.021_154)] hover:bg-[oklch(0.76_0.1_84)]"
             >
               {t("share")}
             </Button>
@@ -391,27 +397,27 @@ function WordleRound({
                 type="button"
                 variant="ghost"
                 onClick={() => void handleOpenLeaderboard()}
-                className="w-full"
+                className="w-full text-[oklch(0.9_0.02_92)] hover:bg-white/8 hover:text-white"
               >
                 {t("viewLeaderboard")}
               </Button>
             ) : null}
             {mode === "practice" ? (
               <>
-                <Button type="button" onClick={handleRestartPractice} className="w-full">
+                <Button type="button" onClick={handleRestartPractice} className="w-full bg-white/10 text-white hover:bg-white/14">
                   {t("newPractice")}
                 </Button>
                 <Button
                   type="button"
                   variant="ghost"
                   onClick={handleReturnToDaily}
-                  className="w-full"
+                  className="w-full text-[oklch(0.9_0.02_92)] hover:bg-white/8 hover:text-white"
                 >
                   {t("backToDaily")}
                 </Button>
               </>
             ) : (
-              <Button type="button" onClick={handlePlayPractice} className="w-full">
+              <Button type="button" onClick={handlePlayPractice} className="w-full bg-white/10 text-white hover:bg-white/14">
                 {t("tryPractice")}
               </Button>
             )}

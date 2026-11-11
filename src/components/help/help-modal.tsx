@@ -25,6 +25,13 @@ function buildWordleCopy(tHelp: (key: string) => string): HelpContentCopy {
   return {
     title: tHelp("title"),
     description: tHelp("description"),
+    spotlightTitle: tHelp("spotlightTitle"),
+    spotlightDescription: tHelp("spotlightDescription"),
+    spotlightPoints: [
+      tHelp("spotlightPoints.lock"),
+      tHelp("spotlightPoints.move"),
+      tHelp("spotlightPoints.track"),
+    ],
     basicsTitle: tHelp("basicsTitle"),
     basics: [
       tHelp("basics.guess"),
@@ -109,6 +116,12 @@ export function HelpModal({ game }: { game?: GameSlug }) {
   const strandsCopy: StrandsHelpCopy = {
     title: tStrandsHelp("title"),
     description: tStrandsHelp("description"),
+    boardReadTitle: tStrandsHelp("boardReadTitle"),
+    boardRead: [
+      tStrandsHelp("boardRead.edges"),
+      tStrandsHelp("boardRead.clusters"),
+      tStrandsHelp("boardRead.pivot"),
+    ],
     basicsTitle: tStrandsHelp("basicsTitle"),
     basics: [
       tStrandsHelp("basics.drag"),
@@ -119,6 +132,12 @@ export function HelpModal({ game }: { game?: GameSlug }) {
     spangram: tStrandsHelp("spangram"),
     hintsTitle: tStrandsHelp("hintsTitle"),
     hints: [tStrandsHelp("hints.charge"), tStrandsHelp("hints.reveal")],
+    hintLoopTitle: tStrandsHelp("hintLoopTitle"),
+    hintLoop: [
+      tStrandsHelp("hintLoop.bank"),
+      tStrandsHelp("hintLoop.spend"),
+      tStrandsHelp("hintLoop.timing"),
+    ],
     tipsTitle: tStrandsHelp("tipsTitle"),
     tips: [tStrandsHelp("tips.words"), tStrandsHelp("tips.mode")],
   };
